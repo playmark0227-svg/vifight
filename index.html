@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ViFight — Creative Studio</title>
+  <meta name="description" content="ViFight｜SNS総合支援・映像制作・HP制作・動画編集スクール。クリエイティブの力で、ビジネスを次のステージへ。">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Interのみ同期読み込み（Latin文字、軽量） -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Noto Sans JPは非同期で遅延読み込み（531フォントフェイス問題を回避） -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" onload="this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet"></noscript>
+</head>
+<body>
+
+  <!-- ========== LOADING SCREEN ========== -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-logo">
+        <span class="loader-letter" style="--i:0">V</span>
+        <span class="loader-letter" style="--i:1">i</span>
+        <span class="loader-letter" style="--i:2">F</span>
+        <span class="loader-letter" style="--i:3">i</span>
+        <span class="loader-letter" style="--i:4">g</span>
+        <span class="loader-letter" style="--i:5">h</span>
+        <span class="loader-letter" style="--i:6">t</span>
+      </div>
+      <div class="loader-bar">
+        <div class="loader-bar-fill"></div>
+      </div>
+      <p class="loader-text">Loading Experience...</p>
+    </div>
+  </div>
+
+  <!-- ========== CUSTOM CURSOR ========== -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursor-follower"></div>
+
+  <!-- ========== NAVIGATION ========== -->
+  <header id="header">
+    <nav class="nav">
+      <a href="#hero" class="nav-logo" data-magnetic>
+        <span>ViFight</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about" data-magnetic>About</a></li>
+        <li><a href="#services" data-magnetic>Services</a></li>
+        <li><a href="#works" data-magnetic>Works</a></li>
+        <li><a href="#flow" data-magnetic>Flow</a></li>
+        <li><a href="#faq" data-magnetic>FAQ</a></li>
+        <li><a href="#contact" class="nav-cta" data-magnetic>Contact</a></li>
+      </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="メニュー">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ========== MOBILE MENU ========== -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-bg"></div>
+    <div class="mobile-menu-content">
+      <ul class="mobile-menu-links">
+        <li><a href="#about" data-menu-link>About</a></li>
+        <li><a href="#services" data-menu-link>Services</a></li>
+        <li><a href="#works" data-menu-link>Works</a></li>
+        <li><a href="#flow" data-menu-link>Flow</a></li>
+        <li><a href="#faq" data-menu-link>FAQ</a></li>
+        <li><a href="#contact" data-menu-link>Contact</a></li>
+      </ul>
+      <div class="mobile-menu-footer">
+        <p>info@vifight.jp</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== HERO ========== -->
+  <section id="hero" class="hero">
+    <div class="hero-video-wrap">
+      <!-- 動画埋め込み用: 下記のコメントを解除して動画ファイルを指定 -->
+      <!-- <video autoplay muted loop playsinline id="hero-video">
+        <source src="assets/video/hero.mp4" type="video/mp4">
+      </video> -->
+      <div class="hero-video-placeholder"></div>
+      <div class="hero-video-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-tag" data-reveal>
+        <span>Creative Studio</span>
+      </div>
+      <h1 class="hero-title">
+        <span class="hero-line" data-reveal><span>Create the</span></span>
+        <span class="hero-line" data-reveal><span>Future with</span></span>
+        <span class="hero-line hero-line-accent" data-reveal><span>ViFight.</span></span>
+      </h1>
+      <p class="hero-sub" data-reveal>
+        クリエイティブの力で、ビジネスを次のステージへ。
+      </p>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+    <div class="hero-marquee">
+      <div class="marquee-track">
+        <span>ViFight — SNS Support — Video Production — Web Design — Editing School —&nbsp;</span>
+        <span>ViFight — SNS Support — Video Production — Web Design — Editing School —&nbsp;</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ABOUT ========== -->
+  <section id="about" class="section about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num" data-reveal>01</span>
+        <h2 class="section-title" data-reveal-title>About</h2>
+        <p class="section-sub" data-reveal>ViFightについて</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="about-lead" data-reveal>
+            私たちは「伝える」を「届ける」に変える<br>クリエイティブカンパニーです。
+          </p>
+          <p class="about-desc" data-reveal>
+            ViFightは、SNS運用支援・映像制作・HP制作・動画編集スクールの4つの事業を柱に、<br>
+            企業やクリエイターの「想い」を最適な形でデザインし、届けるプロフェッショナル集団です。<br><br>
+            テクノロジーとクリエイティビティの融合で、あなたのビジネスに新たな価値を創造します。
+          </p>
+          <div class="about-stats" data-reveal>
+            <div class="stat">
+              <span class="stat-num" data-count="500">0</span><span class="stat-plus">+</span>
+              <span class="stat-label">プロジェクト実績</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num" data-count="98">0</span><span class="stat-plus">%</span>
+              <span class="stat-label">クライアント満足度</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num" data-count="50">0</span><span class="stat-plus">+</span>
+              <span class="stat-label">取引企業数</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-image" data-reveal>
+          <div class="about-image-inner" data-parallax="0.1">
+            <img src="assets/images/representative.jpg" alt="久保 歩夢 — Founder & CEO" class="about-image-photo">
+          </div>
+          <div class="about-image-caption">
+            <span class="caption-name">久保 歩夢</span>
+            <span class="caption-role">Founder & CEO</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PHILOSOPHY ========== -->
+  <section class="section philosophy">
+    <div class="philosophy-bg" data-parallax="0.05"></div>
+    <div class="container">
+      <div class="philosophy-content">
+        <blockquote class="philosophy-quote" data-reveal-words>
+          良いデザインとは、可能な限り少ないデザインである。
+        </blockquote>
+        <p class="philosophy-attr" data-reveal>— ViFight Philosophy</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SERVICES ========== -->
+  <section id="services" class="section services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num" data-reveal>02</span>
+        <h2 class="section-title" data-reveal-title>Services</h2>
+        <p class="section-sub" data-reveal>事業内容</p>
+      </div>
+      <div class="services-list">
+        <!-- Service 1 -->
+        <div class="service-item" data-reveal>
+          <div class="service-item-inner" data-cursor-expand>
+            <div class="service-num">01</div>
+            <div class="service-content">
+              <h3 class="service-title">SNS総合支援</h3>
+              <p class="service-desc">
+                戦略設計からコンテンツ制作、運用代行、分析改善まで。<br>
+                Instagram・TikTok・X・YouTube、全プラットフォームに対応した<br>
+                ワンストップのSNSマーケティングを提供します。
+              </p>
+              <ul class="service-tags">
+                <li>戦略設計</li>
+                <li>コンテンツ制作</li>
+                <li>運用代行</li>
+                <li>分析・改善</li>
+                <li>インフルエンサー施策</li>
+              </ul>
+            </div>
+            <div class="service-icon">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="1"/>
+                <circle cx="50" cy="50" r="25" stroke="currentColor" stroke-width="1"/>
+                <circle cx="50" cy="50" r="8" fill="currentColor"/>
+                <line x1="50" y1="5" x2="50" y2="20" stroke="currentColor" stroke-width="1"/>
+                <line x1="50" y1="80" x2="50" y2="95" stroke="currentColor" stroke-width="1"/>
+                <line x1="5" y1="50" x2="20" y2="50" stroke="currentColor" stroke-width="1"/>
+                <line x1="80" y1="50" x2="95" y2="50" stroke="currentColor" stroke-width="1"/>
+              </svg>
+            </div>
+            <div class="service-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <!-- Service 2 -->
+        <div class="service-item" data-reveal>
+          <div class="service-item-inner" data-cursor-expand>
+            <div class="service-num">02</div>
+            <div class="service-content">
+              <h3 class="service-title">映像制作</h3>
+              <p class="service-desc">
+                企業VP・CM・MV・イベント映像など、あらゆるジャンルの映像を<br>
+                企画・撮影・編集までワンストップで制作。<br>
+                映像の力でブランドの世界観を最大限に引き出します。
+              </p>
+              <ul class="service-tags">
+                <li>企業VP</li>
+                <li>CM・広告映像</li>
+                <li>MV制作</li>
+                <li>イベント撮影</li>
+                <li>ドローン撮影</li>
+              </ul>
+            </div>
+            <div class="service-icon">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="25" width="55" height="50" rx="4" stroke="currentColor" stroke-width="1"/>
+                <polygon points="75,35 95,25 95,75 75,65" stroke="currentColor" stroke-width="1" fill="none"/>
+                <circle cx="37" cy="50" r="12" stroke="currentColor" stroke-width="1"/>
+                <circle cx="37" cy="50" r="4" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="service-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <!-- Service 3 -->
+        <div class="service-item" data-reveal>
+          <div class="service-item-inner" data-cursor-expand>
+            <div class="service-num">03</div>
+            <div class="service-content">
+              <h3 class="service-title">HP制作</h3>
+              <p class="service-desc">
+                美しさと機能性を両立したWebサイトを設計・開発。<br>
+                コーポレートサイト、LP、ECサイトまで、<br>
+                ビジネスの目的に最適化されたWeb体験を構築します。
+              </p>
+              <ul class="service-tags">
+                <li>コーポレートサイト</li>
+                <li>LP制作</li>
+                <li>ECサイト</li>
+                <li>UI/UXデザイン</li>
+                <li>WordPress</li>
+              </ul>
+            </div>
+            <div class="service-icon">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="15" width="80" height="55" rx="4" stroke="currentColor" stroke-width="1"/>
+                <line x1="10" y1="30" x2="90" y2="30" stroke="currentColor" stroke-width="1"/>
+                <circle cx="18" cy="22" r="3" fill="currentColor"/>
+                <circle cx="28" cy="22" r="3" fill="currentColor"/>
+                <circle cx="38" cy="22" r="3" fill="currentColor"/>
+                <line x1="50" y1="70" x2="50" y2="85" stroke="currentColor" stroke-width="1"/>
+                <line x1="35" y1="85" x2="65" y2="85" stroke="currentColor" stroke-width="1"/>
+              </svg>
+            </div>
+            <div class="service-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <!-- Service 4 -->
+        <div class="service-item" data-reveal>
+          <div class="service-item-inner" data-cursor-expand>
+            <div class="service-num">04</div>
+            <div class="service-content">
+              <h3 class="service-title">動画編集スクール</h3>
+              <p class="service-desc">
+                未経験からプロの動画クリエイターへ。<br>
+                実践的なカリキュラムとマンツーマンサポートで、<br>
+                最短距離でスキルを習得できる動画編集スクールです。
+              </p>
+              <ul class="service-tags">
+                <li>未経験OK</li>
+                <li>マンツーマン</li>
+                <li>実践カリキュラム</li>
+                <li>案件紹介サポート</li>
+                <li>オンライン対応</li>
+              </ul>
+            </div>
+            <div class="service-icon">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 15 L85 35 L85 65 L50 85 L15 65 L15 35 Z" stroke="currentColor" stroke-width="1" fill="none"/>
+                <path d="M50 15 L50 85" stroke="currentColor" stroke-width="1"/>
+                <path d="M15 35 L85 65" stroke="currentColor" stroke-width="0.5"/>
+                <path d="M85 35 L15 65" stroke="currentColor" stroke-width="0.5"/>
+                <polygon points="43,42 60,50 43,58" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="service-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== HORIZONTAL SCROLL TEXT ========== -->
+  <section class="section marquee-section">
+    <div class="marquee-large">
+      <div class="marquee-large-track" data-scroll-speed>
+        <span>Design — Create — Deliver — Inspire —&nbsp;</span>
+        <span>Design — Create — Deliver — Inspire —&nbsp;</span>
+        <span>Design — Create — Deliver — Inspire —&nbsp;</span>
+        <span>Design — Create — Deliver — Inspire —&nbsp;</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== WORKS ========== -->
+  <section id="works" class="section works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num" data-reveal>03</span>
+        <h2 class="section-title" data-reveal-title>Works</h2>
+        <p class="section-sub" data-reveal>制作実績</p>
+      </div>
+      <div class="works-grid">
+        <div class="work-item" data-reveal data-cursor-view>
+          <div class="work-image">
+            <div class="work-image-placeholder">
+              <span>Project 01</span>
+            </div>
+            <div class="work-image-overlay"></div>
+          </div>
+          <div class="work-info">
+            <span class="work-cat">SNS運用</span>
+            <h3 class="work-title">ブランドSNS戦略設計</h3>
+            <p class="work-year">2025</p>
+          </div>
+        </div>
+        <div class="work-item" data-reveal data-cursor-view>
+          <div class="work-image">
+            <div class="work-image-placeholder">
+              <span>Project 02</span>
+            </div>
+            <div class="work-image-overlay"></div>
+          </div>
+          <div class="work-info">
+            <span class="work-cat">映像制作</span>
+            <h3 class="work-title">企業ブランディング映像</h3>
+            <p class="work-year">2025</p>
+          </div>
+        </div>
+        <div class="work-item" data-reveal data-cursor-view>
+          <div class="work-image">
+            <div class="work-image-placeholder">
+              <span>Project 03</span>
+            </div>
+            <div class="work-image-overlay"></div>
+          </div>
+          <div class="work-info">
+            <span class="work-cat">HP制作</span>
+            <h3 class="work-title">コーポレートサイトリニューアル</h3>
+            <p class="work-year">2024</p>
+          </div>
+        </div>
+        <div class="work-item" data-reveal data-cursor-view>
+          <div class="work-image">
+            <div class="work-image-placeholder">
+              <span>Project 04</span>
+            </div>
+            <div class="work-image-overlay"></div>
+          </div>
+          <div class="work-info">
+            <span class="work-cat">映像制作</span>
+            <h3 class="work-title">プロモーションMV</h3>
+            <p class="work-year">2024</p>
+          </div>
+        </div>
+        <div class="work-item" data-reveal data-cursor-view>
+          <div class="work-image">
+            <div class="work-image-placeholder">
+              <span>Project 05</span>
+            </div>
+            <div class="work-image-overlay"></div>
+          </div>
+          <div class="work-info">
+            <span class="work-cat">SNS運用</span>
+            <h3 class="work-title">EC×SNS統合マーケティング</h3>
+            <p class="work-year">2024</p>
+          </div>
+        </div>
+        <div class="work-item" data-reveal data-cursor-view>
+          <div class="work-image">
+            <div class="work-image-placeholder">
+              <span>Project 06</span>
+            </div>
+            <div class="work-image-overlay"></div>
+          </div>
+          <div class="work-info">
+            <span class="work-cat">HP制作</span>
+            <h3 class="work-title">ランディングページ制作</h3>
+            <p class="work-year">2024</p>
+          </div>
+        </div>
+      </div>
+      <div class="works-cta" data-reveal>
+        <a href="#contact" class="btn-circle" data-magnetic>
+          <span>View All<br>Works</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FLOW ========== -->
+  <section id="flow" class="section flow">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num" data-reveal>04</span>
+        <h2 class="section-title" data-reveal-title>Flow</h2>
+        <p class="section-sub" data-reveal>ご依頼の流れ</p>
+      </div>
+      <div class="flow-timeline">
+        <div class="flow-line"></div>
+        <div class="flow-step" data-reveal>
+          <div class="flow-step-num">01</div>
+          <div class="flow-step-content">
+            <h3>お問い合わせ</h3>
+            <p>まずはお気軽にご相談ください。フォームまたはお電話にて、お悩みやご要望をお聞かせください。</p>
+          </div>
+        </div>
+        <div class="flow-step" data-reveal>
+          <div class="flow-step-num">02</div>
+          <div class="flow-step-content">
+            <h3>ヒアリング・ご提案</h3>
+            <p>詳細なヒアリングを行い、課題や目標を明確化。最適なプランと見積もりをご提案します。</p>
+          </div>
+        </div>
+        <div class="flow-step" data-reveal>
+          <div class="flow-step-num">03</div>
+          <div class="flow-step-content">
+            <h3>制作・開発</h3>
+            <p>プロジェクトを進行。定期的な進捗共有と確認を行いながら、高品質な成果物を制作します。</p>
+          </div>
+        </div>
+        <div class="flow-step" data-reveal>
+          <div class="flow-step-num">04</div>
+          <div class="flow-step-content">
+            <h3>納品・運用サポート</h3>
+            <p>成果物を納品後も、運用サポートや改善提案を継続。長期的なパートナーとして伴走します。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FAQ ========== -->
+  <section id="faq" class="section faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num" data-reveal>05</span>
+        <h2 class="section-title" data-reveal-title>FAQ</h2>
+        <p class="section-sub" data-reveal>よくある質問</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item" data-reveal>
+          <button class="faq-question">
+            <span>初回相談は無料ですか？</span>
+            <span class="faq-icon">
+              <span></span><span></span>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>はい、初回のご相談・お見積もりは無料です。お気軽にお問い合わせください。</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-question">
+            <span>対応エリアはどこですか？</span>
+            <span class="faq-icon">
+              <span></span><span></span>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>全国対応可能です。オンラインでのお打ち合わせも承っております。撮影が必要な場合は、別途ご相談ください。</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-question">
+            <span>制作期間はどのくらいですか？</span>
+            <span class="faq-icon">
+              <span></span><span></span>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>案件の規模により異なりますが、一般的にHP制作で1〜2ヶ月、映像制作で2週間〜1ヶ月程度です。お急ぎの場合もご相談ください。</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-question">
+            <span>動画編集スクールは未経験でも大丈夫ですか？</span>
+            <span class="faq-icon">
+              <span></span><span></span>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>はい、完全未経験の方でも安心して受講いただけます。基礎から実践まで、一人ひとりのペースに合わせたカリキュラムをご用意しています。</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-question">
+            <span>料金体系を教えてください。</span>
+            <span class="faq-icon">
+              <span></span><span></span>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>ご要望や規模に応じてお見積もりをお出ししております。まずはお気軽にご相談いただき、ご予算に合わせた最適なプランをご提案いたします。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <section id="contact" class="section contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num" data-reveal>06</span>
+        <h2 class="section-title" data-reveal-title>Contact</h2>
+        <p class="section-sub" data-reveal>お問い合わせ</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info" data-reveal>
+          <p class="contact-lead">
+            プロジェクトのご相談、お見積もり、<br>
+            その他ご質問など、お気軽にお問い合わせください。
+          </p>
+          <div class="contact-details">
+            <div class="contact-detail">
+              <span class="contact-label">Email</span>
+              <a href="mailto:info@vifight.jp">info@vifight.jp</a>
+            </div>
+            <div class="contact-detail">
+              <span class="contact-label">SNS</span>
+              <div class="contact-social">
+                <a href="#" data-magnetic aria-label="Instagram">Instagram</a>
+                <a href="#" data-magnetic aria-label="X">X (Twitter)</a>
+                <a href="#" data-magnetic aria-label="YouTube">YouTube</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form" data-reveal>
+          <div class="form-group">
+            <label for="name">お名前 <span>*</span></label>
+            <input type="text" id="name" name="name" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="company">会社名</label>
+            <input type="text" id="company" name="company" autocomplete="organization">
+          </div>
+          <div class="form-group">
+            <label for="email">メールアドレス <span>*</span></label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="service">ご相談内容</label>
+            <select id="service" name="service">
+              <option value="" disabled selected>選択してください</option>
+              <option value="sns">SNS総合支援</option>
+              <option value="video">映像制作</option>
+              <option value="web">HP制作</option>
+              <option value="school">動画編集スクール</option>
+              <option value="other">その他</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">メッセージ <span>*</span></label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="form-submit" data-magnetic>
+            <span>送信する</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-logo">ViFight</div>
+        <div class="footer-links">
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#works">Works</a>
+          <a href="#flow">Flow</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 ViFight Inc. All Rights Reserved.</p>
+        <a href="#hero" class="footer-totop" data-magnetic>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
