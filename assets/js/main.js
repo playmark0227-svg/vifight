@@ -90,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ---------- UNIFIED SCROLL LOOP ----------
-  // すべてのスクロール依存処理を1つのRAFループに統合
   const header = document.getElementById('header');
   const progressBar = document.createElement('div');
   progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent-warm),var(--accent));z-index:10001;width:0%;pointer-events:none;';
@@ -102,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }));
 
   const scrollMarquee = document.querySelector('[data-scroll-speed]');
-  // キャッシュ: scrollWidthを一度だけ読む
   let marqueeWidth = 0;
   let marqueePos = 0;
   let lastScrollY = window.scrollY;
@@ -120,31 +118,22 @@ document.addEventListener('DOMContentLoaded', () => {
   function onScrollFrame() {
     const scrollY = currentScrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-
-    // Header
     header.classList.toggle('scrolled', scrollY > 80);
-
-    // Progress bar
     progressBar.style.width = ((scrollY / docHeight) * 100) + '%';
-
-    // Parallax (getBoundingClientRect は読み取りのみ、バッチ処理)
     for (const { el, speed } of parallaxEls) {
       const rect = el.getBoundingClientRect();
       const center = rect.top + rect.height / 2 - window.innerHeight / 2;
       el.style.transform = `translateY(${center * speed}px)`;
     }
-
     lastScrollY = scrollY;
     ticking = false;
   }
 
-  // marqueeWidthを初期化
   if (scrollMarquee) {
     requestAnimationFrame(() => { marqueeWidth = scrollMarquee.scrollWidth / 4; });
   }
 
   // ========== 単一メインRAFループ ==========
-  // follower / canvas trail / marquee をすべて1ループで処理
   function mainLoop() {
     // 1. Cursor follower
     const dx = mouseX - followerX;
@@ -209,28 +198,18 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ---------- INTERSECTION OBSERVERS (統合) ----------
-  // 1つのObserverで複数の処理を振り分け
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       const el = entry.target;
-      if (el.hasAttribute('data-reveal')) {
-        el.classList.add('visible');
-      }
-      if (el.hasAttribute('data-reveal-title')) {
-        el.querySelectorAll('.char').forEach(c => c.classList.add('visible'));
-      }
-      if (el.hasAttribute('data-reveal-words')) {
-        el.querySelectorAll('.word').forEach(w => w.classList.add('visible'));
-      }
-      if (el.hasAttribute('data-count')) {
-        animateCount(el);
-      }
+      if (el.hasAttribute('data-reveal')) el.classList.add('visible');
+      if (el.hasAttribute('data-reveal-title')) el.querySelectorAll('.char').forEach(c => c.classList.add('visible'));
+      if (el.hasAttribute('data-reveal-words')) el.querySelectorAll('.word').forEach(w => w.classList.add('visible'));
+      if (el.hasAttribute('data-count')) animateCount(el);
       revealObserver.unobserve(el);
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
-  // Title character split
   document.querySelectorAll('[data-reveal-title]').forEach(title => {
     const frag = document.createDocumentFragment();
     [...title.textContent].forEach((char, i) => {
@@ -245,7 +224,6 @@ document.addEventListener('DOMContentLoaded', () => {
     revealObserver.observe(title);
   });
 
-  // Word split
   document.querySelectorAll('[data-reveal-words]').forEach(el => {
     const frag = document.createDocumentFragment();
     el.textContent.trim().split(/(\s+)/).forEach((word, i) => {
@@ -265,10 +243,8 @@ document.addEventListener('DOMContentLoaded', () => {
     revealObserver.observe(el);
   });
 
-  // Observe all reveal targets
   document.querySelectorAll('[data-reveal], [data-count]').forEach(el => revealObserver.observe(el));
 
-  // Counter animation
   function animateCount(el) {
     const target = parseInt(el.getAttribute('data-count'));
     const start = performance.now();
@@ -356,5 +332,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ---------- ACTIVE NAV STYLE (CSS only — no runtime injection) ----------
 });

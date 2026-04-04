@@ -182,6 +182,7 @@ ul {
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
+  transform: translate(-50%, -50%);
   top: 0;
   left: 0;
   will-change: transform;
@@ -472,7 +473,12 @@ ul {
 .hero-video-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(245, 242, 237, 0.3);
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 18, 16, 0.4) 0%,
+    rgba(20, 18, 16, 0.3) 50%,
+    rgba(20, 18, 16, 0.55) 100%
+  );
 }
 
 .hero-content {
@@ -495,9 +501,9 @@ ul {
   font-size: 13px;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: var(--text-light);
+  color: rgba(255, 255, 255, 0.7);
   padding: 8px 20px;
-  border: 1px solid var(--border-strong);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 100px;
 }
 
@@ -507,6 +513,7 @@ ul {
   line-height: 1.1;
   letter-spacing: -2px;
   margin-bottom: 28px;
+  color: #fff;
 }
 
 .hero-line {
@@ -522,7 +529,7 @@ ul {
 }
 
 .hero-line-accent {
-  color: var(--accent-warm);
+  color: #c9a97a;
 }
 
 .hero.visible .hero-line span {
@@ -531,7 +538,7 @@ ul {
 
 .hero-sub {
   font-size: clamp(14px, 1.8vw, 18px);
-  color: var(--text-light);
+  color: rgba(255, 255, 255, 0.75);
   letter-spacing: 1px;
   line-height: 2;
   opacity: 0;
@@ -560,7 +567,7 @@ ul {
   font-size: 11px;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.5);
   writing-mode: vertical-rl;
 }
 
@@ -596,7 +603,7 @@ ul {
   left: 0;
   width: 100%;
   padding: 20px 0;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
   overflow: hidden;
   z-index: 2;
 }
@@ -612,7 +619,7 @@ ul {
   font-size: 13px;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.4);
   flex-shrink: 0;
 }
 

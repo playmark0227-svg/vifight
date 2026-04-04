@@ -8,9 +8,8 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Interのみ同期読み込み（Latin文字、軽量） -->
+  <!-- Interのみ同期（Latin文字・軽量）、Noto Sans JPは非同期で遅延読み込み -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <!-- Noto Sans JPは非同期で遅延読み込み（531フォントフェイス問題を回避） -->
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" onload="this.rel='stylesheet'">
   <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet"></noscript>
 </head>
@@ -82,11 +81,9 @@
   <!-- ========== HERO ========== -->
   <section id="hero" class="hero">
     <div class="hero-video-wrap">
-      <!-- 動画埋め込み用: 下記のコメントを解除して動画ファイルを指定 -->
-      <!-- <video autoplay muted loop playsinline id="hero-video">
+      <video autoplay muted loop playsinline id="hero-video">
         <source src="assets/video/hero.mp4" type="video/mp4">
-      </video> -->
-      <div class="hero-video-placeholder"></div>
+      </video>
       <div class="hero-video-overlay"></div>
     </div>
     <div class="hero-content">
