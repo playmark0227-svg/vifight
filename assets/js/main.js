@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------- UNIFIED SCROLL LOOP ----------
   const header = document.getElementById('header');
   const progressBar = document.createElement('div');
-  progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent-warm),var(--accent));z-index:10001;width:0%;pointer-events:none;';
+  progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent-blue),var(--accent));z-index:10001;width:0%;pointer-events:none;';
   document.body.appendChild(progressBar);
 
   const parallaxEls = [...document.querySelectorAll('[data-parallax]')].map(el => ({

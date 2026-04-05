@@ -20,6 +20,7 @@
   --text-muted: #9b958e;
   --accent: #2d2926;
   --accent-warm: #8b7355;
+  --accent-blue: #7bb8c9;
   --white: #faf9f7;
   --border: rgba(26, 26, 26, 0.1);
   --border-strong: rgba(26, 26, 26, 0.2);
@@ -149,7 +150,7 @@ ul {
 .loader-bar-fill {
   width: 0%;
   height: 100%;
-  background: var(--white);
+  background: var(--accent-blue);
   border-radius: 2px;
   animation: loaderBarFill 2s var(--ease-in-out) forwards;
   animation-delay: 0.5s;
@@ -643,7 +644,7 @@ ul {
   font-family: var(--font-en);
   font-size: 13px;
   letter-spacing: 3px;
-  color: var(--text-muted);
+  color: var(--accent-blue);
   margin-bottom: 16px;
 }
 
@@ -736,7 +737,7 @@ ul {
   font-family: var(--font-en);
   font-size: clamp(24px, 2.5vw, 32px);
   font-weight: 300;
-  color: var(--accent-warm);
+  color: var(--accent-blue);
 }
 
 .stat-label {
@@ -1148,7 +1149,7 @@ ul {
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  border: 2px solid var(--accent-warm);
+  border: 2px solid var(--accent-blue);
   background: var(--bg);
   z-index: 1;
 }
@@ -1384,7 +1385,7 @@ ul {
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-  border-color: var(--accent-warm);
+  border-color: var(--accent-blue);
 }
 
 .form-group textarea {
