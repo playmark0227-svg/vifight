@@ -320,6 +320,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ---------- DARK SECTION CURSOR ----------
+  const darkSections = [...document.querySelectorAll('.philosophy, .footer')];
+  let isOnDark = false;
+  function updateDarkState() {
+    const mid = window.innerHeight * 0.5;
+    const onDark = darkSections.some(s => {
+      const r = s.getBoundingClientRect();
+      return r.top <= mid && r.bottom >= mid;
+    });
+    if (onDark !== isOnDark) {
+      isOnDark = onDark;
+      document.body.classList.toggle('on-dark', onDark);
+    }
+  }
+  window.addEventListener('scroll', updateDarkState, { passive: true });
+  window.addEventListener('resize', updateDarkState, { passive: true });
+  updateDarkState();
+
   // ---------- WORK MODAL ----------
   const workData = {
     '1': {

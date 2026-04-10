@@ -236,6 +236,26 @@ ul {
   color: var(--white);
 }
 
+/* Cursor on dark sections — invert to white */
+body.on-dark .cursor {
+  background: var(--white);
+}
+body.on-dark .cursor-follower {
+  border-color: rgba(250, 249, 247, 0.45);
+}
+body.on-dark .cursor.expanded {
+  background: var(--accent-blue);
+}
+body.on-dark .cursor-follower.expanded {
+  border-color: var(--accent-blue);
+}
+body.on-dark .cursor-follower.view {
+  background: rgba(250, 249, 247, 0.9);
+}
+body.on-dark .cursor-follower.view::after {
+  color: var(--accent);
+}
+
 /* Hide custom cursor on touch devices */
 @media (hover: none) {
   .cursor, .cursor-follower { display: none; }
