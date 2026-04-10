@@ -320,6 +320,111 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ---------- WORK MODAL ----------
+  const workData = {
+    '1': {
+      cat: 'ポータルサイト',
+      label: 'Portal Site',
+      title: '求人ポータルサイト構築・運営',
+      year: '2024 — 継続中',
+      desc: '地域企業の採用課題に応えるため、求人ポータルサイトを企画・設計・開発から運営まで一貫して担当。応募導線の最適化と検索性の高いUIにより、掲載企業からの継続率を高めています。',
+      meta: { Service: 'ポータルサイト構築・運営', Scope: '企画 / 設計 / 開発 / 運営', Period: '2024年〜継続中' }
+    },
+    '2': {
+      cat: 'HP制作',
+      label: 'HP Renewal',
+      title: '印刷会社コーポレートサイト',
+      year: '2024',
+      desc: '徹底したヒアリングをもとに、強みと想いを「自分たちの言葉」で伝えるコーポレートサイトへリニューアル。公開後、月0件だった問い合わせが毎月10件以上へと変化しました。',
+      meta: { Service: 'コーポレートサイト制作', Result: '問い合わせ 0 → 10件 / 月', Period: '2024年' }
+    },
+    '3': {
+      cat: '映像制作',
+      label: 'Brand Movie',
+      title: '飲食店ブランディング映像',
+      year: '2024',
+      desc: '店主の哲学と料理が生まれる瞬間を、シネマカメラで丁寧に捉えたブランディング映像。映像越しに「行ってみたい」と感じてもらえる空気感を大切に制作しました。',
+      meta: { Service: 'ブランディング映像', Equipment: 'シネマカメラ', Period: '2024年' }
+    },
+    '4': {
+      cat: 'HP制作',
+      label: 'Web Site',
+      title: '飲食店コーポレートサイト',
+      year: '2025',
+      desc: '料理の世界観とお店の温度感を一枚一枚に込めたコーポレートサイト。予約導線とSNS連携を整理し、来店までの体験をシームレスに設計しました。',
+      meta: { Service: 'コーポレートサイト制作', Scope: '設計 / デザイン / 実装', Period: '2025年' }
+    },
+    '5': {
+      cat: '映像制作',
+      label: 'Drone Shoot',
+      title: '空撮プロモーション映像',
+      year: '2025',
+      desc: '国家資格保有者によるドローン撮影で、地域の風景を上空から捉えたプロモーション映像。視点の高さでしか伝えられないスケール感を演出しました。',
+      meta: { Service: '空撮プロモーション映像', Equipment: 'ドローン（国家資格）', Period: '2025年' }
+    },
+    '6': {
+      cat: 'ポータルサイト',
+      label: 'Portal Site',
+      title: '地域情報ポータル開発・運営',
+      year: '2025 — 継続中',
+      desc: '地域の魅力を発信し続けるための情報ポータルを開発・運営。地元の事業者と訪れる人をつなぐハブとして、継続的にコンテンツと機能を拡張しています。',
+      meta: { Service: '地域情報ポータル', Scope: '開発 / コンテンツ / 運営', Period: '2025年〜継続中' }
+    }
+  };
+
+  const workModal = document.getElementById('work-modal');
+  if (workModal) {
+    const modalCat = document.getElementById('work-modal-cat');
+    const modalTitle = document.getElementById('work-modal-title');
+    const modalYear = document.getElementById('work-modal-year');
+    const modalDesc = document.getElementById('work-modal-desc');
+    const modalLabel = document.getElementById('work-modal-label');
+    const modalMeta = document.getElementById('work-modal-meta');
+
+    const openWorkModal = (id) => {
+      const data = workData[id];
+      if (!data) return;
+      modalCat.textContent = data.cat;
+      modalTitle.textContent = data.title;
+      modalYear.textContent = data.year;
+      modalDesc.textContent = data.desc;
+      modalLabel.textContent = data.label;
+      modalMeta.innerHTML = '';
+      for (const [k, v] of Object.entries(data.meta)) {
+        const div = document.createElement('div');
+        const dt = document.createElement('dt');
+        dt.textContent = k;
+        const dd = document.createElement('dd');
+        dd.textContent = v;
+        div.appendChild(dt);
+        div.appendChild(dd);
+        modalMeta.appendChild(div);
+      }
+      workModal.classList.add('active');
+      workModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+    };
+
+    const closeWorkModal = () => {
+      workModal.classList.remove('active');
+      workModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+    };
+
+    document.querySelectorAll('.work-item[data-work-id]').forEach(item => {
+      item.style.cursor = 'pointer';
+      item.addEventListener('click', () => openWorkModal(item.getAttribute('data-work-id')));
+    });
+
+    workModal.querySelectorAll('[data-modal-close]').forEach(el => {
+      el.addEventListener('click', closeWorkModal);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && workModal.classList.contains('active')) closeWorkModal();
+    });
+  }
+
   // ---------- EASTER EGG: KONAMI CODE ----------
   const konamiCode = [38,38,40,40,37,39,37,39,66,65];
   let konamiIndex = 0;

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ViFight — Ad Creative Agency</title>
   <meta name="description" content="ViFight｜広告クリエイティブエージェンシー。SNS総合支援・映像制作・HP制作・動画編集スクール。映像の力で、ビジネスを次のステージへ。">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260410">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Interのみ同期（Latin文字・軽量）、Noto Sans JPは非同期で遅延読み込み -->
@@ -192,7 +192,7 @@
             「自分たちの言葉」で伝わるサイトに仕上げてくれました。
           </p>
           <div class="voice-meta">
-            <span class="voice-industry">印刷会社</span>
+            <span class="voice-industry">kunioffice</span>
             <span class="voice-result">問い合わせ <strong>0 → 10件 / 月</strong></span>
           </div>
         </div>
@@ -377,7 +377,7 @@
         <p class="section-sub" data-reveal>制作実績</p>
       </div>
       <div class="works-grid">
-        <div class="work-item" data-reveal data-cursor-view>
+        <div class="work-item" data-reveal data-cursor-view data-work-id="1">
           <div class="work-image">
             <div class="work-image-placeholder">
               <span>Portal Site</span>
@@ -390,7 +390,7 @@
             <p class="work-year">2024 — 継続中</p>
           </div>
         </div>
-        <div class="work-item" data-reveal data-cursor-view>
+        <div class="work-item" data-reveal data-cursor-view data-work-id="2">
           <div class="work-image">
             <div class="work-image-placeholder">
               <span>HP Renewal</span>
@@ -403,7 +403,7 @@
             <p class="work-year">2024 — 問い合わせ0→月10件</p>
           </div>
         </div>
-        <div class="work-item" data-reveal data-cursor-view>
+        <div class="work-item" data-reveal data-cursor-view data-work-id="3">
           <div class="work-image">
             <div class="work-image-placeholder">
               <span>Brand Movie</span>
@@ -416,7 +416,7 @@
             <p class="work-year">2024</p>
           </div>
         </div>
-        <div class="work-item" data-reveal data-cursor-view>
+        <div class="work-item" data-reveal data-cursor-view data-work-id="4">
           <div class="work-image">
             <div class="work-image-placeholder">
               <span>Web Site</span>
@@ -429,7 +429,7 @@
             <p class="work-year">2025</p>
           </div>
         </div>
-        <div class="work-item" data-reveal data-cursor-view>
+        <div class="work-item" data-reveal data-cursor-view data-work-id="5">
           <div class="work-image">
             <div class="work-image-placeholder">
               <span>Drone Shoot</span>
@@ -442,7 +442,7 @@
             <p class="work-year">2025</p>
           </div>
         </div>
-        <div class="work-item" data-reveal data-cursor-view>
+        <div class="work-item" data-reveal data-cursor-view data-work-id="6">
           <div class="work-image">
             <div class="work-image-placeholder">
               <span>Portal Site</span>
@@ -453,6 +453,28 @@
             <span class="work-cat">ポータルサイト</span>
             <h3 class="work-title">地域情報ポータル開発・運営</h3>
             <p class="work-year">2025 — 継続中</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== WORK MODAL ========== -->
+      <div class="work-modal" id="work-modal" aria-hidden="true">
+        <div class="work-modal-backdrop" data-modal-close></div>
+        <div class="work-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="work-modal-title">
+          <button class="work-modal-close" data-modal-close aria-label="閉じる">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M6 6l12 12M18 6L6 18"/>
+            </svg>
+          </button>
+          <div class="work-modal-visual">
+            <span class="work-modal-label" id="work-modal-label">Project</span>
+          </div>
+          <div class="work-modal-body">
+            <span class="work-modal-cat" id="work-modal-cat">カテゴリ</span>
+            <h3 class="work-modal-title" id="work-modal-title">タイトル</h3>
+            <p class="work-modal-year" id="work-modal-year">年</p>
+            <p class="work-modal-desc" id="work-modal-desc">説明</p>
+            <dl class="work-modal-meta" id="work-modal-meta"></dl>
           </div>
         </div>
       </div>
@@ -679,6 +701,6 @@
     </div>
   </footer>
 
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js?v=20260410"></script>
 </body>
 </html>
