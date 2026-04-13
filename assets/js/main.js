@@ -320,6 +320,63 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ---------- HERO FLOATING PARTICLES ----------
+  const heroCanvas = document.getElementById('hero-particles');
+  if (heroCanvas) {
+    const hctx = heroCanvas.getContext('2d');
+    let particles = [];
+    const PARTICLE_COUNT = 50;
+
+    function resizeHeroCanvas() {
+      const hero = document.getElementById('hero');
+      heroCanvas.width = hero.offsetWidth;
+      heroCanvas.height = hero.offsetHeight;
+    }
+    resizeHeroCanvas();
+    window.addEventListener('resize', resizeHeroCanvas);
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      particles.push({
+        x: Math.random() * heroCanvas.width,
+        y: Math.random() * heroCanvas.height,
+        r: Math.random() * 2 + 0.5,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.2 - 0.1,
+        alpha: Math.random() * 0.5 + 0.15,
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: Math.random() * 0.02 + 0.005
+      });
+    }
+
+    function drawHeroParticles() {
+      hctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.pulse += p.pulseSpeed;
+        const a = p.alpha * (0.6 + 0.4 * Math.sin(p.pulse));
+
+        if (p.x < -10) p.x = heroCanvas.width + 10;
+        if (p.x > heroCanvas.width + 10) p.x = -10;
+        if (p.y < -10) p.y = heroCanvas.height + 10;
+        if (p.y > heroCanvas.height + 10) p.y = -10;
+
+        hctx.beginPath();
+        hctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        hctx.fillStyle = `rgba(160, 215, 240, ${a})`;
+        hctx.fill();
+
+        // glow
+        hctx.beginPath();
+        hctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+        hctx.fillStyle = `rgba(123, 184, 201, ${a * 0.15})`;
+        hctx.fill();
+      });
+      requestAnimationFrame(drawHeroParticles);
+    }
+    drawHeroParticles();
+  }
+
   // ---------- HERO TITLE 3D TILT ----------
   const heroTitle = document.querySelector('.hero-title');
   const heroSection = document.getElementById('hero');
