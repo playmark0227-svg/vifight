@@ -469,7 +469,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ---------- DARK SECTION CURSOR ----------
-  const darkSections = [...document.querySelectorAll('.philosophy, .footer')];
+  const darkSections = [...document.querySelectorAll('.hero, .philosophy, .footer')];
   let isOnDark = false;
   function updateDarkState() {
     const mid = window.innerHeight * 0.5;
