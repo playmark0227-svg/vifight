@@ -573,6 +573,10 @@ body.on-dark .cursor-follower.view::after {
   letter-spacing: -2px;
   margin-bottom: 28px;
   color: #fff;
+  transform-style: preserve-3d;
+  perspective: 800px;
+  transition: transform 0.15s ease-out;
+  will-change: transform;
 }
 
 .hero-line {

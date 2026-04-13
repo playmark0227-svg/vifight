@@ -320,6 +320,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ---------- HERO TITLE 3D TILT ----------
+  const heroTitle = document.querySelector('.hero-title');
+  const heroSection = document.getElementById('hero');
+  if (heroTitle && heroSection) {
+    const maxRotate = 12;
+    let tiltX = 0, tiltY = 0, currentX = 0, currentY = 0;
+
+    heroSection.addEventListener('mousemove', (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      const cx = (e.clientX - rect.left) / rect.width - 0.5;
+      const cy = (e.clientY - rect.top) / rect.height - 0.5;
+      tiltX = cy * -maxRotate;
+      tiltY = cx * maxRotate;
+    });
+
+    heroSection.addEventListener('mouseleave', () => {
+      tiltX = 0;
+      tiltY = 0;
+    });
+
+    function animateTilt() {
+      currentX += (tiltX - currentX) * 0.08;
+      currentY += (tiltY - currentY) * 0.08;
+      heroTitle.style.transform =
+        `perspective(800px) rotateX(${currentX.toFixed(2)}deg) rotateY(${currentY.toFixed(2)}deg)`;
+      requestAnimationFrame(animateTilt);
+    }
+    animateTilt();
+  }
+
   // ---------- DARK SECTION CURSOR ----------
   const darkSections = [...document.querySelectorAll('.philosophy, .footer')];
   let isOnDark = false;
