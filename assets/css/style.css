@@ -941,16 +941,82 @@ body.on-dark .cursor-follower.view::after {
 
 /* ---------- PHILOSOPHY ---------- */
 .philosophy {
-  background: var(--accent);
+  background: linear-gradient(160deg, #0d1117 0%, #111820 40%, #0f1923 70%, #0a0f14 100%);
   color: var(--white);
   overflow: hidden;
-  padding: clamp(100px, 15vw, 200px) 0;
+  padding: clamp(120px, 18vw, 260px) 0;
+  position: relative;
 }
 
 .philosophy-bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(139, 115, 85, 0.15) 0%, transparent 70%);
+  background:
+    radial-gradient(ellipse 70% 70% at 50% 50%, rgba(90, 180, 220, 0.12) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 60% at 25% 60%, rgba(123, 184, 201, 0.06) 0%, transparent 50%);
+}
+
+/* Glowing orbs */
+.philosophy-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+}
+.philosophy-orb-1 {
+  width: 40vw;
+  height: 40vw;
+  max-width: 500px;
+  max-height: 500px;
+  top: -15%;
+  right: -5%;
+  background: radial-gradient(circle, rgba(90, 180, 220, 0.22) 0%, transparent 70%);
+  animation: phOrb1 14s ease-in-out infinite alternate;
+}
+.philosophy-orb-2 {
+  width: 30vw;
+  height: 30vw;
+  max-width: 380px;
+  max-height: 380px;
+  bottom: -10%;
+  left: -3%;
+  background: radial-gradient(circle, rgba(123, 184, 201, 0.18) 0%, transparent 70%);
+  animation: phOrb2 18s ease-in-out infinite alternate;
+}
+@keyframes phOrb1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-4vw, 4vh) scale(1.15); }
+}
+@keyframes phOrb2 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(3vw, -3vh) scale(1.1); }
+}
+
+/* Decorative horizontal lines */
+.philosophy-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  pointer-events: none;
+}
+.philosophy-line-top {
+  top: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(123, 184, 201, 0.3) 30%, rgba(160, 215, 240, 0.5) 50%, rgba(123, 184, 201, 0.3) 70%, transparent 100%);
+}
+.philosophy-line-bottom {
+  bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(123, 184, 201, 0.2) 30%, rgba(160, 215, 240, 0.35) 50%, rgba(123, 184, 201, 0.2) 70%, transparent 100%);
+}
+
+/* Particle canvas */
+.philosophy-particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .philosophy-content {
@@ -959,13 +1025,28 @@ body.on-dark .cursor-follower.view::after {
   z-index: 1;
 }
 
+/* Big decorative quote mark */
+.philosophy-deco-quote {
+  font-family: var(--font-en);
+  font-size: clamp(80px, 12vw, 160px);
+  font-weight: 600;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(123, 184, 201, 0.25);
+  text-stroke: 1px rgba(123, 184, 201, 0.25);
+  margin-bottom: -30px;
+  filter: drop-shadow(0 0 30px rgba(123, 184, 201, 0.1));
+  user-select: none;
+}
+
 .philosophy-quote {
-  font-size: clamp(24px, 4vw, 48px);
+  font-size: clamp(22px, 3.5vw, 44px);
   font-weight: 300;
-  line-height: 1.8;
-  letter-spacing: 2px;
+  line-height: 2;
+  letter-spacing: 3px;
   max-width: 900px;
   margin: 0 auto;
+  text-shadow: 0 0 40px rgba(123, 184, 201, 0.15);
 }
 
 .philosophy-quote .word {
@@ -980,12 +1061,22 @@ body.on-dark .cursor-follower.view::after {
   transform: translateY(0);
 }
 
+/* Accent underline between quote and attribution */
+.philosophy-accent-line {
+  width: 60px;
+  height: 2px;
+  margin: 36px auto 0;
+  background: linear-gradient(90deg, transparent, rgba(123, 184, 201, 0.7), transparent);
+  border-radius: 1px;
+  box-shadow: 0 0 12px rgba(123, 184, 201, 0.4);
+}
+
 .philosophy-attr {
   font-family: var(--font-en);
   font-size: 13px;
   letter-spacing: 3px;
-  color: rgba(255, 255, 255, 0.4);
-  margin-top: 40px;
+  color: rgba(160, 215, 240, 0.5);
+  margin-top: 24px;
 }
 
 /* ---------- VOICE / TESTIMONIAL ---------- */

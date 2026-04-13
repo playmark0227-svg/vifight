@@ -377,6 +377,67 @@ document.addEventListener('DOMContentLoaded', () => {
     drawHeroParticles();
   }
 
+  // ---------- PHILOSOPHY PARTICLES ----------
+  const phCanvas = document.getElementById('philosophy-particles');
+  if (phCanvas) {
+    const phCtx = phCanvas.getContext('2d');
+    let phParticles = [];
+    const PH_COUNT = 30;
+    let phActive = false;
+
+    function resizePhCanvas() {
+      const sec = phCanvas.closest('.philosophy');
+      phCanvas.width = sec.offsetWidth;
+      phCanvas.height = sec.offsetHeight;
+    }
+    resizePhCanvas();
+    window.addEventListener('resize', resizePhCanvas);
+
+    for (let i = 0; i < PH_COUNT; i++) {
+      phParticles.push({
+        x: Math.random() * 1400,
+        y: Math.random() * 800,
+        r: Math.random() * 1.8 + 0.4,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: -Math.random() * 0.2 - 0.05,
+        alpha: Math.random() * 0.4 + 0.1,
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: Math.random() * 0.015 + 0.005
+      });
+    }
+
+    function drawPhParticles() {
+      if (!phActive) { requestAnimationFrame(drawPhParticles); return; }
+      phCtx.clearRect(0, 0, phCanvas.width, phCanvas.height);
+      phParticles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.pulse += p.pulseSpeed;
+        const a = p.alpha * (0.5 + 0.5 * Math.sin(p.pulse));
+        if (p.y < -10) p.y = phCanvas.height + 10;
+        if (p.x < -10) p.x = phCanvas.width + 10;
+        if (p.x > phCanvas.width + 10) p.x = -10;
+
+        phCtx.beginPath();
+        phCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        phCtx.fillStyle = `rgba(160, 215, 240, ${a})`;
+        phCtx.fill();
+        phCtx.beginPath();
+        phCtx.arc(p.x, p.y, p.r * 2.5, 0, Math.PI * 2);
+        phCtx.fillStyle = `rgba(123, 184, 201, ${a * 0.12})`;
+        phCtx.fill();
+      });
+      requestAnimationFrame(drawPhParticles);
+    }
+    drawPhParticles();
+
+    // Activate when section enters viewport
+    const phObserver = new IntersectionObserver(([entry]) => {
+      phActive = entry.isIntersecting;
+    }, { threshold: 0.1 });
+    phObserver.observe(phCanvas.closest('.philosophy'));
+  }
+
   // ---------- HERO TITLE 3D TILT ----------
   const heroTitle = document.querySelector('.hero-title');
   const heroSection = document.getElementById('hero');
