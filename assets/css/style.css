@@ -463,42 +463,80 @@ body.on-dark .cursor-follower.view::after {
   overflow: hidden;
 }
 
-.hero-video-wrap {
+/* Hero visual — nuance art */
+.hero-visual {
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
 }
-
-.hero-video-wrap video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.hero-video-placeholder {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #e8e4dd 0%, #d4cfc7 50%, #c4bfb7 100%);
-  position: relative;
-}
-
-.hero-video-placeholder::before {
-  content: '';
+.hero-visual-layer {
   position: absolute;
   inset: 0;
+}
+.hero-visual-base {
   background:
-    radial-gradient(ellipse 80% 60% at 20% 40%, rgba(139, 115, 85, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 80% at 80% 60%, rgba(45, 41, 38, 0.05) 0%, transparent 60%);
+    linear-gradient(160deg, #1a1917 0%, #2a2622 30%, #1e1c1a 60%, #141312 100%);
 }
-
-.hero-video-overlay {
-  position: absolute;
-  inset: 0;
+.hero-visual-grain {
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 512px;
+}
+.hero-visual-orb {
+  border-radius: 50%;
+  filter: blur(100px);
+  will-change: transform;
+}
+.hero-orb-1 {
+  width: 55vw;
+  height: 55vw;
+  max-width: 700px;
+  max-height: 700px;
+  top: -10%;
+  left: -10%;
+  background: radial-gradient(circle, rgba(123, 184, 201, 0.22) 0%, transparent 70%);
+  animation: orbDrift1 18s ease-in-out infinite alternate;
+}
+.hero-orb-2 {
+  width: 45vw;
+  height: 45vw;
+  max-width: 560px;
+  max-height: 560px;
+  bottom: -5%;
+  right: -8%;
+  background: radial-gradient(circle, rgba(139, 115, 85, 0.2) 0%, transparent 70%);
+  animation: orbDrift2 22s ease-in-out infinite alternate;
+}
+.hero-orb-3 {
+  width: 30vw;
+  height: 30vw;
+  max-width: 400px;
+  max-height: 400px;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(250, 249, 247, 0.07) 0%, transparent 70%);
+  animation: orbDrift3 15s ease-in-out infinite alternate;
+}
+@keyframes orbDrift1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(8vw, 6vh) scale(1.15); }
+}
+@keyframes orbDrift2 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-6vw, -8vh) scale(1.1); }
+}
+@keyframes orbDrift3 {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  100% { transform: translate(-40%, -55%) scale(1.25); opacity: 1; }
+}
+.hero-visual-overlay {
   background: linear-gradient(
     to bottom,
-    rgba(20, 18, 16, 0.4) 0%,
-    rgba(20, 18, 16, 0.3) 50%,
-    rgba(20, 18, 16, 0.55) 100%
+    rgba(20, 18, 16, 0.15) 0%,
+    rgba(20, 18, 16, 0.05) 40%,
+    rgba(20, 18, 16, 0.35) 100%
   );
 }
 
