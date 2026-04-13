@@ -591,8 +591,29 @@ body.on-dark .cursor-follower.view::after {
   transition: transform 1s var(--ease-smooth);
 }
 
-.hero-line-accent {
-  color: #c9a97a;
+/* Outline (stroke) style for "Create the" / "Future with" */
+.hero-line-outline span {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.7);
+  text-stroke: 1.5px rgba(255, 255, 255, 0.7);
+  transition: transform 1s var(--ease-smooth), -webkit-text-stroke 0.4s;
+}
+.hero-line-outline:hover span {
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.95);
+}
+
+/* Filled gradient style for "ViFight." */
+.hero-line-accent span {
+  background: linear-gradient(135deg, #fff 0%, var(--accent-blue) 50%, #c9a97a 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 6s ease-in-out infinite alternate;
+}
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }
 
 .hero.visible .hero-line span {
