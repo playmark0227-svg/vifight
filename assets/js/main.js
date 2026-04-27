@@ -469,22 +469,34 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ---------- DARK SECTION CURSOR ----------
+  // Switch cursor to white when mouse is hovering over a dark-background section.
   const darkSections = [...document.querySelectorAll('.hero, .philosophy, .footer')];
   let isOnDark = false;
-  function updateDarkState() {
-    const mid = window.innerHeight * 0.5;
+  let mouseY = window.innerHeight * 0.5;
+  let mouseX = window.innerWidth * 0.5;
+
+  function evalDark() {
     const onDark = darkSections.some(s => {
       const r = s.getBoundingClientRect();
-      return r.top <= mid && r.bottom >= mid;
+      return mouseY >= r.top && mouseY <= r.bottom &&
+             mouseX >= r.left && mouseX <= r.right;
     });
     if (onDark !== isOnDark) {
       isOnDark = onDark;
       document.body.classList.toggle('on-dark', onDark);
     }
   }
-  window.addEventListener('scroll', updateDarkState, { passive: true });
-  window.addEventListener('resize', updateDarkState, { passive: true });
-  updateDarkState();
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    evalDark();
+  }, { passive: true });
+  window.addEventListener('scroll', evalDark, { passive: true });
+  window.addEventListener('resize', evalDark, { passive: true });
+  // Initial: assume hero (top) is dark
+  document.body.classList.add('on-dark');
+  isOnDark = true;
 
   // ---------- WORK MODAL ----------
   const workData = {
