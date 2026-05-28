@@ -481,10 +481,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---------- DARK SECTION CURSOR ----------
   // Switch cursor to white when mouse is hovering over a dark-background section.
+  // Reuses mouseX / mouseY from CUSTOM CURSOR section above.
   const darkSections = [...document.querySelectorAll('.hero, .philosophy, .footer')];
   let isOnDark = false;
-  let mouseY = window.innerHeight * 0.5;
-  let mouseX = window.innerWidth * 0.5;
 
   function evalDark() {
     const onDark = darkSections.some(s => {
@@ -498,11 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    evalDark();
-  }, { passive: true });
+  window.addEventListener('mousemove', evalDark, { passive: true });
   window.addEventListener('scroll', evalDark, { passive: true });
   window.addEventListener('resize', evalDark, { passive: true });
   // Initial: assume hero (top) is dark
