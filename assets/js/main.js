@@ -6,18 +6,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---------- LOADING SCREEN ----------
   const loader = document.getElementById('loader');
+  let loaderHidden = false;
 
-  window.addEventListener('load', () => {
+  function hideLoader() {
+    if (loaderHidden || !loader) return;
+    loaderHidden = true;
+    loader.classList.add('loaded');
+    document.body.style.overflow = '';
     setTimeout(() => {
-      loader.classList.add('loaded');
-      document.body.style.overflow = '';
-      setTimeout(() => {
-        document.getElementById('hero').classList.add('visible');
-      }, 300);
-    }, 2500);
-  });
+      const hero = document.getElementById('hero');
+      if (hero) hero.classList.add('visible');
+    }, 300);
+  }
 
   document.body.style.overflow = 'hidden';
+
+  // Trigger hideLoader after window load (with min display time), OR via safety fallback.
+  if (document.readyState === 'complete') {
+    setTimeout(hideLoader, 1500);
+  } else {
+    window.addEventListener('load', () => setTimeout(hideLoader, 1500));
+  }
+  // Safety fallback: never let the loader hang. Force-hide after 4s regardless.
+  setTimeout(hideLoader, 4000);
 
   // ---------- CUSTOM CURSOR ----------
   const cursor = document.getElementById('cursor');
