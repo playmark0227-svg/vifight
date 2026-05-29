@@ -44,6 +44,24 @@ document.addEventListener('DOMContentLoaded', () => {
   // Safety fallback: never let the loader hang. Force-hide after 4s regardless.
   setTimeout(hideLoader, 4000);
 
+  // ---------- RANDOM ANGULAR DIVIDERS ----------
+  // Generate an irregular, low-poly jagged top edge for each section divider.
+  (function randomizeDividers() {
+    const W = 1440, H = 72;
+    document.querySelectorAll('.section-divider svg polygon').forEach(poly => {
+      const segs = 8 + Math.floor(Math.random() * 7);   // 8–14 facets
+      const pts = ['0,' + H];
+      for (let i = 0; i <= segs; i++) {
+        const x = Math.round((W / segs) * i);
+        const y = Math.round(H * (0.12 + Math.random() * 0.66));  // random peak height
+        pts.push(x + ',' + y);
+      }
+      pts.push(W + ',' + H);
+      poly.parentElement.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      poly.setAttribute('points', pts.join(' '));
+    });
+  })();
+
   // ---------- CUSTOM CURSOR ----------
   const cursor = document.getElementById('cursor');
   const follower = document.getElementById('cursor-follower');
