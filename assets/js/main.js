@@ -44,23 +44,56 @@ document.addEventListener('DOMContentLoaded', () => {
   // Safety fallback: never let the loader hang. Force-hide after 4s regardless.
   setTimeout(hideLoader, 4000);
 
-  // ---------- RANDOM ANGULAR DIVIDERS ----------
-  // Generate an irregular, low-poly jagged top edge for each section divider.
-  (function randomizeDividers() {
+  // ---------- RANDOM + ANIMATED ANGULAR DIVIDERS ----------
+  // Each divider gets an irregular low-poly edge whose peaks gently undulate
+  // (sine per vertex). Only visible dividers animate; static for reduced-motion.
+  const dividerAnims = [];
+  (function buildDividers() {
     const W = 1440, H = 72;
-    document.querySelectorAll('.section-divider svg polygon').forEach(poly => {
+    document.querySelectorAll('.section-divider svg').forEach(svg => {
+      const poly = svg.querySelector('polygon');
+      if (!poly) return;
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
       const segs = 8 + Math.floor(Math.random() * 7);   // 8–14 facets
-      const pts = ['0,' + H];
+      const verts = [];
       for (let i = 0; i <= segs; i++) {
-        const x = Math.round((W / segs) * i);
-        const y = Math.round(H * (0.12 + Math.random() * 0.66));  // random peak height
-        pts.push(x + ',' + y);
+        verts.push({
+          x: Math.round((W / segs) * i),
+          baseY: H * (0.12 + Math.random() * 0.62),
+          phase: Math.random() * Math.PI * 2,
+          amp: 3 + Math.random() * 7,                    // ± peak travel
+          speed: 0.0005 + Math.random() * 0.0011         // per-vertex drift speed
+        });
       }
-      pts.push(W + ',' + H);
-      poly.parentElement.setAttribute('viewBox', `0 0 ${W} ${H}`);
-      poly.setAttribute('points', pts.join(' '));
+      function render(t) {
+        let pts = '0,' + H;
+        for (const v of verts) {
+          const y = reduceMotion ? v.baseY : v.baseY + Math.sin(t * v.speed + v.phase) * v.amp;
+          pts += ' ' + v.x + ',' + y.toFixed(1);
+        }
+        pts += ' ' + W + ',' + H;
+        poly.setAttribute('points', pts);
+      }
+      render(0);
+      const entry = { render, visible: false };
+      dividerAnims.push(entry);
+      new IntersectionObserver(([e]) => { entry.visible = e.isIntersecting; if (e.isIntersecting) startDividerLoop(); }, { rootMargin: '60px' }).observe(svg);
     });
   })();
+
+  let dividerLoopRunning = false;
+  function startDividerLoop() {
+    if (reduceMotion || dividerLoopRunning) return;
+    dividerLoopRunning = true;
+    requestAnimationFrame(function loop(t) {
+      let anyVisible = false;
+      for (const d of dividerAnims) {
+        if (d.visible) { d.render(t); anyVisible = true; }
+      }
+      if (anyVisible) requestAnimationFrame(loop);
+      else dividerLoopRunning = false;   // idle when nothing on screen
+    });
+  }
 
   // ---------- CUSTOM CURSOR ----------
   const cursor = document.getElementById('cursor');
