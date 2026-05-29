@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------- UNIFIED SCROLL LOOP ----------
   const header = document.getElementById('header');
   const progressBar = document.createElement('div');
-  progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent-blue),var(--accent));z-index:10001;width:0%;pointer-events:none;';
+  progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent-brown),var(--accent));z-index:10001;width:0%;pointer-events:none;';
   document.body.appendChild(progressBar);
 
   const parallaxEls = [...document.querySelectorAll('[data-parallax]')].map(el => ({
@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const btn = form.querySelector('.form-submit');
       btn.innerHTML = '<span>送信完了</span>';
-      btn.style.cssText += 'background:var(--accent-blue);color:var(--white);border-color:var(--accent-blue);';
+      btn.style.cssText += 'background:var(--accent-warm);color:var(--white);border-color:var(--accent-warm);';
       setTimeout(() => {
         btn.innerHTML = `<span>送信する</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
         btn.style.background = btn.style.color = btn.style.borderColor = '';
@@ -397,12 +397,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         hctx.beginPath();
         hctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        hctx.fillStyle = `rgba(160, 215, 240, ${a})`;
+        hctx.fillStyle = `rgba(224, 200, 165, ${a})`;
         hctx.fill();
 
         hctx.beginPath();
         hctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
-        hctx.fillStyle = `rgba(123, 184, 201, ${a * 0.15})`;
+        hctx.fillStyle = `rgba(184, 148, 106, ${a * 0.15})`;
         hctx.fill();
       }
       requestAnimationFrame(drawHeroParticles);
@@ -463,11 +463,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         phCtx.beginPath();
         phCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        phCtx.fillStyle = `rgba(160, 215, 240, ${a})`;
+        phCtx.fillStyle = `rgba(224, 200, 165, ${a})`;
         phCtx.fill();
         phCtx.beginPath();
         phCtx.arc(p.x, p.y, p.r * 2.5, 0, Math.PI * 2);
-        phCtx.fillStyle = `rgba(123, 184, 201, ${a * 0.12})`;
+        phCtx.fillStyle = `rgba(184, 148, 106, ${a * 0.12})`;
         phCtx.fill();
       }
       requestAnimationFrame(drawPhParticles);
