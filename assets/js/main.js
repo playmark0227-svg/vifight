@@ -44,54 +44,67 @@ document.addEventListener('DOMContentLoaded', () => {
   // Safety fallback: never let the loader hang. Force-hide after 4s regardless.
   setTimeout(hideLoader, 4000);
 
-  // ---------- RANDOM + ANIMATED ANGULAR DIVIDERS ----------
-  // Each divider gets an irregular low-poly edge whose peaks gently undulate
-  // (sine per vertex). Only visible dividers animate; static for reduced-motion.
-  const dividerAnims = [];
-  (function buildDividers() {
-    const W = 1440, H = 72;
-    document.querySelectorAll('.section-divider svg').forEach(svg => {
-      const poly = svg.querySelector('polygon');
-      if (!poly) return;
-      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-      const segs = 8 + Math.floor(Math.random() * 7);   // 8–14 facets
-      const verts = [];
-      for (let i = 0; i <= segs; i++) {
-        verts.push({
-          x: Math.round((W / segs) * i),
-          baseY: H * (0.12 + Math.random() * 0.62),
-          phase: Math.random() * Math.PI * 2,
-          amp: 3 + Math.random() * 7,                    // ± peak travel
-          speed: 0.0005 + Math.random() * 0.0011         // per-vertex drift speed
-        });
-      }
-      function render(t) {
-        let pts = '0,' + H;
-        for (const v of verts) {
-          const y = reduceMotion ? v.baseY : v.baseY + Math.sin(t * v.speed + v.phase) * v.amp;
-          pts += ' ' + v.x + ',' + y.toFixed(1);
-        }
-        pts += ' ' + W + ',' + H;
-        poly.setAttribute('points', pts);
-      }
-      render(0);
-      const entry = { render, visible: false };
-      dividerAnims.push(entry);
-      new IntersectionObserver(([e]) => { entry.visible = e.isIntersecting; if (e.isIntersecting) startDividerLoop(); }, { rootMargin: '60px' }).observe(svg);
-    });
-  })();
+  // ---------- ANIMATED LOW-POLY EDGES (dividers + hero mountains) ----------
+  // Peaks gently undulate (per-vertex sine). One shared rAF loop; only visible
+  // shapes render; idle when none on screen; static under reduced-motion.
+  const motionAnims = [];
 
-  let dividerLoopRunning = false;
-  function startDividerLoop() {
-    if (reduceMotion || dividerLoopRunning) return;
-    dividerLoopRunning = true;
+  // Register an SVG polygon whose top vertices breathe. `gateEl` controls
+  // visibility. Vertices at the very bottom (baseline) stay fixed.
+  function registerRidge(svg, poly, W, H, ampRange, speedRange, gateEl) {
+    // parse "x,y x,y ..." into vertices; fix those sitting on the baseline
+    const verts = poly.getAttribute('points').trim().split(/\s+/).map(p => {
+      const [x, y] = p.split(',').map(Number);
+      return { x, baseY: y, fixed: y >= H * 0.9, phase: Math.random() * Math.PI * 2,
+               amp: ampRange[0] + Math.random() * (ampRange[1] - ampRange[0]),
+               speed: speedRange[0] + Math.random() * (speedRange[1] - speedRange[0]) };
+    });
+    function render(t) {
+      let pts = '';
+      for (const v of verts) {
+        const y = (reduceMotion || v.fixed) ? v.baseY : v.baseY + Math.sin(t * v.speed + v.phase) * v.amp;
+        pts += v.x + ',' + y.toFixed(1) + ' ';
+      }
+      poly.setAttribute('points', pts.trim());
+    }
+    render(0);
+    const entry = { render, visible: false };
+    motionAnims.push(entry);
+    new IntersectionObserver(([e]) => { entry.visible = e.isIntersecting; if (e.isIntersecting) startMotionLoop(); }, { rootMargin: '80px' }).observe(gateEl || svg);
+  }
+
+  // Section dividers: regenerate a random jagged edge, then animate it.
+  document.querySelectorAll('.section-divider svg').forEach(svg => {
+    const poly = svg.querySelector('polygon');
+    if (!poly) return;
+    const W = 1440, H = 72;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    const segs = 8 + Math.floor(Math.random() * 7);
+    let pts = '0,' + H;
+    for (let i = 0; i <= segs; i++) pts += ' ' + Math.round((W / segs) * i) + ',' + (H * (0.12 + Math.random() * 0.62)).toFixed(1);
+    pts += ' ' + W + ',' + H;
+    poly.setAttribute('points', pts);
+    registerRidge(svg, poly, W, H, [3, 10], [0.0005, 0.0016], svg);
+  });
+
+  // Hero mountains: same breathing motion, gentler & slower (taller viewBox).
+  const heroEl = document.getElementById('hero');
+  document.querySelectorAll('.hero-ridge').forEach(svg => {
+    const poly = svg.querySelector('polygon');
+    if (poly) registerRidge(svg, poly, 1440, 400, [4, 13], [0.0003, 0.0009], heroEl);
+  });
+
+  let motionLoopRunning = false;
+  function startMotionLoop() {
+    if (reduceMotion || motionLoopRunning) return;
+    motionLoopRunning = true;
     requestAnimationFrame(function loop(t) {
       let anyVisible = false;
-      for (const d of dividerAnims) {
+      for (const d of motionAnims) {
         if (d.visible) { d.render(t); anyVisible = true; }
       }
       if (anyVisible) requestAnimationFrame(loop);
-      else dividerLoopRunning = false;   // idle when nothing on screen
+      else motionLoopRunning = false;
     });
   }
 

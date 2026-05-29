@@ -1402,9 +1402,23 @@ body.on-dark .cursor-follower.view::after {
   transform: scale(1.1);
 }
 
+/* gently floating icons; slow spin on hover */
 .service-icon svg {
   width: 100%;
   height: 100%;
+  animation: iconFloat 5s ease-in-out infinite;
+}
+.service-item:nth-child(even) .service-icon svg { animation-delay: -2.5s; }
+.service-item-inner:hover .service-icon svg {
+  animation: iconSpin 12s linear infinite;
+}
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(3deg); }
+}
+@keyframes iconSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .service-arrow {
@@ -2270,6 +2284,40 @@ body.on-dark .cursor-follower.view::after {
   fill: currentColor;
 }
 
+/* ---------- FLOATING ANGULAR SHAPES (ambient motion) ---------- */
+.float-shapes {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.float-shape {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(135deg, var(--accent-brown), var(--accent-tan));
+  opacity: 0.12;
+  will-change: transform;
+}
+.float-shape.tri { clip-path: polygon(50% 0%, 100% 100%, 0% 100%); }
+.float-shape.diamond { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+.float-shape.s1 { top: 14%; left: 7%;  width: 70px;  height: 70px;  animation: floatA 17s ease-in-out infinite; }
+.float-shape.s2 { bottom: 12%; right: 9%; width: 130px; height: 130px; animation: floatB 24s ease-in-out infinite; }
+.float-shape.s3 { top: 58%; left: 72%; width: 54px;  height: 54px;  animation: floatA 20s ease-in-out infinite reverse; }
+.float-shape.s4 { top: 30%; right: 22%; width: 46px; height: 46px;  animation: floatB 19s ease-in-out infinite; opacity: 0.1; }
+@keyframes floatA {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(26px, -34px) rotate(180deg); }
+}
+@keyframes floatB {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-30px, 26px) rotate(-170deg); }
+}
+/* keep section content above the ambient shapes */
+.services, .works { position: relative; }
+.services > .container, .works > .container { position: relative; z-index: 1; }
+
 /* ---------- WORK MODAL ---------- */
 .work-modal {
   position: fixed;
@@ -2454,7 +2502,9 @@ body::after {
   .philosophy-orb,
   .marquee-track,
   .marquee-large-track,
-  .hero-scroll-line::after {
+  .hero-scroll-line::after,
+  .float-shape,
+  .service-icon svg {
     animation: none !important;
   }
   *,
