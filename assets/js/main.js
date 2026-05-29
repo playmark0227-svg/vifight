@@ -21,6 +21,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.body.style.overflow = 'hidden';
 
+  // ---------- PERFORMANCE HELPERS ----------
+  // Respect reduced-motion preference and device class to scale heavy effects.
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  const isSmall = window.innerWidth < 768;
+
+  function debounce(fn, wait) {
+    let t;
+    return function () {
+      clearTimeout(t);
+      t = setTimeout(fn, wait);
+    };
+  }
+
   // Trigger hideLoader after window load (with min display time), OR via safety fallback.
   if (document.readyState === 'complete') {
     setTimeout(hideLoader, 1500);
@@ -74,13 +88,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 
   let lastTrailTime = 0;
-  document.addEventListener('mousemove', (e) => {
-    const now = Date.now();
-    if (now - lastTrailTime < 80) return;
-    lastTrailTime = now;
-    particles.push({ x: e.clientX, y: e.clientY, life: 1, vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5 });
-    if (particles.length > 12) particles.shift();
-  }, { passive: true });
+  if (!reduceMotion && !isTouch) {
+    document.addEventListener('mousemove', (e) => {
+      const now = Date.now();
+      if (now - lastTrailTime < 80) return;
+      lastTrailTime = now;
+      particles.push({ x: e.clientX, y: e.clientY, life: 1, vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5 });
+      if (particles.length > 12) particles.shift();
+    }, { passive: true });
+  }
 
   // ---------- MAGNETIC BUTTONS ----------
   const magneticEls = document.querySelectorAll('[data-magnetic]');
@@ -168,8 +184,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // 3. Marquee
-    if (scrollMarquee && marqueeWidth > 0) {
+    // 3. Marquee (paused for reduced-motion users)
+    if (scrollMarquee && marqueeWidth > 0 && !reduceMotion) {
       marqueePos -= 1;
       if (Math.abs(marqueePos) >= marqueeWidth) marqueePos = 0;
       scrollMarquee.style.transform = `translateX(${marqueePos}px)`;
@@ -331,22 +347,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Disable canvas particles entirely for reduced-motion users; scale down on mobile.
+  const heroParticleCount = reduceMotion ? 0 : (isSmall ? 22 : 50);
+  const phParticleCount = reduceMotion ? 0 : (isSmall ? 14 : 30);
+
   // ---------- HERO FLOATING PARTICLES ----------
   const heroCanvas = document.getElementById('hero-particles');
-  if (heroCanvas) {
+  if (heroCanvas && heroParticleCount > 0) {
     const hctx = heroCanvas.getContext('2d');
+    const hero = document.getElementById('hero');
     let particles = [];
-    const PARTICLE_COUNT = 50;
+    let heroVisible = true;   // hero starts in view at top of page
+    let heroRunning = false;
 
     function resizeHeroCanvas() {
-      const hero = document.getElementById('hero');
       heroCanvas.width = hero.offsetWidth;
       heroCanvas.height = hero.offsetHeight;
     }
     resizeHeroCanvas();
-    window.addEventListener('resize', resizeHeroCanvas);
+    window.addEventListener('resize', debounce(resizeHeroCanvas, 150), { passive: true });
 
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
+    for (let i = 0; i < heroParticleCount; i++) {
       particles.push({
         x: Math.random() * heroCanvas.width,
         y: Math.random() * heroCanvas.height,
@@ -360,51 +381,61 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function drawHeroParticles() {
+      if (!heroVisible) { heroRunning = false; return; }  // stop loop when offscreen
       hctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
-      particles.forEach(p => {
+      const w = heroCanvas.width, h = heroCanvas.height;
+      for (const p of particles) {
         p.x += p.vx;
         p.y += p.vy;
         p.pulse += p.pulseSpeed;
         const a = p.alpha * (0.6 + 0.4 * Math.sin(p.pulse));
 
-        if (p.x < -10) p.x = heroCanvas.width + 10;
-        if (p.x > heroCanvas.width + 10) p.x = -10;
-        if (p.y < -10) p.y = heroCanvas.height + 10;
-        if (p.y > heroCanvas.height + 10) p.y = -10;
+        if (p.x < -10) p.x = w + 10;
+        else if (p.x > w + 10) p.x = -10;
+        if (p.y < -10) p.y = h + 10;
+        else if (p.y > h + 10) p.y = -10;
 
         hctx.beginPath();
         hctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         hctx.fillStyle = `rgba(160, 215, 240, ${a})`;
         hctx.fill();
 
-        // glow
         hctx.beginPath();
         hctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
         hctx.fillStyle = `rgba(123, 184, 201, ${a * 0.15})`;
         hctx.fill();
-      });
+      }
       requestAnimationFrame(drawHeroParticles);
     }
-    drawHeroParticles();
+    function startHero() {
+      if (!heroRunning && heroVisible) { heroRunning = true; requestAnimationFrame(drawHeroParticles); }
+    }
+
+    const heroObserver = new IntersectionObserver(([entry]) => {
+      heroVisible = entry.isIntersecting;
+      if (heroVisible) startHero();
+    }, { threshold: 0 });
+    heroObserver.observe(hero);
+    startHero();
   }
 
   // ---------- PHILOSOPHY PARTICLES ----------
   const phCanvas = document.getElementById('philosophy-particles');
-  if (phCanvas) {
+  if (phCanvas && phParticleCount > 0) {
     const phCtx = phCanvas.getContext('2d');
+    const phSec = phCanvas.closest('.philosophy');
     let phParticles = [];
-    const PH_COUNT = 30;
     let phActive = false;
+    let phRunning = false;
 
     function resizePhCanvas() {
-      const sec = phCanvas.closest('.philosophy');
-      phCanvas.width = sec.offsetWidth;
-      phCanvas.height = sec.offsetHeight;
+      phCanvas.width = phSec.offsetWidth;
+      phCanvas.height = phSec.offsetHeight;
     }
     resizePhCanvas();
-    window.addEventListener('resize', resizePhCanvas);
+    window.addEventListener('resize', debounce(resizePhCanvas, 150), { passive: true });
 
-    for (let i = 0; i < PH_COUNT; i++) {
+    for (let i = 0; i < phParticleCount; i++) {
       phParticles.push({
         x: Math.random() * 1400,
         y: Math.random() * 800,
@@ -418,16 +449,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function drawPhParticles() {
-      if (!phActive) { requestAnimationFrame(drawPhParticles); return; }
+      if (!phActive) { phRunning = false; return; }  // stop loop when offscreen
       phCtx.clearRect(0, 0, phCanvas.width, phCanvas.height);
-      phParticles.forEach(p => {
+      const w = phCanvas.width, h = phCanvas.height;
+      for (const p of phParticles) {
         p.x += p.vx;
         p.y += p.vy;
         p.pulse += p.pulseSpeed;
         const a = p.alpha * (0.5 + 0.5 * Math.sin(p.pulse));
-        if (p.y < -10) p.y = phCanvas.height + 10;
-        if (p.x < -10) p.x = phCanvas.width + 10;
-        if (p.x > phCanvas.width + 10) p.x = -10;
+        if (p.y < -10) p.y = h + 10;
+        if (p.x < -10) p.x = w + 10;
+        else if (p.x > w + 10) p.x = -10;
 
         phCtx.beginPath();
         phCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
@@ -437,46 +469,63 @@ document.addEventListener('DOMContentLoaded', () => {
         phCtx.arc(p.x, p.y, p.r * 2.5, 0, Math.PI * 2);
         phCtx.fillStyle = `rgba(123, 184, 201, ${a * 0.12})`;
         phCtx.fill();
-      });
+      }
       requestAnimationFrame(drawPhParticles);
     }
-    drawPhParticles();
 
-    // Activate when section enters viewport
+    // Activate / run only while section is on screen
     const phObserver = new IntersectionObserver(([entry]) => {
       phActive = entry.isIntersecting;
+      if (phActive && !phRunning) { phRunning = true; requestAnimationFrame(drawPhParticles); }
     }, { threshold: 0.1 });
-    phObserver.observe(phCanvas.closest('.philosophy'));
+    phObserver.observe(phSec);
   }
 
   // ---------- HERO TITLE 3D TILT ----------
+  // Skip entirely on touch devices (no hover) and for reduced-motion users.
   const heroTitle = document.querySelector('.hero-title');
-  const heroSection = document.getElementById('hero');
-  if (heroTitle && heroSection) {
+  const heroSectionEl = document.getElementById('hero');
+  if (heroTitle && heroSectionEl && !isTouch && !reduceMotion) {
     const maxRotate = 12;
     let tiltX = 0, tiltY = 0, currentX = 0, currentY = 0;
+    let tiltVisible = true;
+    let tiltRunning = false;
 
-    heroSection.addEventListener('mousemove', (e) => {
-      const rect = heroSection.getBoundingClientRect();
+    heroSectionEl.addEventListener('mousemove', (e) => {
+      const rect = heroSectionEl.getBoundingClientRect();
       const cx = (e.clientX - rect.left) / rect.width - 0.5;
       const cy = (e.clientY - rect.top) / rect.height - 0.5;
       tiltX = cy * -maxRotate;
       tiltY = cx * maxRotate;
-    });
+      startTilt();
+    }, { passive: true });
 
-    heroSection.addEventListener('mouseleave', () => {
+    heroSectionEl.addEventListener('mouseleave', () => {
       tiltX = 0;
       tiltY = 0;
     });
 
     function animateTilt() {
+      // Stop the loop once it has settled back to rest and there's no target.
+      if (!tiltVisible) { tiltRunning = false; return; }
       currentX += (tiltX - currentX) * 0.08;
       currentY += (tiltY - currentY) * 0.08;
       heroTitle.style.transform =
         `perspective(800px) rotateX(${currentX.toFixed(2)}deg) rotateY(${currentY.toFixed(2)}deg)`;
+      const settled = Math.abs(tiltX - currentX) < 0.01 && Math.abs(tiltY - currentY) < 0.01 &&
+                      Math.abs(tiltX) < 0.01 && Math.abs(tiltY) < 0.01;
+      if (settled) { tiltRunning = false; return; }
       requestAnimationFrame(animateTilt);
     }
-    animateTilt();
+    function startTilt() {
+      if (!tiltRunning && tiltVisible) { tiltRunning = true; requestAnimationFrame(animateTilt); }
+    }
+
+    const tiltObserver = new IntersectionObserver(([entry]) => {
+      tiltVisible = entry.isIntersecting;
+      if (tiltVisible) startTilt();
+    }, { threshold: 0 });
+    tiltObserver.observe(heroSectionEl);
   }
 
   // ---------- DARK SECTION CURSOR ----------
