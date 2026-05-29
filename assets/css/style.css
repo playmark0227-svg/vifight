@@ -2208,6 +2208,27 @@ body.on-dark .cursor-follower.view::after {
   }
 }
 
+/* ---------- ANGULAR SECTION DIVIDERS ---------- */
+/* Low-poly, faceted transitions between sections.
+   Each divider's box bg = the section above; the polygon (currentColor)
+   = the section below, rising into it with angular peaks. */
+.section-divider {
+  position: relative;
+  width: 100%;
+  height: clamp(36px, 5vw, 72px);
+  line-height: 0;
+  overflow: hidden;
+  z-index: 2;
+}
+.section-divider svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.section-divider polygon {
+  fill: currentColor;
+}
+
 /* ---------- WORK MODAL ---------- */
 .work-modal {
   position: fixed;
