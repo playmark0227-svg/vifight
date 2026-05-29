@@ -635,9 +635,46 @@ body.on-dark .cursor-follower.view::after {
     to bottom,
     rgba(21, 16, 11, 0.1) 0%,
     transparent 30%,
-    transparent 70%,
-    rgba(21, 16, 11, 0.32) 100%
+    transparent 60%,
+    rgba(21, 16, 11, 0.15) 100%
   );
+}
+
+/* Patagonia-style sunset glow + layered mountain skyline */
+.hero-sunset {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 62%;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 120% 95% at 50% 102%, rgba(224, 158, 86, 0.42) 0%, rgba(196, 132, 80, 0.2) 32%, rgba(184, 148, 106, 0.07) 52%, transparent 70%);
+}
+.hero-ridge {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  display: block;
+  z-index: 3;
+  pointer-events: none;
+}
+.hero-ridge polygon { fill: currentColor; }
+/* atmospheric perspective: distant ridge lighter & lit, near ridge darkest */
+.hero-ridge-3 {
+  height: clamp(150px, 32vh, 340px);
+  color: #4a3724;
+  opacity: 0.92;
+}
+.hero-ridge-2 {
+  height: clamp(120px, 25vh, 280px);
+  color: #2e2317;
+}
+.hero-ridge-1 {
+  height: clamp(90px, 18vh, 210px);
+  color: #16110c;
 }
 
 .hero-content {
