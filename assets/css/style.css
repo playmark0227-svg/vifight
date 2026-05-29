@@ -11,19 +11,19 @@
 }
 
 :root {
-  /* MUJI-inspired palette */
-  --bg: #f5f2ed;
-  --bg-dark: #e8e4dd;
-  --bg-accent: #d4cfc7;
-  --text: #1a1a1a;
-  --text-light: #6b6560;
-  --text-muted: #9b958e;
-  --accent: #2d2926;
+  /* Modern cool-neutral palette (cohesive with the blue hero) */
+  --bg: #eceef1;
+  --bg-dark: #e0e4e9;
+  --bg-accent: #cfd5db;
+  --text: #14181d;
+  --text-light: #5a626c;
+  --text-muted: #939ba6;
+  --accent: #12161b;
   --accent-warm: #8b7355;
   --accent-blue: #7bb8c9;
-  --white: #faf9f7;
-  --border: rgba(26, 26, 26, 0.1);
-  --border-strong: rgba(26, 26, 26, 0.2);
+  --white: #fafbfc;
+  --border: rgba(20, 28, 38, 0.1);
+  --border-strong: rgba(20, 28, 38, 0.18);
 
   /* Typography */
   --font-en: 'Inter', sans-serif;
@@ -275,7 +275,10 @@ body.on-dark .cursor-follower.view::after {
 }
 
 #header.scrolled {
-  background: rgba(245, 242, 237, 0.96);
+  background: rgba(236, 238, 241, 0.72);
+  backdrop-filter: saturate(140%) blur(18px);
+  -webkit-backdrop-filter: saturate(140%) blur(18px);
+  border-bottom: 1px solid var(--border);
   padding: 12px 0;
 }
 
@@ -375,6 +378,45 @@ body.on-dark .cursor-follower.view::after {
 
 .nav-hamburger.active span:nth-child(3) {
   transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* ---- Header color states: light over the dark hero, dark on the glass bar ---- */
+/* Default = over hero (dark bg) → light text */
+.nav-logo,
+.nav-links a {
+  color: rgba(255, 255, 255, 0.92);
+}
+.nav-links a::after {
+  background: rgba(255, 255, 255, 0.9);
+}
+.nav-cta {
+  border-color: rgba(255, 255, 255, 0.45);
+}
+.nav-cta:hover {
+  background: var(--white);
+  color: var(--accent);
+}
+.nav-hamburger span {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+/* Scrolled = light frosted bar → dark text */
+#header.scrolled .nav-logo,
+#header.scrolled .nav-links a {
+  color: var(--text);
+}
+#header.scrolled .nav-links a::after {
+  background: var(--text);
+}
+#header.scrolled .nav-cta {
+  border-color: var(--border-strong);
+}
+#header.scrolled .nav-cta:hover {
+  background: var(--accent);
+  color: var(--white);
+}
+#header.scrolled .nav-hamburger span {
+  background: var(--text);
 }
 
 /* ---------- MOBILE MENU ---------- */
@@ -1477,7 +1519,7 @@ body.on-dark .cursor-follower.view::after {
 }
 
 .work-item:hover .work-title {
-  color: var(--accent-warm);
+  color: #4a8198;
 }
 
 .work-year {
@@ -1628,7 +1670,7 @@ body.on-dark .cursor-follower.view::after {
 }
 
 .faq-question:hover {
-  color: var(--accent-warm);
+  color: #4a8198;
 }
 
 .faq-icon {
@@ -1860,9 +1902,21 @@ body.on-dark .cursor-follower.view::after {
 
 /* ---------- FOOTER ---------- */
 .footer {
-  background: var(--accent);
+  background: linear-gradient(160deg, #0d1117 0%, #111820 50%, #0a0f14 100%);
   color: var(--white);
   padding: 60px 0 30px;
+  position: relative;
+}
+
+/* glowing top edge to match hero / philosophy */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(123, 184, 201, 0.4) 50%, transparent);
 }
 
 .footer-top {

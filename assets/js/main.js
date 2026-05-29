@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const btn = form.querySelector('.form-submit');
       btn.innerHTML = '<span>送信完了</span>';
-      btn.style.cssText += 'background:var(--accent-warm);color:var(--white);border-color:var(--accent-warm);';
+      btn.style.cssText += 'background:var(--accent-blue);color:var(--white);border-color:var(--accent-blue);';
       setTimeout(() => {
         btn.innerHTML = `<span>送信する</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
         btn.style.background = btn.style.color = btn.style.borderColor = '';
