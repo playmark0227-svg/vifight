@@ -2306,6 +2306,8 @@ body.on-dark .cursor-follower.view::after {
 .float-shape.s2 { bottom: 12%; right: 9%; width: 130px; height: 130px; animation: floatB 24s ease-in-out infinite; }
 .float-shape.s3 { top: 58%; left: 72%; width: 54px;  height: 54px;  animation: floatA 20s ease-in-out infinite reverse; }
 .float-shape.s4 { top: 30%; right: 22%; width: 46px; height: 46px;  animation: floatB 19s ease-in-out infinite; opacity: 0.1; }
+.float-shape.s5 { top: 20%; right: 14%; width: 64px; height: 64px; animation: floatA 21s ease-in-out infinite reverse; }
+.float-shape.s6 { bottom: 18%; left: 12%; width: 100px; height: 100px; animation: floatB 26s ease-in-out infinite; opacity: 0.1; }
 @keyframes floatA {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
   50% { transform: translate(26px, -34px) rotate(180deg); }
@@ -2314,9 +2316,60 @@ body.on-dark .cursor-follower.view::after {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
   50% { transform: translate(-30px, 26px) rotate(-170deg); }
 }
-/* keep section content above the ambient shapes */
-.services, .works { position: relative; }
-.services > .container, .works > .container { position: relative; z-index: 1; }
+/* lighter shapes for dark sections */
+.float-shapes--dark .float-shape {
+  background: linear-gradient(135deg, var(--accent-tan), var(--accent-brown));
+  opacity: 0.08;
+}
+/* keep section content above the ambient shapes (global) */
+.section, .footer { position: relative; }
+.section > .container, .footer > .container { position: relative; z-index: 1; }
+
+/* ---------- FLOW TIMELINE MOTION ---------- */
+.flow-line { overflow: visible; }
+.flow-line::after {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: -22%;
+  width: 3px;
+  height: 22%;
+  background: linear-gradient(to bottom, transparent, var(--accent-warm), transparent);
+  filter: blur(0.5px);
+  animation: flowTravel 4.5s linear infinite;
+}
+@keyframes flowTravel {
+  0% { top: -22%; }
+  100% { top: 100%; }
+}
+/* radar-ping pulse on each step dot (staggered) */
+.flow-step::before {
+  animation: dotPulse 2.6s ease-in-out infinite;
+}
+.flow-step:nth-child(3)::before { animation-delay: 0.5s; }
+.flow-step:nth-child(4)::before { animation-delay: 1s; }
+.flow-step:nth-child(5)::before { animation-delay: 1.5s; }
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(184, 148, 106, 0.45); }
+  50% { box-shadow: 0 0 0 7px rgba(184, 148, 106, 0); }
+}
+
+/* ---------- PULSING ACCENTS ---------- */
+.section-num::before {
+  transform-origin: right center;
+  animation: tickPulse 2.8s ease-in-out infinite;
+}
+@keyframes tickPulse {
+  0%, 100% { opacity: 0.55; transform: scaleX(0.7); }
+  50% { opacity: 1; transform: scaleX(1.15); }
+}
+.philosophy-accent-line {
+  animation: linePulse 3.6s ease-in-out infinite;
+}
+@keyframes linePulse {
+  0%, 100% { opacity: 0.7; box-shadow: 0 0 12px rgba(184, 148, 106, 0.35); }
+  50% { opacity: 1; box-shadow: 0 0 24px rgba(184, 148, 106, 0.7); }
+}
 
 /* ---------- WORK MODAL ---------- */
 .work-modal {
