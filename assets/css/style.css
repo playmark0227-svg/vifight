@@ -192,6 +192,10 @@ ul {
   transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out), background 0.3s;
 }
 
+/* hide the custom cursor until the pointer first moves (no stray ring at 0,0) */
+.cursor, .cursor-follower { opacity: 0; }
+body.cursor-ready .cursor, body.cursor-ready .cursor-follower { opacity: 1; }
+
 .cursor-follower {
   position: fixed;
   width: 40px;
@@ -2241,6 +2245,15 @@ body.on-dark .cursor-follower.view::after {
   .philosophy-orb { filter: blur(60px); }
   /* Light streaks add little on small screens; drop them */
   .hero-visual-streak { display: none; }
+
+  /* Declutter ambient shapes on phones — keep only two small accents per section */
+  .float-shape { display: none; }
+  .float-shape.s1, .float-shape.s3 { display: block; width: 46px; height: 46px; }
+
+  /* Trim the mountain skyline so it doesn't dominate a tall phone hero */
+  .hero-ridge-3 { height: clamp(110px, 24vh, 220px); }
+  .hero-ridge-2 { height: clamp(90px, 19vh, 180px); }
+  .hero-ridge-1 { height: clamp(68px, 14vh, 140px); }
 }
 
 @media (max-width: 480px) {

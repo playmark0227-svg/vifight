@@ -35,14 +35,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  // Trigger hideLoader after window load (with min display time), OR via safety fallback.
+  // Trigger hideLoader after window load (with a short min display time), OR via safety fallback.
   if (document.readyState === 'complete') {
-    setTimeout(hideLoader, 1500);
+    setTimeout(hideLoader, 1000);
   } else {
-    window.addEventListener('load', () => setTimeout(hideLoader, 1500));
+    window.addEventListener('load', () => setTimeout(hideLoader, 1000));
   }
-  // Safety fallback: never let the loader hang. Force-hide after 4s regardless.
-  setTimeout(hideLoader, 4000);
+  // Safety fallback: never let the loader hang. Force-hide after 3.5s regardless.
+  setTimeout(hideLoader, 3500);
 
   // ---------- ANIMATED LOW-POLY EDGES (dividers + hero mountains) ----------
   // Peaks gently undulate (per-vertex sine). One shared rAF loop; only visible
@@ -118,6 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mouseX = e.clientX;
     mouseY = e.clientY;
     cursor.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
+    if (!document.body.classList.contains('cursor-ready')) document.body.classList.add('cursor-ready');
   }, { passive: true });
 
   // Cursor interactions (委譲で一括)
