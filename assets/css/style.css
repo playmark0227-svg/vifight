@@ -1596,24 +1596,35 @@ body.on-dark .cursor-follower.view::after {
   box-shadow: 0 24px 60px rgba(13, 50, 70, 0.16);
 }
 
-.work-image-placeholder {
+/* real project photo fills the card; warm tint + grid sit above it */
+.work-photo {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  position: relative;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease-out);
+  will-change: transform;
+}
+
+.work-image-placeholder {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   background:
-    radial-gradient(ellipse 80% 70% at 70% 20%, rgba(190, 150, 105, 0.28) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 80% at 20% 90%, rgba(150, 110, 72, 0.2) 0%, transparent 55%),
-    linear-gradient(150deg, #2a2118 0%, #352a1e 45%, #211a12 100%);
+    radial-gradient(ellipse 80% 70% at 70% 20%, rgba(190, 150, 105, 0.22) 0%, transparent 60%),
+    linear-gradient(150deg, rgba(42, 33, 24, 0.5) 0%, rgba(53, 42, 30, 0.35) 45%, rgba(33, 26, 18, 0.62) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-en);
   font-size: 14px;
   font-weight: 500;
-  color: rgba(230, 212, 188, 0.85);
+  color: rgba(240, 226, 204, 0.92);
   letter-spacing: 3px;
   text-transform: uppercase;
-  transition: transform 0.8s var(--ease-out);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
 }
 
 /* faint grid texture for editorial feel */
@@ -1628,7 +1639,7 @@ body.on-dark .cursor-follower.view::after {
   opacity: 0.6;
 }
 
-.work-item:hover .work-image-placeholder {
+.work-item:hover .work-photo {
   transform: scale(1.06);
 }
 
@@ -2572,21 +2583,31 @@ body.on-dark .cursor-follower.view::after {
   min-height: 320px;
   overflow: hidden;
 }
+.work-modal-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .work-modal-visual::before {
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 1;
   background:
-    radial-gradient(circle at 30% 30%, rgba(123, 184, 201, 0.25), transparent 60%),
+    linear-gradient(to top, rgba(26, 20, 14, 0.6) 0%, rgba(26, 20, 14, 0.15) 45%, transparent 70%),
     radial-gradient(circle at 70% 70%, rgba(139, 115, 85, 0.18), transparent 60%);
 }
 .work-modal-label {
   position: relative;
+  z-index: 2;
   font-family: var(--font-en);
   font-size: clamp(22px, 3vw, 32px);
   font-weight: 500;
   letter-spacing: 0.04em;
-  color: var(--accent);
+  color: #f6efe2;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.55);
   text-align: center;
   padding: 0 20px;
 }
