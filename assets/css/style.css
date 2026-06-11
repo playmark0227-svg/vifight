@@ -101,10 +101,14 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.6s var(--ease-out), visibility 0.6s;
+  /* full-screen polygon with a segmented bottom edge, ready to wipe upward */
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 88% 100%, 76% 100%, 62% 100%, 50% 100%, 38% 100%, 24% 100%, 12% 100%, 0 100%);
+  transition: clip-path 0.9s var(--ease-in-out), opacity 0.4s ease 0.6s, visibility 0.4s 0.6s;
 }
 
+/* exit: the bottom edge rises unevenly — a jagged mountain-ridge wipe */
 #loader.loaded {
+  clip-path: polygon(0 0, 100% 0, 100% 0%, 88% 6%, 76% 1%, 62% 8%, 50% 2%, 38% 9%, 24% 3%, 12% 7%, 0 0%);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -644,6 +648,92 @@ body.on-dark .cursor-follower.view::after {
   );
 }
 
+/* ---------- AURORA BOREALIS (Hokkaido night sky) ---------- */
+.hero-aurora {
+  position: absolute;
+  top: -8%;
+  left: -8%;
+  right: -8%;
+  height: 64%;
+  pointer-events: none;
+  filter: blur(38px) saturate(125%);
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.aurora-band {
+  position: absolute;
+  width: 130%;
+  height: 58%;
+  left: -15%;
+  border-radius: 50%;
+  will-change: transform, opacity;
+}
+.aurora-band-1 {
+  top: -4%;
+  background: linear-gradient(100deg,
+    transparent 12%,
+    rgba(72, 214, 174, 0.34) 34%,
+    rgba(123, 184, 201, 0.26) 54%,
+    rgba(72, 214, 174, 0.18) 72%,
+    transparent 90%);
+  animation: aurora1 13s ease-in-out infinite alternate;
+}
+.aurora-band-2 {
+  top: 16%;
+  background: linear-gradient(95deg,
+    transparent 8%,
+    rgba(123, 184, 201, 0.24) 30%,
+    rgba(150, 125, 205, 0.18) 58%,
+    transparent 85%);
+  animation: aurora2 17s ease-in-out infinite alternate;
+}
+.aurora-band-3 {
+  top: 4%;
+  background: linear-gradient(105deg,
+    transparent 15%,
+    rgba(96, 222, 186, 0.18) 45%,
+    rgba(123, 184, 201, 0.15) 68%,
+    transparent 88%);
+  animation: aurora3 21s ease-in-out infinite alternate;
+}
+@keyframes aurora1 {
+  0%   { transform: translateX(-6%) skewY(-3deg) scaleY(1); opacity: 0.75; }
+  100% { transform: translateX(6%) skewY(2.5deg) scaleY(1.22); opacity: 1; }
+}
+@keyframes aurora2 {
+  0%   { transform: translateX(5%) skewY(2deg) scaleY(1); }
+  100% { transform: translateX(-7%) skewY(-3deg) scaleY(1.14); }
+}
+@keyframes aurora3 {
+  0%   { transform: translateX(-3%) skewY(1.5deg); opacity: 0.55; }
+  100% { transform: translateX(4%) skewY(-2.5deg); opacity: 1; }
+}
+/* pause sky animations while their section is offscreen */
+.offstage .aurora-band,
+.offstage .philosophy-aurora {
+  animation-play-state: paused;
+}
+
+/* faint aurora veil over the Philosophy night section */
+.philosophy-aurora {
+  position: absolute;
+  top: -6%;
+  left: -10%;
+  right: -10%;
+  height: 55%;
+  pointer-events: none;
+  filter: blur(46px) saturate(120%);
+  mix-blend-mode: screen;
+  background: linear-gradient(98deg,
+    transparent 10%,
+    rgba(72, 214, 174, 0.16) 35%,
+    rgba(123, 184, 201, 0.13) 58%,
+    rgba(150, 125, 205, 0.09) 75%,
+    transparent 92%);
+  border-radius: 50%;
+  animation: aurora2 19s ease-in-out infinite alternate;
+}
+
 /* Patagonia-style sunset glow + layered mountain skyline */
 .hero-sunset {
   position: absolute;
@@ -658,12 +748,13 @@ body.on-dark .cursor-follower.view::after {
 }
 .hero-ridge {
   position: absolute;
-  left: 0;
+  left: -3%;
   bottom: 0;
-  width: 100%;
+  width: 106%;   /* slack so depth-parallax can shift layers without exposing edges */
   display: block;
   z-index: 3;
   pointer-events: none;
+  will-change: transform;
 }
 .hero-ridge polygon { fill: currentColor; }
 /* atmospheric perspective: distant ridge lighter & lit, near ridge darkest */
@@ -1554,6 +1645,22 @@ body.on-dark .cursor-follower.view::after {
   opacity: 1;
 }
 
+/* warm spotlight that follows the cursor inside each card */
+.work-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 230px at var(--mx, 50%) var(--my, 50%),
+    rgba(240, 212, 170, 0.30), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-out);
+  z-index: 2;
+  pointer-events: none;
+}
+.work-item:hover .work-image::after {
+  opacity: 1;
+}
+
 .work-info {
   padding: 20px 4px 0;
 }
@@ -2254,6 +2361,11 @@ body.on-dark .cursor-follower.view::after {
   .hero-ridge-3 { height: clamp(110px, 24vh, 220px); }
   .hero-ridge-2 { height: clamp(90px, 19vh, 180px); }
   .hero-ridge-1 { height: clamp(68px, 14vh, 140px); }
+
+  /* Aurora: lighter blur, two bands only on phone GPUs */
+  .hero-aurora { filter: blur(22px) saturate(115%); }
+  .aurora-band-3 { display: none; }
+  .philosophy-aurora { filter: blur(28px); }
 }
 
 @media (max-width: 480px) {
@@ -2570,7 +2682,9 @@ body::after {
   .marquee-large-track,
   .hero-scroll-line::after,
   .float-shape,
-  .service-icon svg {
+  .service-icon svg,
+  .aurora-band,
+  .philosophy-aurora {
     animation: none !important;
   }
   *,

@@ -445,6 +445,10 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    // Shooting stars: occasional meteors streaking across the upper sky
+    let meteors = [];
+    let nextMeteorAt = performance.now() + 2200;
+
     function drawHeroParticles() {
       if (!heroVisible) { heroRunning = false; return; }  // stop loop when offscreen
       hctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
@@ -470,6 +474,42 @@ document.addEventListener('DOMContentLoaded', () => {
         hctx.fillStyle = `rgba(184, 148, 106, ${a * 0.15})`;
         hctx.fill();
       }
+
+      // meteors
+      const now = performance.now();
+      if (now >= nextMeteorAt && meteors.length < 2) {
+        const leftward = Math.random() < 0.5;
+        meteors.push({
+          x: w * (0.2 + Math.random() * 0.6),
+          y: h * (0.04 + Math.random() * 0.28),
+          vx: (7 + Math.random() * 5) * (leftward ? -1 : 1),
+          vy: 2.2 + Math.random() * 2,
+          life: 1
+        });
+        nextMeteorAt = now + 3500 + Math.random() * 5500;
+      }
+      meteors = meteors.filter(m => m.life > 0);
+      for (const m of meteors) {
+        const tailX = m.x - m.vx * 9, tailY = m.y - m.vy * 9;
+        const grad = hctx.createLinearGradient(m.x, m.y, tailX, tailY);
+        grad.addColorStop(0, `rgba(255, 246, 230, ${0.9 * m.life})`);
+        grad.addColorStop(1, 'rgba(255, 246, 230, 0)');
+        hctx.strokeStyle = grad;
+        hctx.lineWidth = 1.6;
+        hctx.lineCap = 'round';
+        hctx.beginPath();
+        hctx.moveTo(m.x, m.y);
+        hctx.lineTo(tailX, tailY);
+        hctx.stroke();
+        hctx.beginPath();
+        hctx.arc(m.x, m.y, 1.7, 0, Math.PI * 2);
+        hctx.fillStyle = `rgba(255, 250, 240, ${m.life})`;
+        hctx.fill();
+        m.x += m.vx;
+        m.y += m.vy;
+        m.life -= 0.016;
+      }
+
       requestAnimationFrame(drawHeroParticles);
     }
     function startHero() {
@@ -556,6 +596,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let tiltVisible = true;
     let tiltRunning = false;
 
+    // Depth-parallax layers: nearer layers travel further with the pointer
+    const plxLayers = [
+      { el: document.querySelector('.hero-ridge-1'), fx: 26, fy: 12 },
+      { el: document.querySelector('.hero-ridge-2'), fx: 16, fy: 8 },
+      { el: document.querySelector('.hero-ridge-3'), fx: 9,  fy: 5 },
+      { el: document.querySelector('.hero-aurora'),  fx: -14, fy: -7 },
+      { el: document.querySelector('.hero-sunset'),  fx: 6,  fy: 3 }
+    ].filter(l => l.el);
+
     heroSectionEl.addEventListener('mousemove', (e) => {
       const rect = heroSectionEl.getBoundingClientRect();
       const cx = (e.clientX - rect.left) / rect.width - 0.5;
@@ -577,6 +626,11 @@ document.addEventListener('DOMContentLoaded', () => {
       currentY += (tiltY - currentY) * 0.08;
       heroTitle.style.transform =
         `perspective(800px) rotateX(${currentX.toFixed(2)}deg) rotateY(${currentY.toFixed(2)}deg)`;
+      // drive the scenery with the same eased pointer values (-1..1)
+      const nx = currentY / maxRotate, ny = -currentX / maxRotate;
+      for (const l of plxLayers) {
+        l.el.style.transform = `translate(${(nx * l.fx).toFixed(1)}px, ${(ny * l.fy).toFixed(1)}px)`;
+      }
       const settled = Math.abs(tiltX - currentX) < 0.01 && Math.abs(tiltY - currentY) < 0.01 &&
                       Math.abs(tiltX) < 0.01 && Math.abs(tiltY) < 0.01;
       if (settled) { tiltRunning = false; return; }
@@ -617,6 +671,30 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial: assume hero (top) is dark
   document.body.classList.add('on-dark');
   isOnDark = true;
+
+  // ---------- WORKS CURSOR SPOTLIGHT ----------
+  // A warm glow inside each work card tracks the pointer (CSS vars --mx/--my).
+  const worksGrid = document.querySelector('.works-grid');
+  if (worksGrid && !isTouch) {
+    worksGrid.addEventListener('mousemove', (e) => {
+      const item = e.target.closest('.work-item');
+      if (!item) return;
+      const img = item.querySelector('.work-image');
+      if (!img) return;
+      const r = img.getBoundingClientRect();
+      img.style.setProperty('--mx', (((e.clientX - r.left) / r.width) * 100).toFixed(1) + '%');
+      img.style.setProperty('--my', (((e.clientY - r.top) / r.height) * 100).toFixed(1) + '%');
+    }, { passive: true });
+  }
+
+  // ---------- PAUSE SKY ANIMATIONS OFFSCREEN ----------
+  // Aurora bands keep compositing even offscreen; pause them when their
+  // section scrolls out of view.
+  document.querySelectorAll('.hero, .philosophy').forEach(sec => {
+    new IntersectionObserver(([e]) => {
+      sec.classList.toggle('offstage', !e.isIntersecting);
+    }, { threshold: 0 }).observe(sec);
+  });
 
   // ---------- WORK MODAL ----------
   const workData = {
