@@ -17,17 +17,23 @@ document.addEventListener('DOMContentLoaded', () => {
       const hero = document.getElementById('hero');
       if (hero) hero.classList.add('visible');
     }, 300);
-    // Heal the first-composite mis-sort: Chrome occasionally paints the
-    // hero-visual stack over the title on the very first composite only.
-    // Mutating a hero-visual child layer rebuilds the layer tree correctly
-    // (verified live: toggling orb z fixes it and it never re-breaks).
-    const orb = document.querySelector('.hero-orb-1');
-    if (orb) {
-      [100, 600, 1600, 3200].forEach(ms => setTimeout(() => {
-        orb.style.zIndex = '-5';
-        requestAnimationFrame(() => requestAnimationFrame(() => { orb.style.zIndex = ''; }));
-      }, ms));
-    }
+    // Snap hero entrance transitions to their final state shortly after the
+    // loader hides. Root cause of the "ghost title": Chrome sometimes froze
+    // the data-reveal opacity/translate transitions mid-flight on first
+    // paint (title stuck ~20% opacity, 40px low). By 1.2s the reveal is
+    // normally finished anyway, so snapping is invisible — but it rescues
+    // frozen runs deterministically.
+    [1200, 2600].forEach(ms => setTimeout(() => {
+      const els = document.querySelectorAll('#hero [data-reveal], #hero .hero-line span');
+      els.forEach(el => {
+        el.style.transition = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        els.forEach(el => { el.style.transition = ''; });
+      }));
+    }, ms));
   }
 
   document.body.style.overflow = 'hidden';
