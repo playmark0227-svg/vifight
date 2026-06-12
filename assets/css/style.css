@@ -531,15 +531,14 @@ body.on-dark .cursor-follower.view::after {
 }
 /* real landscape photo blended into the night scene — warm-tinted, fading
    toward the bottom so the low-poly ridges own the foreground */
-/* NOTE: no mask-image / will-change here — the masked async-decoded img
-   was composited ABOVE the hero text on first paint (Chrome layer-order
-   race). A plain img + gradient fade div keeps compositing boring. */
+/* NOTE: deliberately a DIV with background-image, NOT an <img> — the img
+   element's compositor layer was painted ABOVE the hero title on first
+   load (verified: hit-test order correct, paint order wrong). Plain
+   background painting sidesteps the bug entirely. */
 .hero-photo {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  background: url('../images/hero/hero-cover.jpg') center / cover no-repeat;
   opacity: 0.92;
   filter: sepia(0.08) saturate(0.98) brightness(0.78) contrast(1.03);
 }
