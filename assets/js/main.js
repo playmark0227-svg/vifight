@@ -17,14 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const hero = document.getElementById('hero');
       if (hero) hero.classList.add('visible');
     }, 300);
-    // Force re-layerization a few times after reveal: the compositor can
-    // sort hero-visual's translucent layers above the title on first paint
-    // (verified); a z nudge repaints with correct order.
-    const hc = document.querySelector('.hero-content');
-    if (hc) {
+    // Heal the first-composite mis-sort: Chrome occasionally paints the
+    // hero-visual stack over the title on the very first composite only.
+    // Mutating a hero-visual child layer rebuilds the layer tree correctly
+    // (verified live: toggling orb z fixes it and it never re-breaks).
+    const orb = document.querySelector('.hero-orb-1');
+    if (orb) {
       [100, 600, 1600, 3200].forEach(ms => setTimeout(() => {
-        hc.style.zIndex = '11';
-        requestAnimationFrame(() => requestAnimationFrame(() => { hc.style.zIndex = ''; }));
+        orb.style.zIndex = '-5';
+        requestAnimationFrame(() => requestAnimationFrame(() => { orb.style.zIndex = ''; }));
       }, ms));
     }
   }
