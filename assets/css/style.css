@@ -537,10 +537,10 @@ body.on-dark .cursor-follower.view::after {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.5;
-  filter: sepia(0.35) saturate(0.85) brightness(0.6) contrast(1.05);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.92) 52%, rgba(0,0,0,0.35) 78%, transparent 100%);
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.92) 52%, rgba(0,0,0,0.35) 78%, transparent 100%);
+  opacity: 0.88;
+  filter: sepia(0.12) saturate(0.95) brightness(0.72) contrast(1.02);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 62%, rgba(0,0,0,0.55) 84%, rgba(0,0,0,0.15) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 62%, rgba(0,0,0,0.55) 84%, rgba(0,0,0,0.15) 100%);
 }
 .hero-visual-grain {
   opacity: 0.05;
@@ -652,13 +652,15 @@ body.on-dark .cursor-follower.view::after {
 }
 .hero-visual-overlay {
   z-index: 2;
-  background: linear-gradient(
-    to bottom,
-    rgba(21, 16, 11, 0.1) 0%,
-    transparent 30%,
-    transparent 60%,
-    rgba(21, 16, 11, 0.15) 100%
-  );
+  background:
+    radial-gradient(ellipse 70% 60% at 30% 55%, rgba(21, 16, 11, 0.34) 0%, transparent 70%),
+    linear-gradient(
+      to bottom,
+      rgba(21, 16, 11, 0.22) 0%,
+      rgba(21, 16, 11, 0.06) 30%,
+      transparent 60%,
+      rgba(21, 16, 11, 0.2) 100%
+    );
 }
 
 /* ---------- AURORA BOREALIS (Hokkaido night sky) ---------- */
