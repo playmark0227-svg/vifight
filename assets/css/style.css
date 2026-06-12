@@ -519,7 +519,9 @@ body.on-dark .cursor-follower.view::after {
 .hero-visual {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  /* negative z: compositors keep negative-z layers strictly below the
+     section's positive content — ends the first-paint sort race for good */
+  z-index: -1;
   overflow: hidden;
 }
 .hero-visual-layer {

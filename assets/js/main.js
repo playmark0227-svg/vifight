@@ -17,13 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const hero = document.getElementById('hero');
       if (hero) hero.classList.add('visible');
     }, 300);
-    // Force re-layerization: the compositor sometimes paints the hero cover
-    // photo over the title on the very first composite (verified). Nudging
-    // the content layer's z after load repaints with correct order.
+    // Force re-layerization a few times after reveal: the compositor can
+    // sort hero-visual's translucent layers above the title on first paint
+    // (verified); a z nudge repaints with correct order.
     const hc = document.querySelector('.hero-content');
     if (hc) {
-      hc.style.zIndex = '11';
-      requestAnimationFrame(() => requestAnimationFrame(() => { hc.style.zIndex = ''; }));
+      [100, 600, 1600, 3200].forEach(ms => setTimeout(() => {
+        hc.style.zIndex = '11';
+        requestAnimationFrame(() => requestAnimationFrame(() => { hc.style.zIndex = ''; }));
+      }, ms));
     }
   }
 
