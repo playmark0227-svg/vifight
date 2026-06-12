@@ -17,6 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const hero = document.getElementById('hero');
       if (hero) hero.classList.add('visible');
     }, 300);
+    // Force re-layerization: the compositor sometimes paints the hero cover
+    // photo over the title on the very first composite (verified). Nudging
+    // the content layer's z after load repaints with correct order.
+    const hc = document.querySelector('.hero-content');
+    if (hc) {
+      hc.style.zIndex = '11';
+      requestAnimationFrame(() => requestAnimationFrame(() => { hc.style.zIndex = ''; }));
+    }
   }
 
   document.body.style.overflow = 'hidden';

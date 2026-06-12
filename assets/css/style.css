@@ -803,6 +803,7 @@ body.on-dark .cursor-follower.view::after {
      (verified live — hit-test order was correct, paint order wrong). */
   z-index: 10;
   isolation: isolate;
+  transform: translateZ(0);  /* own compositor layer from first paint */
   padding: 0 clamp(30px, 6vw, 100px);
   max-width: var(--container);
   margin: 0 auto;
