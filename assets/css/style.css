@@ -526,21 +526,15 @@ body.on-dark .cursor-follower.view::after {
   position: absolute;
   inset: 0;
 }
+/* Cover photo lives INSIDE the base layer: warm tint over photo over a
+   fallback gradient, all in ONE multi-background element. Separate photo
+   elements (img OR div) kept getting composited above the hero text on
+   first paint; a single first-painted layer cannot be mis-sorted. */
 .hero-visual-base {
-  background: linear-gradient(150deg, #1c1611 0%, #261d14 28%, #221a13 55%, #15100b 100%);
-}
-/* real landscape photo blended into the night scene — warm-tinted, fading
-   toward the bottom so the low-poly ridges own the foreground */
-/* NOTE: deliberately a DIV with background-image, NOT an <img> — the img
-   element's compositor layer was painted ABOVE the hero title on first
-   load (verified: hit-test order correct, paint order wrong). Plain
-   background painting sidesteps the bug entirely. */
-.hero-photo {
-  position: absolute;
-  inset: 0;
-  background: url('../images/hero/hero-cover.jpg') center / cover no-repeat;
-  opacity: 0.92;
-  filter: sepia(0.08) saturate(0.98) brightness(0.78) contrast(1.03);
+  background:
+    linear-gradient(150deg, rgba(28, 22, 17, 0.38) 0%, rgba(38, 29, 20, 0.2) 28%, rgba(34, 26, 19, 0.24) 55%, rgba(21, 16, 11, 0.46) 100%),
+    url('../images/hero/hero-cover.jpg') center / cover no-repeat,
+    linear-gradient(150deg, #1c1611 0%, #261d14 28%, #221a13 55%, #15100b 100%);
 }
 /* fades the photo into the espresso base toward the bottom (replaces mask) */
 .hero-photo-fade {
