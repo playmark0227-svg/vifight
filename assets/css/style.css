@@ -2540,12 +2540,17 @@ body.on-dark .cursor-follower.view::after {
   opacity: 1;
   visibility: visible;
 }
+.work-modal.active .work-modal-backdrop {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
 .work-modal-backdrop {
   position: absolute;
   inset: 0;
   background: rgba(26, 26, 26, 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  /* backdrop-filter ONLY while open: when always-on, Chrome kept applying
+     the hidden modal's backdrop blur/dim over the hero title (root cause
+     of the intermittent ghost-title bug). */
   cursor: pointer;
 }
 .work-modal-dialog {
