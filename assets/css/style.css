@@ -677,7 +677,9 @@ body.on-dark .cursor-follower.view::after {
   height: 64%;
   pointer-events: none;
   filter: blur(38px) saturate(125%);
-  mix-blend-mode: screen;
+  /* NOTE: no mix-blend-mode — screen-blending here corrupted compositor
+     sorting of sibling layers (hero text painted under the scrim). */
+  opacity: 0.8;
   will-change: transform;
 }
 .aurora-band {
@@ -743,7 +745,7 @@ body.on-dark .cursor-follower.view::after {
   height: 55%;
   pointer-events: none;
   filter: blur(46px) saturate(120%);
-  mix-blend-mode: screen;
+  opacity: 0.85;
   background: linear-gradient(98deg,
     transparent 10%,
     rgba(72, 214, 174, 0.16) 35%,
