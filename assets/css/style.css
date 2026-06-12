@@ -531,6 +531,9 @@ body.on-dark .cursor-follower.view::after {
 }
 /* real landscape photo blended into the night scene — warm-tinted, fading
    toward the bottom so the low-poly ridges own the foreground */
+/* NOTE: no mask-image / will-change here — the masked async-decoded img
+   was composited ABOVE the hero text on first paint (Chrome layer-order
+   race). A plain img + gradient fade div keeps compositing boring. */
 .hero-photo {
   position: absolute;
   inset: 0;
@@ -539,8 +542,15 @@ body.on-dark .cursor-follower.view::after {
   object-fit: cover;
   opacity: 0.92;
   filter: sepia(0.08) saturate(0.98) brightness(0.78) contrast(1.03);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 62%, rgba(0,0,0,0.55) 84%, rgba(0,0,0,0.15) 100%);
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 62%, rgba(0,0,0,0.55) 84%, rgba(0,0,0,0.15) 100%);
+}
+/* fades the photo into the espresso base toward the bottom (replaces mask) */
+.hero-photo-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+    transparent 0%, transparent 55%,
+    rgba(28, 22, 17, 0.5) 82%,
+    rgba(21, 16, 11, 0.9) 100%);
 }
 .hero-visual-grain {
   opacity: 0.05;
@@ -824,11 +834,10 @@ body.on-dark .cursor-follower.view::after {
   letter-spacing: -2px;
   margin-bottom: 28px;
   color: #fff;
-  /* NOTE: no transform-style/perspective here — combined with the masked
-     hero photo they trigger a compositing bug that paints the photo OVER
-     this title. The JS tilt supplies perspective() inside transform. */
+  /* NOTE: no transform-style/perspective/will-change here — combined with
+     the hero photo they trigger a compositing bug that paints the photo
+     OVER this title. The JS tilt supplies perspective() inside transform. */
   transition: transform 0.15s ease-out;
-  will-change: transform;
 }
 
 .hero-line {
