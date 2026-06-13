@@ -659,12 +659,12 @@ body.on-dark .cursor-follower.view::after {
   top: -8%;
   left: -8%;
   right: -8%;
-  height: 64%;
+  height: 66%;
   pointer-events: none;
-  filter: blur(38px) saturate(125%);
+  filter: blur(36px) saturate(150%);
   /* NOTE: no mix-blend-mode — screen-blending here corrupted compositor
      sorting of sibling layers (hero text painted under the scrim). */
-  opacity: 0.8;
+  opacity: 0.95;
   will-change: transform;
 }
 .aurora-band {
@@ -676,52 +676,101 @@ body.on-dark .cursor-follower.view::after {
   will-change: transform, opacity;
 }
 .aurora-band-1 {
-  top: -4%;
+  top: -6%;
   background: linear-gradient(100deg,
-    transparent 12%,
-    rgba(72, 214, 174, 0.34) 34%,
-    rgba(123, 184, 201, 0.26) 54%,
-    rgba(72, 214, 174, 0.18) 72%,
-    transparent 90%);
+    transparent 10%,
+    rgba(46, 230, 166, 0.5) 30%,
+    rgba(108, 242, 200, 0.4) 48%,
+    rgba(92, 202, 214, 0.3) 66%,
+    transparent 88%);
   animation: aurora1 13s ease-in-out infinite alternate;
 }
 .aurora-band-2 {
-  top: 16%;
+  top: 15%;
   background: linear-gradient(95deg,
-    transparent 8%,
-    rgba(123, 184, 201, 0.24) 30%,
-    rgba(150, 125, 205, 0.18) 58%,
-    transparent 85%);
+    transparent 6%,
+    rgba(92, 214, 208, 0.34) 26%,
+    rgba(150, 122, 218, 0.28) 52%,
+    rgba(222, 116, 200, 0.24) 74%,
+    transparent 90%);
   animation: aurora2 17s ease-in-out infinite alternate;
 }
 .aurora-band-3 {
-  top: 4%;
+  top: 2%;
   background: linear-gradient(105deg,
-    transparent 15%,
-    rgba(96, 222, 186, 0.18) 45%,
-    rgba(123, 184, 201, 0.15) 68%,
+    transparent 14%,
+    rgba(74, 238, 194, 0.3) 42%,
+    rgba(108, 198, 216, 0.24) 66%,
     transparent 88%);
   animation: aurora3 21s ease-in-out infinite alternate;
 }
+/* pink/magenta lower fringe — the iconic high-altitude aurora tint */
+.aurora-band-4 {
+  top: 27%;
+  height: 46%;
+  background: linear-gradient(92deg,
+    transparent 14%,
+    rgba(230, 124, 202, 0.24) 40%,
+    rgba(180, 128, 224, 0.18) 64%,
+    transparent 88%);
+  animation: aurora4 25s ease-in-out infinite alternate;
+}
 @keyframes aurora1 {
-  0%   { transform: translateX(-6%) skewY(-3deg) scaleY(1); opacity: 0.75; }
-  100% { transform: translateX(6%) skewY(2.5deg) scaleY(1.22); opacity: 1; }
+  0%   { transform: translateX(-6%) skewY(-3deg) scaleY(1); opacity: 0.8; }
+  100% { transform: translateX(6%) skewY(2.5deg) scaleY(1.24); opacity: 1; }
 }
 @keyframes aurora2 {
   0%   { transform: translateX(5%) skewY(2deg) scaleY(1); }
-  100% { transform: translateX(-7%) skewY(-3deg) scaleY(1.14); }
+  100% { transform: translateX(-7%) skewY(-3deg) scaleY(1.16); }
 }
 @keyframes aurora3 {
   0%   { transform: translateX(-3%) skewY(1.5deg); opacity: 0.55; }
   100% { transform: translateX(4%) skewY(-2.5deg); opacity: 1; }
 }
+@keyframes aurora4 {
+  0%   { transform: translateX(4%) skewY(-1.5deg) scaleY(1); opacity: 0.4; }
+  100% { transform: translateX(-5%) skewY(2deg) scaleY(1.18); opacity: 0.85; }
+}
+
+/* Vertical "curtain" rays — the signature aurora drape. Kept as its own
+   lightly-blurred sibling (outside .hero-aurora's heavy blur) so the
+   striations still read as falling rays rather than a flat wash. Lives
+   inside .hero-visual (z-index:-1), so it stays safely below the hero text. */
+.aurora-curtain {
+  position: absolute;
+  top: -10%;
+  left: -12%;
+  right: -12%;
+  height: 72%;
+  pointer-events: none;
+  opacity: 0.5;
+  filter: blur(7px) saturate(140%);
+  background: repeating-linear-gradient(94deg,
+    transparent 0px,
+    rgba(104, 240, 200, 0) 12px,
+    rgba(104, 240, 200, 0.26) 24px,
+    rgba(150, 216, 224, 0.14) 33px,
+    rgba(104, 240, 200, 0) 44px,
+    transparent 60px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 28%, rgba(0, 0, 0, 0.8) 54%, transparent 96%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 28%, rgba(0, 0, 0, 0.8) 54%, transparent 96%);
+  will-change: transform, opacity;
+  animation: auroraCurtain 12s ease-in-out infinite alternate;
+}
+@keyframes auroraCurtain {
+  0%   { transform: translateX(-5%) skewX(-5deg) scaleY(1);   opacity: 0.3; }
+  50%  { opacity: 0.62; }
+  100% { transform: translateX(6%) skewX(4deg) scaleY(1.14);  opacity: 0.44; }
+}
 /* pause sky animations while their section is offscreen */
 .offstage .aurora-band,
-.offstage .philosophy-aurora {
+.offstage .aurora-curtain,
+.offstage .philosophy-aurora,
+.offstage .philosophy-aurora-curtain {
   animation-play-state: paused;
 }
 
-/* faint aurora veil over the Philosophy night section */
+/* aurora veil over the Philosophy night section */
 .philosophy-aurora {
   position: absolute;
   top: -6%;
@@ -729,16 +778,38 @@ body.on-dark .cursor-follower.view::after {
   right: -10%;
   height: 55%;
   pointer-events: none;
-  filter: blur(46px) saturate(120%);
-  opacity: 0.85;
+  filter: blur(46px) saturate(140%);
+  opacity: 0.92;
   background: linear-gradient(98deg,
-    transparent 10%,
-    rgba(72, 214, 174, 0.16) 35%,
-    rgba(123, 184, 201, 0.13) 58%,
-    rgba(150, 125, 205, 0.09) 75%,
+    transparent 8%,
+    rgba(58, 226, 172, 0.24) 32%,
+    rgba(108, 196, 216, 0.17) 55%,
+    rgba(182, 126, 218, 0.13) 74%,
     transparent 92%);
   border-radius: 50%;
   animation: aurora2 19s ease-in-out infinite alternate;
+}
+/* faint vertical rays over the Philosophy sky */
+.philosophy-aurora-curtain {
+  position: absolute;
+  top: -8%;
+  left: -10%;
+  right: -10%;
+  height: 50%;
+  pointer-events: none;
+  opacity: 0.4;
+  filter: blur(8px) saturate(135%);
+  background: repeating-linear-gradient(93deg,
+    transparent 0px,
+    rgba(96, 234, 194, 0) 16px,
+    rgba(104, 236, 198, 0.17) 28px,
+    rgba(150, 212, 224, 0.1) 36px,
+    rgba(96, 234, 194, 0) 48px,
+    transparent 64px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 35%, transparent 92%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 35%, transparent 92%);
+  will-change: transform, opacity;
+  animation: auroraCurtain 16s ease-in-out infinite alternate;
 }
 
 /* Patagonia-style sunset glow + layered mountain skyline */
@@ -2389,10 +2460,12 @@ body.on-dark .cursor-follower.view::after {
   .hero-ridge-2 { height: clamp(90px, 19vh, 180px); }
   .hero-ridge-1 { height: clamp(68px, 14vh, 140px); }
 
-  /* Aurora: lighter blur, two bands only on phone GPUs */
-  .hero-aurora { filter: blur(22px) saturate(115%); }
+  /* Aurora: lighter blur, fewer layers to spare phone GPUs */
+  .hero-aurora { filter: blur(22px) saturate(135%); }
   .aurora-band-3 { display: none; }
+  .aurora-curtain { filter: blur(5px) saturate(130%); opacity: 0.42; }
   .philosophy-aurora { filter: blur(28px); }
+  .philosophy-aurora-curtain { display: none; }
 }
 
 @media (max-width: 480px) {
@@ -2726,7 +2799,9 @@ body::after {
   .float-shape,
   .service-icon svg,
   .aurora-band,
-  .philosophy-aurora {
+  .aurora-curtain,
+  .philosophy-aurora,
+  .philosophy-aurora-curtain {
     animation: none !important;
   }
   *,
