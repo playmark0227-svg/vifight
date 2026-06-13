@@ -762,6 +762,18 @@ body.on-dark .cursor-follower.view::after {
   50%  { opacity: 0.62; }
   100% { transform: translateX(6%) skewX(4deg) scaleY(1.14);  opacity: 0.44; }
 }
+/* Interactive aurora — a pointer-reactive glow canvas painted by main.js
+   ("Aurora Brush"). Sits in the hero sky band (z-index:1, like the stars),
+   above the CSS aurora glow and below the sunset/skyline. pointer-events:none
+   so it never intercepts clicks; the hero section listens for the pointer. */
+.hero-aurora-interactive {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
 /* pause sky animations while their section is offscreen */
 .offstage .aurora-band,
 .offstage .aurora-curtain,

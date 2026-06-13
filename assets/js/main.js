@@ -541,6 +541,136 @@ document.addEventListener('DOMContentLoaded', () => {
     startHero();
   }
 
+  // ---------- INTERACTIVE AURORA ("Aurora Brush") ----------
+  // The hero sky responds to the pointer: glide the cursor (or drag a finger)
+  // across the hero and luminous aurora light gathers and rises from it, like
+  // stirring the northern lights by hand. A gentle idle auto-stir keeps the sky
+  // alive between interactions. Disabled for reduced-motion; scaled on mobile.
+  const auroraCanvas = document.getElementById('hero-aurora-canvas');
+  if (auroraCanvas && !reduceMotion) {
+    const actx = auroraCanvas.getContext('2d');
+    const heroEl = document.getElementById('hero');
+    const MAX_WISPS = isSmall ? 46 : 120;
+
+    // Pre-render one soft radial-glow sprite per aurora hue — far cheaper than
+    // rebuilding a gradient for every wisp on every frame.
+    const palette = [
+      [88, 240, 188],   // emerald
+      [120, 232, 214],  // teal
+      [150, 212, 232],  // ice blue
+      [196, 142, 228],  // violet
+      [236, 130, 200]   // magenta
+    ];
+    function makeGlowSprite(col) {
+      const s = document.createElement('canvas');
+      s.width = s.height = 128;
+      const c = s.getContext('2d');
+      const g = c.createRadialGradient(64, 64, 0, 64, 64, 64);
+      g.addColorStop(0,    `rgba(${col[0]},${col[1]},${col[2]},1)`);
+      g.addColorStop(0.45, `rgba(${col[0]},${col[1]},${col[2]},0.35)`);
+      g.addColorStop(1,    `rgba(${col[0]},${col[1]},${col[2]},0)`);
+      c.fillStyle = g;
+      c.fillRect(0, 0, 128, 128);
+      return s;
+    }
+    const sprites = palette.map(makeGlowSprite);
+
+    let wisps = [];
+    let aVisible = true;
+    let aRunning = false;
+    let lastX = 0, lastY = 0, haveLast = false;
+    let nextIdleAt = 0;
+
+    function resizeAuroraCanvas() {
+      auroraCanvas.width = heroEl.offsetWidth;
+      auroraCanvas.height = heroEl.offsetHeight;
+    }
+    resizeAuroraCanvas();
+    window.addEventListener('resize', debounce(resizeAuroraCanvas, 150), { passive: true });
+
+    function spawnWisp(x, y, drift, intensity) {
+      if (wisps.length >= MAX_WISPS) wisps.shift();
+      wisps.push({
+        x: x + (Math.random() - 0.5) * 22,
+        y: y + (Math.random() - 0.5) * 18,
+        vx: drift * 0.05 + (Math.random() - 0.5) * 0.5,
+        vy: -(0.35 + Math.random() * 0.7),        // light rises through the sky
+        r: 14 + Math.random() * 22 + intensity * 7,
+        life: 1,
+        decay: 0.007 + Math.random() * 0.009,
+        sprite: sprites[(Math.random() * sprites.length) | 0],
+        sway: Math.random() * Math.PI * 2,
+        swaySpeed: 0.02 + Math.random() * 0.03
+      });
+    }
+
+    function stirAt(clientX, clientY) {
+      const rect = heroEl.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+      if (x < 0 || y < 0 || x > rect.width || y > rect.height) return;
+      const dx = haveLast ? x - lastX : 0;
+      const dy = haveLast ? y - lastY : 0;
+      lastX = x; lastY = y; haveLast = true;
+      // densest near the top of the sky, fading out toward the skyline
+      const sky = 1 - Math.min(1, y / (rect.height * 0.75));
+      if (sky <= 0) return;
+      const speed = Math.hypot(dx, dy);
+      const n = Math.min(3, Math.round(sky * (0.6 + speed * 0.12)));
+      for (let k = 0; k < n; k++) spawnWisp(x, y, dx, sky * (1 + speed * 0.05));
+      startAurora();
+    }
+
+    heroEl.addEventListener('mousemove', e => stirAt(e.clientX, e.clientY), { passive: true });
+    heroEl.addEventListener('touchmove', e => {
+      const t = e.touches[0];
+      if (t) stirAt(t.clientX, t.clientY);
+    }, { passive: true });
+    heroEl.addEventListener('mouseleave', () => { haveLast = false; });
+
+    function drawAurora() {
+      if (!aVisible) { aRunning = false; return; }
+      const w = auroraCanvas.width, h = auroraCanvas.height;
+
+      // idle auto-stir keeps the sky gently alive between interactions
+      const now = performance.now();
+      if (now >= nextIdleAt) {
+        spawnWisp(w * (0.12 + Math.random() * 0.76), h * (0.05 + Math.random() * 0.28), 0, 1);
+        nextIdleAt = now + (isSmall ? 2200 : 1500) + Math.random() * 1800;
+      }
+
+      actx.clearRect(0, 0, w, h);
+      actx.globalCompositeOperation = 'lighter';   // additive → luminous glow
+      for (const p of wisps) {
+        p.sway += p.swaySpeed;
+        p.x += p.vx + Math.sin(p.sway) * 0.5;
+        p.y += p.vy;
+        p.vy *= 0.99;
+        p.life -= p.decay;
+        const a = Math.max(0, p.life);
+        const d = (p.r + (1 - p.life) * p.r * 0.5) * 2;
+        // taller than wide → vertical aurora rays rather than round blobs
+        const wd = d * 0.6, hd = d * 1.7;
+        actx.globalAlpha = a * 0.5;
+        actx.drawImage(p.sprite, p.x - wd / 2, p.y - hd / 2, wd, hd);
+      }
+      actx.globalAlpha = 1;
+      actx.globalCompositeOperation = 'source-over';
+
+      wisps = wisps.filter(p => p.life > 0 && p.y > -70);
+      requestAnimationFrame(drawAurora);
+    }
+    function startAurora() {
+      if (!aRunning && aVisible) { aRunning = true; requestAnimationFrame(drawAurora); }
+    }
+
+    new IntersectionObserver(([entry]) => {
+      aVisible = entry.isIntersecting;
+      if (aVisible) startAurora();
+    }, { threshold: 0 }).observe(heroEl);
+    startAurora();
+  }
+
   // ---------- PHILOSOPHY PARTICLES ----------
   const phCanvas = document.getElementById('philosophy-particles');
   if (phCanvas && phParticleCount > 0) {
