@@ -3445,3 +3445,14 @@ body::after {
   .flow-assure { grid-template-columns: 1fr; }
   .tab-callout { flex-direction: column; align-items: flex-start; }
 }
+
+/* ---------- small-phone polish (newer blocks) ---------- */
+@media (max-width: 480px) {
+  .tab-pager { padding: 38px 20px 60px; gap: 12px; }
+  .tab-pager-link { padding: 15px 16px; }
+  .tab-pager-name { font-size: 17px; }
+  .tab-pager-dir { font-size: 11px; }
+  .home-stats { gap: 18px 28px; }
+  .works-highlights { gap: 22px 30px; }
+  .tab-callout { padding: 26px 22px; }
+}
