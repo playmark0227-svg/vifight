@@ -97,7 +97,12 @@ ul {
   position: fixed;
   inset: 0;
   z-index: 10000;
-  background: var(--accent);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 100% 62% at 50% 8%, rgba(46, 226, 170, 0.14) 0%, transparent 56%),
+    radial-gradient(ellipse 80% 55% at 74% 18%, rgba(150, 120, 220, 0.12) 0%, transparent 56%),
+    radial-gradient(ellipse 70% 50% at 24% 22%, rgba(96, 214, 210, 0.10) 0%, transparent 56%),
+    linear-gradient(180deg, #15100b 0%, #0e0b07 62%, #0a0805 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -114,7 +119,56 @@ ul {
   pointer-events: none;
 }
 
+/* aurora glow curtains behind the logo */
+.loader-aurora {
+  position: absolute;
+  top: -14%;
+  left: -20%;
+  right: -20%;
+  height: 74%;
+  pointer-events: none;
+  filter: blur(46px) saturate(155%);
+  opacity: 0.9;
+  background:
+    radial-gradient(ellipse 40% 56% at 24% 36%, rgba(54, 226, 168, 0.55) 0%, transparent 62%),
+    radial-gradient(ellipse 38% 50% at 48% 24%, rgba(96, 214, 210, 0.44) 0%, transparent 62%),
+    radial-gradient(ellipse 36% 54% at 70% 38%, rgba(160, 120, 224, 0.42) 0%, transparent 62%),
+    radial-gradient(ellipse 30% 48% at 88% 30%, rgba(228, 124, 200, 0.34) 0%, transparent 62%);
+  animation: loaderAurora 6s ease-in-out infinite alternate;
+}
+@keyframes loaderAurora {
+  0%   { transform: translateX(-4%) scaleY(1);   opacity: 0.7; }
+  100% { transform: translateX(5%) scaleY(1.16); opacity: 0.95; }
+}
+/* vertical aurora rays */
+.loader-rays {
+  position: absolute;
+  top: -12%;
+  left: -10%;
+  right: -10%;
+  height: 64%;
+  pointer-events: none;
+  opacity: 0.4;
+  filter: blur(6px) saturate(140%);
+  background: repeating-linear-gradient(95deg,
+    transparent 0,
+    rgba(120, 240, 200, 0) 14px,
+    rgba(120, 240, 200, 0.20) 26px,
+    rgba(150, 210, 230, 0.11) 34px,
+    rgba(120, 240, 200, 0) 46px,
+    transparent 64px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 42%, transparent 92%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 42%, transparent 92%);
+  animation: loaderRays 5s ease-in-out infinite alternate;
+}
+@keyframes loaderRays {
+  0%   { transform: translateX(-3%) skewX(-4deg); opacity: 0.25; }
+  100% { transform: translateX(4%) skewX(3deg);   opacity: 0.5; }
+}
+
 .loader-inner {
+  position: relative;
+  z-index: 1;
   text-align: center;
 }
 
@@ -128,9 +182,10 @@ ul {
 .loader-letter {
   display: inline-block;
   font-family: var(--font-en);
-  font-size: clamp(36px, 6vw, 60px);
+  font-size: clamp(38px, 6.4vw, 64px);
   font-weight: 600;
-  color: var(--white);
+  color: #fbf7f0;
+  text-shadow: 0 0 20px rgba(96, 240, 196, 0.5), 0 0 46px rgba(120, 180, 240, 0.3);
   opacity: 0;
   transform: translateY(30px);
   animation: loaderLetterIn 0.6s var(--ease-out) forwards;
@@ -145,9 +200,9 @@ ul {
 }
 
 .loader-bar {
-  width: 200px;
+  width: 220px;
   height: 2px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.12);
   margin: 0 auto 20px;
   border-radius: 2px;
   overflow: hidden;
@@ -156,8 +211,9 @@ ul {
 .loader-bar-fill {
   width: 0%;
   height: 100%;
-  background: var(--accent-warm);
+  background: linear-gradient(90deg, var(--aurora-green), var(--aurora-teal) 50%, var(--aurora-violet));
   border-radius: 2px;
+  box-shadow: 0 0 12px rgba(70, 226, 170, 0.65);
   animation: loaderBarFill 2s var(--ease-in-out) forwards;
   animation-delay: 0.5s;
 }
@@ -171,7 +227,7 @@ ul {
   font-size: 11px;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(143, 243, 208, 0.62);
   opacity: 0;
   animation: fadeIn 0.6s var(--ease-out) 0.8s forwards;
 }
@@ -2825,7 +2881,9 @@ body::after {
   .aurora-curtain,
   .philosophy-aurora,
   .philosophy-aurora-curtain,
-  .home-aurora {
+  .home-aurora,
+  .loader-aurora,
+  .loader-rays {
     animation: none !important;
   }
   *,
