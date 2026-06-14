@@ -31,7 +31,7 @@
   <meta name="twitter:image" content="https://playmark0227-svg.github.io/vifight/assets/images/hero/hero-cover.jpg">
 
   <link rel="preload" as="image" href="assets/images/hero/hero-cover.jpg" fetchpriority="high">
-  <link rel="stylesheet" href="assets/css/style.css?v=20260614d">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260614e">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Interのみ同期（Latin文字・軽量）、Noto Sans JPは非同期で遅延読み込み -->
@@ -233,14 +233,56 @@
         </div>
         <a href="#services" class="home-more" data-reveal>すべて見る <span>→</span></a>
       </div>
-      <ul class="home-services">
-        <li class="home-service" data-reveal><span class="home-service-num">01</span><span class="home-service-name">SNS総合支援</span></li>
-        <li class="home-service" data-reveal><span class="home-service-num">02</span><span class="home-service-name">映像制作</span></li>
-        <li class="home-service" data-reveal><span class="home-service-num">03</span><span class="home-service-name">HP制作</span></li>
-        <li class="home-service" data-reveal><span class="home-service-num">04</span><span class="home-service-name">プログラム開発</span></li>
-        <li class="home-service" data-reveal><span class="home-service-num">05</span><span class="home-service-name">動画編集アカデミー</span></li>
-        <li class="home-service" data-reveal><span class="home-service-num">06</span><span class="home-service-name">Claudeアカデミー</span></li>
-      </ul>
+      <div class="home-services">
+        <a href="#services" class="home-service" data-reveal>
+          <span class="home-service-num">01</span>
+          <div class="home-service-body">
+            <h3 class="home-service-name">SNS総合支援</h3>
+            <p class="home-service-desc">戦略設計から制作・運用・分析まで一気通貫。SNSに最適化したクリエイティブで集客を最大化します。</p>
+          </div>
+          <span class="home-service-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="#services" class="home-service" data-reveal>
+          <span class="home-service-num">02</span>
+          <div class="home-service-body">
+            <h3 class="home-service-name">映像制作</h3>
+            <p class="home-service-desc">企画・撮影・編集までワンストップ。実績100件以上、シネマカメラと国家資格者の空撮で対応。</p>
+          </div>
+          <span class="home-service-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="#services" class="home-service" data-reveal>
+          <span class="home-service-num">03</span>
+          <div class="home-service-body">
+            <h3 class="home-service-name">HP制作</h3>
+            <p class="home-service-desc">成果直結のWebサイトを月額¥10,000〜。「問い合わせ0→毎月10件」を生んだ制作力。</p>
+          </div>
+          <span class="home-service-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="#services" class="home-service" data-reveal>
+          <span class="home-service-num">04</span>
+          <div class="home-service-body">
+            <h3 class="home-service-name">プログラム開発</h3>
+            <p class="home-service-desc">業務システム・アプリからAI自動化ツールまで。「人の手間」を減らし、仕組みで強くします。</p>
+          </div>
+          <span class="home-service-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="#services" class="home-service" data-reveal>
+          <span class="home-service-num">05</span>
+          <div class="home-service-body">
+            <h3 class="home-service-name">動画編集アカデミー</h3>
+            <p class="home-service-desc">審査制・完全マンツーマンでプロレベルへ。サブスク入会者には毎月の案件を必ずご紹介。</p>
+          </div>
+          <span class="home-service-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="#services" class="home-service" data-reveal>
+          <span class="home-service-num">06</span>
+          <div class="home-service-body">
+            <h3 class="home-service-name">Claudeアカデミー</h3>
+            <p class="home-service-desc">現場で「効くAI」の使い方を、導入から実装まで伴走。チームの業務にAIを根付かせます。</p>
+          </div>
+          <span class="home-service-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -405,6 +447,10 @@
       </div>
     </div>
   </section>
+  <nav class="tab-pager" aria-label="ページ切り替え">
+    <a href="#hero" class="tab-pager-link tab-pager-prev"><span class="tab-pager-dir">← Prev</span><span class="tab-pager-name">Home</span></a>
+    <a href="#services" class="tab-pager-link tab-pager-next"><span class="tab-pager-dir">Next →</span><span class="tab-pager-name">Services</span></a>
+  </nav>
   </div><!-- /view-about -->
 
   <!-- ========== SERVICES ========== -->
@@ -655,6 +701,10 @@
       </div>
     </div>
   </section>
+  <nav class="tab-pager" aria-label="ページ切り替え">
+    <a href="#about" class="tab-pager-link tab-pager-prev"><span class="tab-pager-dir">← Prev</span><span class="tab-pager-name">About</span></a>
+    <a href="#works" class="tab-pager-link tab-pager-next"><span class="tab-pager-dir">Next →</span><span class="tab-pager-name">Works</span></a>
+  </nav>
   </div><!-- /view-services -->
 
   <!-- ========== WORKS ========== -->
@@ -671,6 +721,7 @@
         <span class="section-num" data-reveal>03</span>
         <h2 class="section-title" data-reveal-title>Works</h2>
         <p class="section-sub" data-reveal>制作実績</p>
+        <p class="section-lead" data-reveal>ポータルサイト・コーポレートサイト・ブランディング映像・空撮まで。北海道を中心に手がけたプロジェクトの一部をご紹介します。各実績をクリックすると詳細をご覧いただけます。</p>
       </div>
       <div class="works-grid">
         <div class="work-item" data-reveal data-cursor-view data-work-id="1">
@@ -788,6 +839,10 @@
       </div>
     </div>
   </section>
+  <nav class="tab-pager" aria-label="ページ切り替え">
+    <a href="#services" class="tab-pager-link tab-pager-prev"><span class="tab-pager-dir">← Prev</span><span class="tab-pager-name">Services</span></a>
+    <a href="#flow" class="tab-pager-link tab-pager-next"><span class="tab-pager-dir">Next →</span><span class="tab-pager-name">Flow</span></a>
+  </nav>
   </div><!-- /view-works -->
 
   <!-- ========== FLOW ========== -->
@@ -803,6 +858,7 @@
         <span class="section-num" data-reveal>04</span>
         <h2 class="section-title" data-reveal-title>Flow</h2>
         <p class="section-sub" data-reveal>ご依頼の流れ</p>
+        <p class="section-lead" data-reveal>初回のお問い合わせから納品・運用まで。ViFightがどのようにプロジェクトを進めるのか、4つのステップでご紹介します。まずはお気軽にご相談ください。</p>
       </div>
       <div class="flow-timeline">
         <div class="flow-line"></div>
@@ -837,6 +893,10 @@
       </div>
     </div>
   </section>
+  <nav class="tab-pager" aria-label="ページ切り替え">
+    <a href="#works" class="tab-pager-link tab-pager-prev"><span class="tab-pager-dir">← Prev</span><span class="tab-pager-name">Works</span></a>
+    <a href="#faq" class="tab-pager-link tab-pager-next"><span class="tab-pager-dir">Next →</span><span class="tab-pager-name">FAQ</span></a>
+  </nav>
   </div><!-- /view-flow -->
 
   <!-- ========== FAQ ========== -->
@@ -852,6 +912,7 @@
         <span class="section-num" data-reveal>05</span>
         <h2 class="section-title" data-reveal-title>FAQ</h2>
         <p class="section-sub" data-reveal>よくある質問</p>
+        <p class="section-lead" data-reveal>ご依頼前によくいただくご質問をまとめました。ここに掲載のない疑問やご不明点も、お気軽にお問い合わせください。</p>
       </div>
       <div class="faq-list">
         <div class="faq-item" data-reveal>
@@ -912,6 +973,10 @@
       </div>
     </div>
   </section>
+  <nav class="tab-pager" aria-label="ページ切り替え">
+    <a href="#flow" class="tab-pager-link tab-pager-prev"><span class="tab-pager-dir">← Prev</span><span class="tab-pager-name">Flow</span></a>
+    <a href="#contact" class="tab-pager-link tab-pager-next"><span class="tab-pager-dir">Next →</span><span class="tab-pager-name">Contact</span></a>
+  </nav>
   </div><!-- /view-faq -->
 
   <!-- ========== CONTACT ========== -->
@@ -993,6 +1058,10 @@
       </div>
     </div>
   </section>
+  <nav class="tab-pager" aria-label="ページ切り替え">
+    <a href="#faq" class="tab-pager-link tab-pager-prev"><span class="tab-pager-dir">← Prev</span><span class="tab-pager-name">FAQ</span></a>
+    <a href="#hero" class="tab-pager-link tab-pager-next"><span class="tab-pager-dir">Next →</span><span class="tab-pager-name">Home</span></a>
+  </nav>
   </div><!-- /view-contact -->
   </main>
 
@@ -1051,6 +1120,6 @@
     </div>
   </div>
 
-  <script src="assets/js/main.js?v=20260614d"></script>
+  <script src="assets/js/main.js?v=20260614e"></script>
 </body>
 </html>

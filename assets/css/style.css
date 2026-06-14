@@ -3085,19 +3085,99 @@ body::after {
 .home-preview-sub { color: rgba(251, 247, 240, 0.6); font-size: 14px; letter-spacing: 0.1em; }
 .home-preview-head .home-more { margin-top: 0; }
 
-/* --- services preview list --- */
-.home-services { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); }
+/* --- services preview cards --- */
+.home-services {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(14px, 1.6vw, 22px);
+}
 .home-service {
   display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: clamp(18px, 2.4vw, 28px) 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  transition: padding-left 0.35s var(--ease-out), background 0.35s;
+  align-items: flex-start;
+  gap: clamp(16px, 2vw, 24px);
+  padding: clamp(22px, 2.6vw, 32px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--white);
+  transition: transform 0.4s var(--ease-out), border-color 0.4s, background 0.4s;
 }
-.home-service:hover { padding-left: 22px; background: linear-gradient(90deg, rgba(70, 226, 170, 0.09), transparent 70%); }
-.home-service-num { font-family: var(--font-en); font-size: 13px; color: var(--aurora-teal); min-width: 26px; }
-.home-service-name { font-size: clamp(17px, 2.4vw, 24px); font-weight: 500; }
+.home-service:hover {
+  transform: translateY(-3px);
+  border-color: rgba(70, 226, 170, 0.45);
+  background: linear-gradient(135deg, rgba(70, 226, 170, 0.09), rgba(150, 120, 220, 0.05));
+}
+.home-service-num {
+  font-family: var(--font-en);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--aurora-teal);
+  padding-top: 3px;
+  min-width: 24px;
+}
+.home-service-body { flex: 1; }
+.home-service-name { font-size: clamp(17px, 2.2vw, 23px); font-weight: 600; margin-bottom: 9px; }
+.home-service-desc { font-size: clamp(13px, 1.4vw, 14.5px); line-height: 1.85; color: rgba(251, 247, 240, 0.66); }
+.home-service-arrow {
+  font-family: var(--font-en);
+  font-size: 18px;
+  color: var(--aurora-green);
+  align-self: center;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.home-service:hover .home-service-arrow { opacity: 1; transform: translateX(0); }
+
+/* --- lead paragraph under a section header --- */
+.section-lead {
+  max-width: 660px;
+  margin-top: clamp(22px, 3vw, 32px);
+  color: var(--text-light);
+  font-size: clamp(15px, 1.7vw, 17px);
+  line-height: 2;
+}
+
+/* --- per-tab pager (prev / next) at the foot of each view --- */
+.tab-pager {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: clamp(44px, 6vw, 84px) clamp(20px, 4vw, 60px) clamp(70px, 9vw, 116px);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  border-top: 1px solid var(--border);
+}
+.tab-pager-link {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 7px;
+  padding: clamp(16px, 2vw, 22px) clamp(20px, 2.4vw, 28px);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  transition: border-color 0.35s, background 0.35s, transform 0.35s;
+}
+.tab-pager-next { text-align: right; align-items: flex-end; }
+.tab-pager-link:hover {
+  border-color: rgba(70, 226, 170, 0.55);
+  background: linear-gradient(135deg, rgba(70, 226, 170, 0.06), transparent 70%);
+  transform: translateY(-2px);
+}
+.tab-pager-dir {
+  font-family: var(--font-en);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--accent-warm);
+}
+.tab-pager-name {
+  font-family: var(--font-en);
+  font-size: clamp(18px, 2.4vw, 24px);
+  font-weight: 600;
+  color: var(--text);
+}
 
 /* --- works preview --- */
 .home-works { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2vw, 26px); }
