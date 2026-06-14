@@ -193,7 +193,9 @@ ul {
   top: 0;
   left: 0;
   will-change: transform;
-  transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out), background 0.3s;
+  /* faint contrasting ring so the dot keeps an edge on any background */
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5), 0 0 6px rgba(0, 0, 0, 0.22);
+  transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out), background 0.3s, box-shadow 0.3s;
 }
 
 /* hide the custom cursor until the pointer first moves (no stray ring at 0,0) */
@@ -249,6 +251,7 @@ body.cursor-ready .cursor, body.cursor-ready .cursor-follower { opacity: 1; }
 /* Cursor on dark sections — invert to white */
 body.on-dark .cursor {
   background: var(--white);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4), 0 0 8px rgba(0, 0, 0, 0.45);
 }
 body.on-dark .cursor-follower {
   border-color: rgba(250, 249, 247, 0.45);
