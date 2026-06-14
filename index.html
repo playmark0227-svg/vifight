@@ -31,7 +31,7 @@
   <meta name="twitter:image" content="https://playmark0227-svg.github.io/vifight/assets/images/hero/hero-cover.jpg">
 
   <link rel="preload" as="image" href="assets/images/hero/hero-cover.jpg" fetchpriority="high">
-  <link rel="stylesheet" href="assets/css/style.css?v=20260613o">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260614b">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Interのみ同期（Latin文字・軽量）、Noto Sans JPは非同期で遅延読み込み -->
@@ -136,7 +136,10 @@
     </div>
   </div>
 
+  <main id="views">
+
   <!-- ========== HERO ========== -->
+  <div class="view view--home is-active" id="view-home">
   <section id="hero" class="hero">
     <div class="hero-visual" aria-hidden="true">
       <div class="hero-visual-layer hero-visual-base"></div>
@@ -189,13 +192,10 @@
       </div>
     </div>
   </section>
-
-  <!-- angular divider: hero(espresso) → about(white) -->
-  <div class="section-divider" style="background:#15100b;color:var(--white)" aria-hidden="true">
-    <svg viewBox="0 0 1440 72" preserveAspectRatio="none"><polygon points="0,72 0,40 160,56 320,22 480,50 640,18 800,48 960,24 1120,52 1280,30 1440,44 1440,72"/></svg>
-  </div>
+  </div><!-- /view-home -->
 
   <!-- ========== ABOUT ========== -->
+  <div class="view" id="view-about">
   <section id="about" class="section about">
     <div class="float-shapes" aria-hidden="true">
       <div class="float-shape tri s5"></div>
@@ -309,13 +309,10 @@
       </div>
     </div>
   </section>
-
-  <!-- angular divider: voice(white) → services(cream) -->
-  <div class="section-divider section-divider--sm" style="background:var(--white);color:var(--bg)" aria-hidden="true">
-    <svg viewBox="0 0 1440 72" preserveAspectRatio="none"><polygon points="0,72 0,44 180,58 360,28 540,54 720,24 900,50 1080,30 1260,56 1440,40 1440,72"/></svg>
-  </div>
+  </div><!-- /view-about -->
 
   <!-- ========== SERVICES ========== -->
+  <div class="view" id="view-services">
   <section id="services" class="section services">
     <div class="float-shapes" aria-hidden="true">
       <div class="float-shape tri s1"></div>
@@ -561,8 +558,10 @@
       </div>
     </div>
   </section>
+  </div><!-- /view-services -->
 
   <!-- ========== WORKS ========== -->
+  <div class="view" id="view-works">
   <section id="works" class="section works">
     <div class="float-shapes" aria-hidden="true">
       <div class="float-shape diamond s1"></div>
@@ -691,13 +690,10 @@
       </div>
     </div>
   </section>
-
-  <!-- angular divider: works(white) → flow(cream) -->
-  <div class="section-divider section-divider--sm" style="background:var(--white);color:var(--bg)" aria-hidden="true">
-    <svg viewBox="0 0 1440 72" preserveAspectRatio="none"><polygon points="0,72 0,40 200,56 400,26 600,52 800,22 1000,50 1200,30 1440,46 1440,72"/></svg>
-  </div>
+  </div><!-- /view-works -->
 
   <!-- ========== FLOW ========== -->
+  <div class="view" id="view-flow">
   <section id="flow" class="section flow">
     <div class="float-shapes" aria-hidden="true">
       <div class="float-shape tri s2"></div>
@@ -742,8 +738,10 @@
       </div>
     </div>
   </section>
+  </div><!-- /view-flow -->
 
   <!-- ========== FAQ ========== -->
+  <div class="view" id="view-faq">
   <section id="faq" class="section faq">
     <div class="float-shapes" aria-hidden="true">
       <div class="float-shape diamond s3"></div>
@@ -814,13 +812,10 @@
       </div>
     </div>
   </section>
-
-  <!-- angular divider: faq(white) → contact(cream) -->
-  <div class="section-divider section-divider--sm" style="background:var(--white);color:var(--bg)" aria-hidden="true">
-    <svg viewBox="0 0 1440 72" preserveAspectRatio="none"><polygon points="0,72 0,42 160,56 320,26 480,52 640,24 800,50 960,28 1120,54 1280,32 1440,46 1440,72"/></svg>
-  </div>
+  </div><!-- /view-faq -->
 
   <!-- ========== CONTACT ========== -->
+  <div class="view" id="view-contact">
   <section id="contact" class="section contact">
     <div class="float-shapes" aria-hidden="true">
       <div class="float-shape tri s1"></div>
@@ -897,8 +892,10 @@
       </div>
     </div>
   </section>
+  </div><!-- /view-contact -->
+  </main>
 
-  <!-- angular divider: contact(cream) → footer(espresso) -->
+  <!-- angular divider: active view → footer(espresso) -->
   <div class="section-divider" style="background:var(--bg);color:#1c1611" aria-hidden="true">
     <svg viewBox="0 0 1440 72" preserveAspectRatio="none"><polygon points="0,72 0,38 144,54 288,22 432,52 576,16 720,48 864,20 1008,50 1152,26 1296,56 1440,32 1440,72"/></svg>
   </div>
@@ -953,6 +950,6 @@
     </div>
   </div>
 
-  <script src="assets/js/main.js?v=20260614a"></script>
+  <script src="assets/js/main.js?v=20260614b"></script>
 </body>
 </html>

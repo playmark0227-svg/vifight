@@ -344,6 +344,14 @@ body.on-dark .cursor-follower.view::after {
   width: 100%;
 }
 
+/* active tab indicator */
+.nav-links a.active {
+  font-weight: 600;
+}
+.nav-links a.active::after {
+  width: 100%;
+}
+
 .nav-cta {
   padding: 10px 28px !important;
   border: 1px solid var(--text);
@@ -2894,4 +2902,18 @@ body::after {
   letter-spacing: 0.3em;
   color: #c8d6ea;
   text-shadow: 0 0 16px rgba(150, 180, 240, 0.5);
+}
+
+/* ---------- TABBED VIEWS (one-pager → per-tab) ---------- */
+/* Each nav item shows one view at a time. Only opacity is animated on entry —
+   never transform/filter — so position:fixed descendants (e.g. the work modal)
+   keep anchoring to the viewport. */
+.view { display: none; }
+.view.is-active {
+  display: block;
+  animation: viewFade 0.55s ease both;
+}
+@keyframes viewFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }

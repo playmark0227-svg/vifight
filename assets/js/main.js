@@ -200,6 +200,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---------- UNIFIED SCROLL LOOP ----------
   const header = document.getElementById('header');
+  // True only while the Home (hero) tab is active. Every other tab sits over
+  // light sections, so the header must use its solid / dark-text style there.
+  let onHomeView = true;
   const progressBar = document.createElement('div');
   progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent-brown),var(--accent));z-index:10001;width:0%;pointer-events:none;';
   document.body.appendChild(progressBar);
@@ -227,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function onScrollFrame() {
     const scrollY = currentScrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    header.classList.toggle('scrolled', scrollY > 80);
+    header.classList.toggle('scrolled', scrollY > 80 || !onHomeView);
     progressBar.style.width = ((scrollY / docHeight) * 100) + '%';
     for (const { el, speed } of parallaxEls) {
       const rect = el.getBoundingClientRect();
@@ -295,16 +298,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ---------- SMOOTH SCROLL ----------
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = document.querySelector(link.getAttribute('href'));
-      if (target) {
-        window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
-      }
-    });
-  });
+  // ---------- IN-PAGE ANCHOR LINKS ----------
+  // Hash links that map to a tab are handled by the TAB ROUTER below; any
+  // remaining in-page anchors fall back to a smooth scroll.
 
   // ---------- INTERSECTION OBSERVERS (統合) ----------
   const revealObserver = new IntersectionObserver((entries) => {
@@ -355,6 +351,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-reveal], [data-count]').forEach(el => revealObserver.observe(el));
 
   function animateCount(el) {
+    if (el.dataset.counted) return;   // guard: reveal observer + tab router may both call
+    el.dataset.counted = '1';
     const target = parseInt(el.getAttribute('data-count'));
     const start = performance.now();
     const duration = 2000;
@@ -383,6 +381,84 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.works-grid .work-item').forEach((el, i) => { el.style.transitionDelay = `${i * 0.1}s`; });
   document.querySelectorAll('.service-item').forEach((el, i) => { el.style.transitionDelay = `${i * 0.08}s`; });
   document.querySelectorAll('.flow-step').forEach((el, i) => { el.style.transitionDelay = `${i * 0.12}s`; });
+
+  // ---------- TAB ROUTER (single-page → per-tab views) ----------
+  // The long one-pager is split into tabbed views; clicking a nav item shows
+  // just that section. Hash routing keeps URLs (/#about) shareable and makes
+  // the browser back/forward buttons step through tabs.
+  const views = document.querySelectorAll('.view');
+  if (views.length) {
+    const sectionToView = {
+      hero: 'view-home', about: 'view-about', services: 'view-services',
+      works: 'view-works', flow: 'view-flow', faq: 'view-faq', contact: 'view-contact'
+    };
+    const viewToSection = {
+      'view-home': 'hero', 'view-about': 'about', 'view-services': 'services',
+      'view-works': 'works', 'view-flow': 'flow', 'view-faq': 'faq', 'view-contact': 'contact'
+    };
+    const viewIdFromHash = (hash) => sectionToView[(hash || '').replace('#', '')] || null;
+    let currentView = document.querySelector('.view.is-active') || views[0];
+
+    // Reveal every animated element in a freshly-shown view at once; the
+    // existing per-element transition delays still cascade them in nicely.
+    function revealView(viewEl) {
+      viewEl.querySelectorAll('[data-reveal]').forEach(el => { el.classList.add('visible'); revealObserver.unobserve(el); });
+      viewEl.querySelectorAll('[data-reveal-title]').forEach(el => { el.querySelectorAll('.char').forEach(c => c.classList.add('visible')); revealObserver.unobserve(el); });
+      viewEl.querySelectorAll('[data-reveal-words]').forEach(el => { el.querySelectorAll('.word').forEach(w => w.classList.add('visible')); revealObserver.unobserve(el); });
+      viewEl.querySelectorAll('[data-count]').forEach(el => { animateCount(el); revealObserver.unobserve(el); });
+    }
+
+    function showView(viewId, isInitial) {
+      const target = document.getElementById(viewId);
+      if (!target) return;
+      views.forEach(v => v.classList.toggle('is-active', v === target));
+      currentView = target;
+
+      // sync nav highlight (Home has no nav link → all inactive)
+      const sectionId = viewToSection[viewId] || '';
+      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + sectionId));
+
+      // header: solid / dark-text style on every tab except Home (hero)
+      onHomeView = (viewId === 'view-home');
+      header.classList.toggle('scrolled', window.scrollY > 80 || !onHomeView);
+
+      // close the work modal if a tab change happens while it's open
+      const wm = document.getElementById('work-modal');
+      if (wm && wm.classList.contains('active')) {
+        wm.classList.remove('active');
+        wm.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+      }
+
+      // Let the hero keep its scripted first-load entrance; for every other
+      // transition, jump to top, bloom the content in, and re-measure canvases.
+      const heroEntrance = isInitial && viewId === 'view-home';
+      if (!heroEntrance) {
+        if (!isInitial) window.scrollTo(0, 0);
+        revealView(target);
+        window.dispatchEvent(new Event('resize'));
+      }
+    }
+
+    function navigateTo(hash, isInitial) {
+      showView(viewIdFromHash(hash) || 'view-home', isInitial);
+    }
+
+    // Intercept hash links that map to a tab; push history (no native jump).
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const hash = link.getAttribute('href');
+        const viewId = viewIdFromHash(hash);
+        if (!viewId) return;   // unknown anchor → leave default behaviour
+        e.preventDefault();
+        if (location.hash !== hash) history.pushState(null, '', hash);
+        showView(viewId, false);
+      });
+    });
+
+    window.addEventListener('popstate', () => navigateTo(location.hash, false));
+    navigateTo(location.hash, true);
+  }
 
   // ---------- TILT EFFECT ----------
   document.querySelectorAll('.work-item').forEach(item => {
@@ -1228,16 +1304,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ---------- EASTER EGG: KONAMI CODE ----------
-  const konamiCode = [38,38,40,40,37,39,37,39,66,65];
-  let konamiIndex = 0;
-  document.addEventListener('keydown', (e) => {
-    konamiIndex = e.keyCode === konamiCode[konamiIndex] ? konamiIndex + 1 : 0;
-    if (konamiIndex === konamiCode.length) {
-      document.body.style.cssText += 'transition:filter 0.5s;filter:hue-rotate(180deg);';
-      setTimeout(() => { document.body.style.filter = ''; }, 3000);
-      konamiIndex = 0;
-    }
-  });
+  // (The Konami code now triggers the full Aurora Storm easter egg — see the
+  // AURORA STORM module above. The old hue-rotate flash was removed so the two
+  // effects don't fight over the same key sequence.)
 
 });
