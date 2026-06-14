@@ -3236,3 +3236,154 @@ body::after {
   .home-services { grid-template-columns: 1fr; }
   .home-works { grid-template-columns: 1fr; gap: 28px; }
 }
+
+/* ============================================================
+   THICKER CONTENT — strengths, profile, highlights, callouts
+   ============================================================ */
+
+/* --- Home: strengths cards (dark) --- */
+.strength-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(14px, 1.6vw, 22px);
+}
+.strength-card {
+  padding: clamp(26px, 3vw, 40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: transform 0.4s var(--ease-out), border-color 0.4s, background 0.4s;
+}
+.strength-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(70, 226, 170, 0.4);
+  background: linear-gradient(135deg, rgba(70, 226, 170, 0.08), rgba(150, 120, 220, 0.04) 70%, transparent);
+}
+.strength-num {
+  font-family: var(--font-en);
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  color: var(--aurora-teal);
+}
+.strength-card h3 {
+  font-size: clamp(18px, 2.2vw, 24px);
+  font-weight: 600;
+  margin: 12px 0 14px;
+  line-height: 1.4;
+}
+.strength-card p {
+  font-size: clamp(13px, 1.45vw, 15px);
+  line-height: 1.95;
+  color: rgba(251, 247, 240, 0.7);
+}
+
+/* --- About: company profile table (light) --- */
+.about-profile { margin-top: clamp(56px, 8vw, 96px); }
+.about-profile-title {
+  font-family: var(--font-en);
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: clamp(24px, 3vw, 36px);
+}
+.about-profile-title span { color: var(--accent-warm); font-size: 0.6em; letter-spacing: 0.15em; display: block; margin-bottom: 6px; }
+.profile-table { border-top: 1px solid var(--border); }
+.profile-table > div {
+  display: flex;
+  gap: clamp(14px, 3vw, 44px);
+  padding: clamp(15px, 2vw, 22px) 4px;
+  border-bottom: 1px solid var(--border);
+}
+.profile-table dt {
+  font-family: var(--font-en);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--accent-warm);
+  min-width: clamp(96px, 16vw, 140px);
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.profile-table dd { color: var(--text-light); font-size: clamp(14px, 1.5vw, 15.5px); line-height: 1.85; }
+
+/* --- Works: highlight figures (light) --- */
+.works-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(28px, 6vw, 72px);
+  margin-bottom: clamp(40px, 5vw, 64px);
+  padding-bottom: clamp(32px, 4vw, 48px);
+  border-bottom: 1px solid var(--border);
+}
+.wh-item { display: flex; flex-direction: column; gap: 8px; }
+.wh-num {
+  font-family: var(--font-en);
+  font-size: clamp(34px, 4.6vw, 54px);
+  font-weight: 600;
+  line-height: 1;
+  background: linear-gradient(120deg, var(--aurora-green), var(--aurora-ice));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+}
+.wh-label { font-size: 13px; color: var(--text-light); letter-spacing: 0.03em; line-height: 1.6; }
+
+/* --- reusable callout band (light) --- */
+.tab-callout {
+  margin-top: clamp(44px, 6vw, 76px);
+  padding: clamp(28px, 4vw, 46px);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--aurora-green);
+  background: linear-gradient(120deg, rgba(70, 226, 170, 0.07), rgba(150, 120, 220, 0.03) 60%, transparent);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: clamp(20px, 3vw, 40px);
+  flex-wrap: wrap;
+}
+.tab-callout-text h3 { font-size: clamp(18px, 2.3vw, 25px); font-weight: 600; margin-bottom: 10px; }
+.tab-callout-text p { color: var(--text-light); font-size: clamp(14px, 1.5vw, 16px); line-height: 1.9; }
+.tab-callout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 34px;
+  border-radius: 100px;
+  background: var(--text);
+  color: var(--white);
+  font-family: var(--font-en);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  transition: transform 0.3s var(--ease-out), background 0.3s, gap 0.3s;
+}
+.tab-callout-btn span { transition: transform 0.3s; }
+.tab-callout-btn:hover { transform: translateY(-2px); background: var(--accent-warm); gap: 14px; }
+.tab-callout-btn:hover span { transform: translateX(4px); }
+
+/* --- Flow: reassurance points (light) --- */
+.flow-assure {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 26px);
+  margin-top: clamp(48px, 6vw, 80px);
+}
+.flow-assure-item {
+  padding: clamp(22px, 2.6vw, 30px);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.4);
+}
+.flow-assure-item .fa-ico {
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(120deg, var(--aurora-green), var(--aurora-teal));
+  color: #0d1a16; font-weight: 700; margin-bottom: 16px;
+}
+.flow-assure-item h4 { font-size: clamp(15px, 1.7vw, 18px); font-weight: 600; margin-bottom: 9px; }
+.flow-assure-item p { font-size: 13.5px; color: var(--text-light); line-height: 1.85; }
+
+@media (max-width: 760px) {
+  .strength-grid { grid-template-columns: 1fr; }
+  .flow-assure { grid-template-columns: 1fr; }
+  .tab-callout { flex-direction: column; align-items: flex-start; }
+}
