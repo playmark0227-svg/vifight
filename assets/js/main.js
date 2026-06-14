@@ -541,11 +541,16 @@ document.addEventListener('DOMContentLoaded', () => {
     startHero();
   }
 
+  // Shared "wind" written by the mobile gyro handler, read by the aurora
+  // canvas so tilting the phone drifts the northern lights.
+  let auroraWind = 0;
+
   // ---------- INTERACTIVE AURORA ("Aurora Brush") ----------
   // The hero sky responds to the pointer: glide the cursor (or drag a finger)
   // across the hero and luminous aurora light gathers and rises from it, like
-  // stirring the northern lights by hand. A gentle idle auto-stir keeps the sky
-  // alive between interactions. Disabled for reduced-motion; scaled on mobile.
+  // stirring the northern lights by hand. Click/tap bursts a ring of light.
+  // A gentle idle auto-stir keeps the sky alive between interactions.
+  // Disabled for reduced-motion; scaled on mobile.
   const auroraCanvas = document.getElementById('hero-aurora-canvas');
   if (auroraCanvas && !reduceMotion) {
     const actx = auroraCanvas.getContext('2d');
@@ -576,6 +581,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sprites = palette.map(makeGlowSprite);
 
     let wisps = [];
+    let bursts = [];
     let aVisible = true;
     let aRunning = false;
     let lastX = 0, lastY = 0, haveLast = false;
@@ -621,11 +627,39 @@ document.addEventListener('DOMContentLoaded', () => {
       startAurora();
     }
 
+    // Click / tap → burst a ring of aurora light radiating from the point.
+    function burstAt(clientX, clientY) {
+      const rect = heroEl.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+      if (x < 0 || y < 0 || x > rect.width || y > rect.height) return;
+      bursts.push({ x, y, r: 0, life: 1 });
+      const m = isSmall ? 10 : 16;
+      for (let k = 0; k < m; k++) {
+        const ang = (Math.PI * 2 * k) / m + Math.random() * 0.4;
+        const sp = 2 + Math.random() * 3.4;
+        if (wisps.length >= MAX_WISPS) wisps.shift();
+        wisps.push({
+          x, y,
+          vx: Math.cos(ang) * sp,
+          vy: Math.sin(ang) * sp - 0.4,
+          r: 14 + Math.random() * 18,
+          life: 1,
+          decay: 0.013 + Math.random() * 0.012,
+          sprite: sprites[(Math.random() * sprites.length) | 0],
+          sway: Math.random() * Math.PI * 2,
+          swaySpeed: 0.02 + Math.random() * 0.03
+        });
+      }
+      startAurora();
+    }
+
     heroEl.addEventListener('mousemove', e => stirAt(e.clientX, e.clientY), { passive: true });
     heroEl.addEventListener('touchmove', e => {
       const t = e.touches[0];
       if (t) stirAt(t.clientX, t.clientY);
     }, { passive: true });
+    heroEl.addEventListener('pointerdown', e => burstAt(e.clientX, e.clientY), { passive: true });
     heroEl.addEventListener('mouseleave', () => { haveLast = false; });
 
     function drawAurora() {
@@ -643,7 +677,7 @@ document.addEventListener('DOMContentLoaded', () => {
       actx.globalCompositeOperation = 'lighter';   // additive → luminous glow
       for (const p of wisps) {
         p.sway += p.swaySpeed;
-        p.x += p.vx + Math.sin(p.sway) * 0.5;
+        p.x += p.vx + Math.sin(p.sway) * 0.5 + auroraWind * 0.7;
         p.y += p.vy;
         p.vy *= 0.99;
         p.life -= p.decay;
@@ -654,10 +688,22 @@ document.addEventListener('DOMContentLoaded', () => {
         actx.globalAlpha = a * 0.5;
         actx.drawImage(p.sprite, p.x - wd / 2, p.y - hd / 2, wd, hd);
       }
+      // expanding rings from click/tap bursts
+      for (const b of bursts) {
+        b.r += 6;
+        b.life -= 0.025;
+        actx.globalAlpha = Math.max(0, b.life) * 0.5;
+        actx.strokeStyle = 'rgba(126, 240, 200, 1)';
+        actx.lineWidth = 2.5;
+        actx.beginPath();
+        actx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+        actx.stroke();
+      }
       actx.globalAlpha = 1;
       actx.globalCompositeOperation = 'source-over';
 
       wisps = wisps.filter(p => p.life > 0 && p.y > -70);
+      bursts = bursts.filter(b => b.life > 0);
       requestAnimationFrame(drawAurora);
     }
     function startAurora() {
@@ -670,6 +716,224 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0 }).observe(heroEl);
     startAurora();
   }
+
+  // ---------- DEVICE TILT (mobile gyro parallax) ----------
+  // On phones, tilting the device drifts the aurora and nudges the skyline,
+  // bringing the hero's depth-parallax to touch devices. iOS needs a one-time
+  // motion permission, requested on the first tap.
+  if (isTouch && !reduceMotion) {
+    const gAurora = document.querySelector('.hero-aurora');
+    const gRidges = Array.prototype.slice.call(document.querySelectorAll('.hero-ridge'));
+    let tgx = 0, tgy = 0, cgx = 0, cgy = 0, gRunning = false;
+
+    function onOrient(e) {
+      if (e.gamma == null && e.beta == null) return;
+      tgx = Math.max(-1, Math.min(1, (e.gamma || 0) / 35));        // left-right
+      tgy = Math.max(-1, Math.min(1, ((e.beta || 0) - 40) / 45));  // front-back
+      startGyro();
+    }
+    function gyroLoop() {
+      cgx += (tgx - cgx) * 0.08;
+      cgy += (tgy - cgy) * 0.08;
+      if (gAurora) gAurora.style.transform = `translate(${(cgx * 16).toFixed(1)}px, ${(cgy * 8).toFixed(1)}px)`;
+      for (let i = 0; i < gRidges.length; i++) {
+        const f = 16 - i * 4;
+        gRidges[i].style.transform = `translate(${(cgx * f).toFixed(1)}px, ${(cgy * f * 0.4).toFixed(1)}px)`;
+      }
+      auroraWind = cgx * 1.4;   // tilt feeds the aurora canvas drift
+      if (Math.abs(tgx - cgx) > 0.001 || Math.abs(tgy - cgy) > 0.001) {
+        requestAnimationFrame(gyroLoop);
+      } else {
+        gRunning = false;
+      }
+    }
+    function startGyro() { if (!gRunning) { gRunning = true; requestAnimationFrame(gyroLoop); } }
+    function attachOrient() { window.addEventListener('deviceorientation', onOrient, { passive: true }); }
+
+    const DOE = window.DeviceOrientationEvent;
+    if (DOE && typeof DOE.requestPermission === 'function') {
+      // iOS 13+: must ask from a user gesture
+      window.addEventListener('touchend', function ask() {
+        DOE.requestPermission().then(s => { if (s === 'granted') attachOrient(); }).catch(() => {});
+      }, { once: true, passive: true });
+    } else if (DOE) {
+      attachOrient();
+    }
+  }
+
+  // ---------- AURORA STORM (hidden easter egg) ----------
+  // A secret full-screen northern-lights reveal. Triggers: the Konami code
+  // (↑↑↓↓←→←→ B A), typing "aurora" / "vifight", or 5 quick taps on the logo.
+  (function auroraStorm() {
+    const overlay = document.getElementById('aurora-storm-overlay');
+    const canvas = document.getElementById('aurora-storm');
+    if (!overlay || !canvas) return;
+    const sctx = canvas.getContext('2d');
+    let active = false;
+    let rafId = 0;
+    let bands = [];
+    let sparks = [];
+    let startT = 0;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    // Soft ascending shimmer. User-initiated (a keypress/tap), so this respects
+    // browser autoplay policy. Wrapped in try/catch — silent if audio is blocked.
+    function chime() {
+      try {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        const ac = new AC();
+        [392, 523.25, 659.25, 783.99].forEach((f, i) => {   // G4 C5 E5 G5
+          const o = ac.createOscillator();
+          const g = ac.createGain();
+          o.type = 'sine';
+          o.frequency.value = f;
+          const t0 = ac.currentTime + i * 0.12;
+          g.gain.setValueAtTime(0, t0);
+          g.gain.linearRampToValueAtTime(0.06, t0 + 0.05);
+          g.gain.exponentialRampToValueAtTime(0.0001, t0 + 1.6);
+          o.connect(g).connect(ac.destination);
+          o.start(t0);
+          o.stop(t0 + 1.7);
+        });
+        setTimeout(() => { try { ac.close(); } catch (e) {} }, 2600);
+      } catch (e) { /* audio unavailable — no-op */ }
+    }
+
+    function build() {
+      const w = canvas.width, h = canvas.height;
+      const cols = [
+        [80, 240, 185], [120, 232, 216], [150, 205, 235], [196, 140, 228], [236, 132, 200]
+      ];
+      bands = [];
+      const n = reduceMotion ? 2 : 4;
+      for (let i = 0; i < n; i++) {
+        bands.push({
+          y: h * (0.12 + i * 0.14),
+          h: h * (0.18 + Math.random() * 0.12),
+          amp: h * (0.04 + Math.random() * 0.05),
+          freq: 0.004 + Math.random() * 0.004,
+          speed: 0.5 + Math.random() * 0.8,
+          phase: Math.random() * Math.PI * 2,
+          c: cols[i % cols.length],
+          a: 0.5 + Math.random() * 0.5
+        });
+      }
+      sparks = [];
+      const sn = reduceMotion ? 0 : (isSmall ? 40 : 90);
+      for (let i = 0; i < sn; i++) {
+        sparks.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 1.8 + 0.4,
+          v: 0.3 + Math.random() * 0.9,
+          tw: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    function frame(now) {
+      if (!active) return;
+      const w = canvas.width, h = canvas.height;
+      const tt = (now - startT) / 1000;
+      sctx.clearRect(0, 0, w, h);
+      sctx.globalCompositeOperation = 'lighter';
+
+      const step = Math.max(16, w / 48);
+      for (const band of bands) {
+        const g = sctx.createLinearGradient(0, band.y - band.amp, 0, band.y + band.h + band.amp);
+        g.addColorStop(0,    `rgba(${band.c[0]},${band.c[1]},${band.c[2]},0)`);
+        g.addColorStop(0.45, `rgba(${band.c[0]},${band.c[1]},${band.c[2]},${0.2 * band.a})`);
+        g.addColorStop(1,    `rgba(${band.c[0]},${band.c[1]},${band.c[2]},0)`);
+        sctx.fillStyle = g;
+        sctx.beginPath();
+        sctx.moveTo(0, band.y + band.h);
+        for (let x = 0; x <= w; x += step) {
+          const y = band.y
+            + Math.sin(x * band.freq + tt * band.speed + band.phase) * band.amp
+            + Math.sin(x * band.freq * 0.5 - tt * band.speed * 0.7) * band.amp * 0.4;
+          sctx.lineTo(x, y);
+        }
+        for (let x = w; x >= 0; x -= step) {
+          const y = band.y + band.h
+            + Math.sin(x * band.freq + tt * band.speed + band.phase + 1) * band.amp * 0.8;
+          sctx.lineTo(x, y);
+        }
+        sctx.closePath();
+        sctx.fill();
+      }
+
+      for (const s of sparks) {
+        s.y -= s.v;
+        s.tw += 0.05;
+        if (s.y < -5) { s.y = h + 5; s.x = Math.random() * w; }
+        sctx.globalAlpha = 0.4 + 0.6 * Math.abs(Math.sin(s.tw));
+        sctx.fillStyle = 'rgba(232, 250, 245, 1)';
+        sctx.beginPath();
+        sctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        sctx.fill();
+      }
+      sctx.globalAlpha = 1;
+      sctx.globalCompositeOperation = 'source-over';
+      rafId = requestAnimationFrame(frame);
+    }
+
+    function trigger() {
+      if (active) return;
+      active = true;
+      resize();
+      build();
+      chime();
+      overlay.classList.add('active');
+      requestAnimationFrame(() => overlay.classList.add('show-msg'));
+      if (!reduceMotion) {
+        startT = performance.now();
+        rafId = requestAnimationFrame(frame);
+      }
+      setTimeout(() => overlay.classList.remove('show-msg'), 5600);
+      setTimeout(() => overlay.classList.remove('active'), 6500);
+      setTimeout(() => {
+        active = false;
+        if (rafId) cancelAnimationFrame(rafId);
+        sctx.clearRect(0, 0, canvas.width, canvas.height);
+      }, 7600);
+    }
+
+    window.addEventListener('resize', debounce(() => { if (active) resize(); }, 150), { passive: true });
+
+    // Konami code + typed-word triggers
+    const konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+    let kIdx = 0;
+    let typed = '';
+    document.addEventListener('keydown', (e) => {
+      // never hijack typing in form fields (e.g. the contact form)
+      const t = e.target;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+      const code = e.keyCode || e.which;
+      kIdx = (code === konami[kIdx]) ? kIdx + 1 : (code === konami[0] ? 1 : 0);
+      if (kIdx === konami.length) { kIdx = 0; trigger(); }
+      if (e.key && e.key.length === 1) {
+        typed = (typed + e.key.toLowerCase()).slice(-7);
+        if (typed.endsWith('aurora') || typed.endsWith('vifight')) trigger();
+      }
+    });
+
+    // Mobile-friendly trigger: 5 quick taps on the logo
+    const logo = document.querySelector('.nav-logo');
+    if (logo) {
+      let taps = 0, tapT = 0;
+      logo.addEventListener('click', () => {
+        const now = performance.now();
+        taps = (now - tapT < 600) ? taps + 1 : 1;
+        tapT = now;
+        if (taps >= 5) { taps = 0; trigger(); }
+      });
+    }
+  })();
 
   // ---------- PHILOSOPHY PARTICLES ----------
   const phCanvas = document.getElementById('philosophy-particles');

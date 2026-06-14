@@ -2822,3 +2822,76 @@ body::after {
     scroll-behavior: auto !important;
   }
 }
+
+/* ---------- AURORA STORM (hidden easter egg) ---------- */
+/* Full-screen northern-lights takeover, triggered by a secret code
+   (Konami / typing "aurora" / 5 taps on the logo). Controlled by main.js. */
+#aurora-storm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.9s ease, visibility 0s linear 0.9s;
+  background:
+    radial-gradient(ellipse 130% 80% at 50% -5%, rgba(46, 226, 174, 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 90% 65% at 72% 16%, rgba(168, 122, 224, 0.16) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 60% at 24% 22%, rgba(96, 210, 222, 0.14) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(5, 8, 15, 0.86) 0%, rgba(6, 10, 18, 0.52) 48%, rgba(4, 7, 13, 0.88) 100%);
+}
+#aurora-storm-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.9s ease;
+}
+#aurora-storm {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.aurora-storm-msg {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 24px;
+  opacity: 0;
+  transform: translateY(22px) scale(0.94);
+  transition: opacity 1.1s ease, transform 1.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+#aurora-storm-overlay.show-msg .aurora-storm-msg {
+  opacity: 1;
+  transform: none;
+}
+.aurora-storm-label {
+  display: block;
+  font-family: var(--font-en, sans-serif);
+  font-size: clamp(11px, 2.2vw, 14px);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: #8ff3d0;
+  margin-bottom: clamp(18px, 3vw, 28px);
+  text-shadow: 0 0 18px rgba(96, 240, 196, 0.8);
+}
+.aurora-storm-line {
+  font-size: clamp(24px, 5.4vw, 52px);
+  font-weight: 600;
+  line-height: 1.5;
+  color: #f4fbff;
+  letter-spacing: 0.04em;
+  text-shadow:
+    0 0 22px rgba(120, 240, 205, 0.55),
+    0 0 48px rgba(150, 180, 240, 0.4);
+}
+.aurora-storm-sign {
+  display: block;
+  margin-top: clamp(16px, 3vw, 26px);
+  font-family: var(--font-en, sans-serif);
+  font-size: clamp(13px, 2.6vw, 18px);
+  letter-spacing: 0.3em;
+  color: #c8d6ea;
+  text-shadow: 0 0 16px rgba(150, 180, 240, 0.5);
+}
