@@ -52,6 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
+  // One debounced resize listener fans out to every component that needs to
+  // re-measure, instead of each registering its own window 'resize' handler.
+  const resizeFns = [];
+  window.addEventListener('resize', debounce(() => {
+    for (const fn of resizeFns) fn();
+  }, 150), { passive: true });
+
   // Trigger hideLoader after window load (with a short min display time), OR via safety fallback.
   if (document.readyState === 'complete') {
     setTimeout(hideLoader, 1000);
@@ -130,12 +137,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const follower = document.getElementById('cursor-follower');
   let mouseX = 0, mouseY = 0;
   let followerX = 0, followerY = 0;
+  let particles = [];                          // cursor-trail particles (drawn in mainLoop)
+  const trailOn = !reduceMotion && !isTouch;
+  let lastTrailTime = 0;
 
+  // Single global pointer handler: cursor dot + dark-section test (against
+  // cached rects, no layout read) + throttled trail spawn — one listener
+  // instead of three separate mousemove handlers.
   document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
     cursor.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
     if (!document.body.classList.contains('cursor-ready')) document.body.classList.add('cursor-ready');
+    checkDark();
+    if (trailOn && e.timeStamp - lastTrailTime >= 80) {
+      lastTrailTime = e.timeStamp;
+      particles.push({ x: mouseX, y: mouseY, life: 1, vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5 });
+      if (particles.length > 12) particles.shift();
+    }
   }, { passive: true });
 
   // Cursor interactions (委譲で一括)
@@ -161,24 +180,13 @@ document.addEventListener('DOMContentLoaded', () => {
   trailCanvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9997;';
   document.body.appendChild(trailCanvas);
   const ctx = trailCanvas.getContext('2d');
-  let particles = [];
   trailCanvas.width = window.innerWidth;
   trailCanvas.height = window.innerHeight;
-  window.addEventListener('resize', () => {
+  resizeFns.push(() => {
     trailCanvas.width = window.innerWidth;
     trailCanvas.height = window.innerHeight;
-  }, { passive: true });
-
-  let lastTrailTime = 0;
-  if (!reduceMotion && !isTouch) {
-    document.addEventListener('mousemove', (e) => {
-      const now = Date.now();
-      if (now - lastTrailTime < 80) return;
-      lastTrailTime = now;
-      particles.push({ x: e.clientX, y: e.clientY, life: 1, vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5 });
-      if (particles.length > 12) particles.shift();
-    }, { passive: true });
-  }
+  });
+  // (trail particles are spawned by the unified pointer handler above)
 
   // ---------- MAGNETIC BUTTONS ----------
   const magneticEls = document.querySelectorAll('[data-magnetic]');
@@ -238,6 +246,9 @@ document.addEventListener('DOMContentLoaded', () => {
       el.style.transform = `translateY(${center * speed}px)`;
     }
     lastScrollY = scrollY;
+    // sections shifted under the pointer → refresh dark-cursor rects + state
+    computeDarkRects();
+    checkDark();
     ticking = false;
   }
 
@@ -523,7 +534,7 @@ document.addEventListener('DOMContentLoaded', () => {
       heroCanvas.height = hero.offsetHeight;
     }
     resizeHeroCanvas();
-    window.addEventListener('resize', debounce(resizeHeroCanvas, 150), { passive: true });
+    resizeFns.push(resizeHeroCanvas);
 
     for (let i = 0; i < heroParticleCount; i++) {
       particles.push({
@@ -668,7 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
       auroraCanvas.height = heroEl.offsetHeight;
     }
     resizeAuroraCanvas();
-    window.addEventListener('resize', debounce(resizeAuroraCanvas, 150), { passive: true });
+    resizeFns.push(resizeAuroraCanvas);
 
     function spawnWisp(x, y, drift, intensity) {
       if (wisps.length >= MAX_WISPS) wisps.shift();
@@ -979,7 +990,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 7600);
     }
 
-    window.addEventListener('resize', debounce(() => { if (active) resize(); }, 150), { passive: true });
+    resizeFns.push(() => { if (active) resize(); });
 
     // Konami code + typed-word triggers
     const konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
@@ -1025,7 +1036,7 @@ document.addEventListener('DOMContentLoaded', () => {
       phCanvas.height = phSec.offsetHeight;
     }
     resizePhCanvas();
-    window.addEventListener('resize', debounce(resizePhCanvas, 150), { passive: true });
+    resizeFns.push(resizePhCanvas);
 
     for (let i = 0; i < phParticleCount; i++) {
       phParticles.push({
@@ -1139,23 +1150,29 @@ document.addEventListener('DOMContentLoaded', () => {
   // Reuses mouseX / mouseY from CUSTOM CURSOR section above. Any section that
   // sits on a dark background should match here (add .bg-dark to future ones).
   const darkSections = [...document.querySelectorAll('.hero, .philosophy, .footer, .home-section, .bg-dark')];
+  let darkRects = [];
   let isOnDark = false;
 
-  function evalDark() {
-    const onDark = darkSections.some(s => {
-      const r = s.getBoundingClientRect();
-      return mouseY >= r.top && mouseY <= r.bottom &&
-             mouseX >= r.left && mouseX <= r.right;
-    });
+  // Rects are cached and only refreshed on scroll/resize (see onScrollFrame and
+  // the unified resize), so the pointer handler's checkDark() is a cheap
+  // arithmetic test with no per-move getBoundingClientRect / layout read.
+  function computeDarkRects() {
+    darkRects = darkSections
+      .map(s => s.getBoundingClientRect())
+      .filter(r => r.width > 0 && r.height > 0);
+  }
+  function checkDark() {
+    let onDark = false;
+    for (const r of darkRects) {
+      if (mouseY >= r.top && mouseY <= r.bottom && mouseX >= r.left && mouseX <= r.right) { onDark = true; break; }
+    }
     if (onDark !== isOnDark) {
       isOnDark = onDark;
       document.body.classList.toggle('on-dark', onDark);
     }
   }
-
-  window.addEventListener('mousemove', evalDark, { passive: true });
-  window.addEventListener('scroll', evalDark, { passive: true });
-  window.addEventListener('resize', evalDark, { passive: true });
+  computeDarkRects();
+  resizeFns.push(() => { computeDarkRects(); checkDark(); });
   // Initial: assume hero (top) is dark
   document.body.classList.add('on-dark');
   isOnDark = true;
