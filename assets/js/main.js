@@ -496,20 +496,46 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ---------- FORM ----------
+  // ---------- FORM (FormSubmit AJAX) ----------
   const form = document.querySelector('.contact-form');
   if (form) {
-    form.addEventListener('submit', (e) => {
+    const btn = form.querySelector('.form-submit');
+    const idleMarkup = '<span>送信する</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+    // AJAX endpoint keeps the in-page success state (no redirect to FormSubmit).
+    const endpoint = (form.getAttribute('action') || '').replace('formsubmit.co/', 'formsubmit.co/ajax/');
+    const resetBtn = (delay) => setTimeout(() => {
+      btn.innerHTML = idleMarkup;
+      btn.style.background = btn.style.color = btn.style.borderColor = '';
+      btn.disabled = false;
+    }, delay);
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const btn = form.querySelector('.form-submit');
-      btn.innerHTML = '<span>送信完了</span>';
-      btn.style.cssText += 'background:var(--accent-warm);color:var(--white);border-color:var(--accent-warm);';
-      setTimeout(() => {
-        btn.innerHTML = `<span>送信する</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>`;
-        btn.style.background = btn.style.color = btn.style.borderColor = '';
-        form.reset();
-      }, 3000);
+      if (btn.disabled) return;
+      btn.disabled = true;
+      btn.innerHTML = '<span>送信中…</span>';
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form)
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && String(data.success) === 'true') {
+          btn.innerHTML = '<span>送信完了</span>';
+          btn.style.cssText += 'background:var(--accent-warm);color:var(--white);border-color:var(--accent-warm);';
+          form.reset();
+          resetBtn(3500);
+        } else {
+          throw new Error('formsubmit failed');
+        }
+      } catch (err) {
+        btn.innerHTML = '<span>送信に失敗しました</span>';
+        btn.style.cssText += 'background:#b3402e;color:#fff;border-color:#b3402e;';
+        resetBtn(4000);
+      }
     });
+
     form.querySelectorAll('input, textarea, select').forEach(input => {
       input.addEventListener('focus', () => input.parentElement.classList.add('focused'));
       input.addEventListener('blur', () => { if (!input.value) input.parentElement.classList.remove('focused'); });

@@ -31,7 +31,7 @@
   <meta name="twitter:image" content="https://vifight.com/assets/images/hero/hero-cover.jpg">
 
   <link rel="preload" as="image" href="assets/images/hero/hero-cover.jpg" fetchpriority="high">
-  <link rel="stylesheet" href="assets/css/style.css?v=20260614h">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260618a">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Interのみ同期（Latin文字・軽量）、Noto Sans JPは非同期で遅延読み込み -->
@@ -1135,7 +1135,7 @@
             </div>
           </div>
         </div>
-        <form class="contact-form" data-reveal>
+        <form class="contact-form" action="https://formsubmit.co/ayumu.k@vifight.com" method="POST" data-reveal>
           <div class="form-group">
             <label for="name">お名前 <span>*</span></label>
             <input type="text" id="name" name="name" required autocomplete="name">
@@ -1165,6 +1165,11 @@
             <label for="message">メッセージ <span>*</span></label>
             <textarea id="message" name="message" rows="5" required></textarea>
           </div>
+          <!-- FormSubmit settings (formsubmit.co) -->
+          <input type="hidden" name="_subject" value="【ViFight】Webサイトからお問い合わせ">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
           <button type="submit" class="form-submit" data-magnetic>
             <span>送信する</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1237,6 +1242,6 @@
     </div>
   </div>
 
-  <script src="assets/js/main.js?v=20260614h"></script>
+  <script src="assets/js/main.js?v=20260618a"></script>
 </body>
 </html>
