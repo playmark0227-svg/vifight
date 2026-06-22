@@ -3622,3 +3622,17 @@ body.legal-page button { cursor: pointer; }
 @media (max-width: 600px) {
   .legal-table dt { min-width: 100%; margin-bottom: 2px; }
 }
+
+/* payment note in the contact section */
+.contact-payment {
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--text-light);
+  max-width: 470px;
+}
+.contact-payment a {
+  color: var(--accent-warm);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.contact-payment a:hover { color: var(--aurora-green); }
