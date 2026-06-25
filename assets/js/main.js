@@ -543,8 +543,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Disable canvas particles entirely for reduced-motion users; scale down on mobile.
-  const heroParticleCount = reduceMotion ? 0 : (isSmall ? 22 : 50);
-  const phParticleCount = reduceMotion ? 0 : (isSmall ? 14 : 30);
+  const heroParticleCount = reduceMotion ? 0 : (isSmall ? 16 : 26);
+  const phParticleCount = reduceMotion ? 0 : (isSmall ? 10 : 18);
 
   // ---------- HERO FLOATING PARTICLES ----------
   const heroCanvas = document.getElementById('hero-particles');
@@ -668,7 +668,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (auroraCanvas && !reduceMotion) {
     const actx = auroraCanvas.getContext('2d');
     const heroEl = document.getElementById('hero');
-    const MAX_WISPS = isSmall ? 46 : 120;
+    const MAX_WISPS = isSmall ? 38 : 60;
 
     // Pre-render one soft radial-glow sprite per aurora hue — far cheaper than
     // rebuilding a gradient for every wisp on every frame.
@@ -698,7 +698,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let aVisible = true;
     let aRunning = false;
     let lastX = 0, lastY = 0, haveLast = false;
-    let nextIdleAt = 0;
+    let idleTimer = null;
 
     function resizeAuroraCanvas() {
       auroraCanvas.width = heroEl.offsetWidth;
@@ -778,14 +778,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function drawAurora() {
       if (!aVisible) { aRunning = false; return; }
       const w = auroraCanvas.width, h = auroraCanvas.height;
-
-      // idle auto-stir keeps the sky gently alive between interactions
-      const now = performance.now();
-      if (now >= nextIdleAt) {
-        spawnWisp(w * (0.12 + Math.random() * 0.76), h * (0.05 + Math.random() * 0.28), 0, 1);
-        nextIdleAt = now + (isSmall ? 2200 : 1500) + Math.random() * 1800;
-      }
-
       actx.clearRect(0, 0, w, h);
       actx.globalCompositeOperation = 'lighter';   // additive → luminous glow
       for (const p of wisps) {
@@ -817,17 +809,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
       wisps = wisps.filter(p => p.life > 0 && p.y > -70);
       bursts = bursts.filter(b => b.life > 0);
-      requestAnimationFrame(drawAurora);
+      // animate only while there is something to draw; otherwise sleep
+      if (wisps.length || bursts.length) requestAnimationFrame(drawAurora);
+      else aRunning = false;
     }
     function startAurora() {
       if (!aRunning && aVisible) { aRunning = true; requestAnimationFrame(drawAurora); }
     }
 
+    // Gentle idle "breathing" on a sparse timer (not a per-frame loop), so the
+    // canvas can sleep between interactions instead of running continuously.
+    function scheduleIdle() {
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => {
+        if (aVisible && !document.hidden) {
+          spawnWisp(auroraCanvas.width * (0.12 + Math.random() * 0.76),
+                    auroraCanvas.height * (0.05 + Math.random() * 0.28), 0, 1);
+          startAurora();
+        }
+        scheduleIdle();
+      }, (isSmall ? 4200 : 3200) + Math.random() * 2200);
+    }
+
     new IntersectionObserver(([entry]) => {
       aVisible = entry.isIntersecting;
-      if (aVisible) startAurora();
+      if (aVisible) { startAurora(); scheduleIdle(); }
+      else { clearTimeout(idleTimer); idleTimer = null; }
     }, { threshold: 0 }).observe(heroEl);
     startAurora();
+    scheduleIdle();
   }
 
   // ---------- DEVICE TILT (mobile gyro parallax) ----------
