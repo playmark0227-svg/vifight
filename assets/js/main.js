@@ -543,8 +543,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Disable canvas particles entirely for reduced-motion users; scale down on mobile.
-  const heroParticleCount = reduceMotion ? 0 : (isSmall ? 16 : 26);
-  const phParticleCount = reduceMotion ? 0 : (isSmall ? 10 : 18);
+  const heroParticleCount = reduceMotion ? 0 : (isSmall ? 22 : 50);
+  const phParticleCount = reduceMotion ? 0 : (isSmall ? 14 : 30);
 
   // ---------- HERO FLOATING PARTICLES ----------
   const heroCanvas = document.getElementById('hero-particles');
@@ -668,7 +668,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (auroraCanvas && !reduceMotion) {
     const actx = auroraCanvas.getContext('2d');
     const heroEl = document.getElementById('hero');
-    const MAX_WISPS = isSmall ? 38 : 60;
+    const MAX_WISPS = isSmall ? 46 : 120;
 
     // Pre-render one soft radial-glow sprite per aurora hue — far cheaper than
     // rebuilding a gradient for every wisp on every frame.

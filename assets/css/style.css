@@ -615,7 +615,7 @@ body.on-dark .cursor-follower.view::after {
 }
 .hero-visual-orb {
   border-radius: 50%;
-  filter: blur(72px);
+  filter: blur(120px);
   will-change: transform;
 }
 .hero-orb-1 {
@@ -657,7 +657,7 @@ body.on-dark .cursor-follower.view::after {
   top: 60%;
   left: 15%;
   background: radial-gradient(circle, rgba(123, 184, 201, 0.2) 0%, transparent 65%);
-  filter: blur(54px);
+  filter: blur(80px);
   animation: orbDrift4 12s ease-in-out infinite alternate;
 }
 @keyframes orbDrift1 {
@@ -728,7 +728,7 @@ body.on-dark .cursor-follower.view::after {
   right: -8%;
   height: 66%;
   pointer-events: none;
-  filter: blur(30px) saturate(145%);
+  filter: blur(36px) saturate(150%);
   /* NOTE: no mix-blend-mode — screen-blending here corrupted compositor
      sorting of sibling layers (hero text painted under the scrim). */
   opacity: 0.95;
@@ -857,7 +857,7 @@ body.on-dark .cursor-follower.view::after {
   right: -10%;
   height: 55%;
   pointer-events: none;
-  filter: blur(38px) saturate(135%);
+  filter: blur(46px) saturate(140%);
   opacity: 0.92;
   background: linear-gradient(98deg,
     transparent 8%,
@@ -1339,7 +1339,7 @@ body.on-dark .cursor-follower.view::after {
 .philosophy-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(60px);
+  filter: blur(100px);
   pointer-events: none;
 }
 .philosophy-orb-1 {
@@ -2523,10 +2523,9 @@ body.on-dark .cursor-follower.view::after {
     flex-wrap: wrap;
   }
 
-  /* Lighter blur on mobile GPUs (heavy filters are costly on phones) */
-  .hero-visual-orb { filter: blur(46px); }
-  .hero-orb-4 { filter: blur(38px); }
-  .philosophy-orb { filter: blur(46px); }
+  .hero-visual-orb { filter: blur(60px); }
+  .hero-orb-4 { filter: blur(50px); }
+  .philosophy-orb { filter: blur(60px); }
   /* Light streaks add little on small screens; drop them */
   .hero-visual-streak { display: none; }
 
