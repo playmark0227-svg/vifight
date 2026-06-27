@@ -223,8 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const scrollMarquee = document.querySelector('[data-scroll-speed]');
   let marqueeWidth = 0;
   let marqueePos = 0;
-  let lastScrollY = window.scrollY;
-  let currentScrollY = lastScrollY;
+  let currentScrollY = window.scrollY;
   let ticking = false;
 
   window.addEventListener('scroll', () => {
@@ -245,7 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const center = rect.top + rect.height / 2 - window.innerHeight / 2;
       el.style.transform = `translateY(${center * speed}px)`;
     }
-    lastScrollY = scrollY;
     // sections shifted under the pointer → refresh dark-cursor rects + state
     computeDarkRects();
     checkDark();
@@ -876,7 +874,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const DOE = window.DeviceOrientationEvent;
     if (DOE && typeof DOE.requestPermission === 'function') {
       // iOS 13+: must ask from a user gesture
-      window.addEventListener('touchend', function ask() {
+      window.addEventListener('touchend', function () {
         DOE.requestPermission().then(s => { if (s === 'granted') attachOrient(); }).catch(() => {});
       }, { once: true, passive: true });
     } else if (DOE) {
@@ -907,7 +905,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // browser autoplay policy. Wrapped in try/catch — silent if audio is blocked.
     function chime() {
       try {
-        const AC = window.AudioContext || window.webkitAudioContext;
+        const AC = window.AudioContext;
         if (!AC) return;
         const ac = new AC();
         [392, 523.25, 659.25, 783.99].forEach((f, i) => {   // G4 C5 E5 G5
@@ -1033,6 +1031,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let kIdx = 0;
     let typed = '';
     document.addEventListener('keydown', (e) => {
+      // close work modal on Escape
+      const wm = document.getElementById('work-modal');
+      if (e.key === 'Escape' && wm && wm.classList.contains('active')) {
+        wm.classList.remove('active');
+        wm.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        return;
+      }
       // never hijack typing in form fields (e.g. the contact form)
       const t = e.target;
       if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
@@ -1351,10 +1357,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     workModal.querySelectorAll('[data-modal-close]').forEach(el => {
       el.addEventListener('click', closeWorkModal);
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && workModal.classList.contains('active')) closeWorkModal();
     });
   }
 
