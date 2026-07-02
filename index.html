@@ -31,7 +31,7 @@
   <meta name="twitter:image" content="https://vifight.com/assets/images/hero/hero-cover.jpg">
 
   <link rel="preload" as="image" href="assets/images/hero/hero-cover.jpg" fetchpriority="high">
-  <link rel="stylesheet" href="assets/css/style.css?v=20260627a">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260702a">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Interのみ同期（Latin文字・軽量）、Noto Sans JPは非同期で遅延読み込み -->
@@ -150,6 +150,10 @@
       <div class="hero-visual-layer hero-visual-orb hero-orb-2"></div>
       <div class="hero-visual-layer hero-visual-orb hero-orb-3"></div>
       <div class="hero-visual-layer hero-visual-orb hero-orb-4"></div>
+      <!-- twinkling night sky + a lone shooting star -->
+      <div class="hero-visual-layer hero-stars"></div>
+      <div class="hero-visual-layer hero-stars-2"></div>
+      <div class="hero-shooting-star"></div>
       <!-- Aurora borealis — Hokkaido night sky -->
       <div class="hero-aurora">
         <div class="aurora-band aurora-band-1"></div>
@@ -205,7 +209,7 @@
         SNS総合支援・映像制作・HP制作・プログラム開発まで。<br>
         北海道 中標津・札幌の広告クリエイティブカンパニーが、貴社の想いを「自分ごと」として形にします。
       </p>
-      <div class="home-stats" data-reveal>
+      <div class="home-stats" data-reveal="zoom">
         <div class="home-stat">
           <span class="home-stat-figure"><span class="home-stat-num" data-count="100">0</span><span class="home-stat-plus">+</span></span>
           <span class="home-stat-label">映像制作実績</span>
@@ -235,22 +239,22 @@
         </div>
       </div>
       <div class="strength-grid">
-        <div class="strength-card" data-reveal>
+        <div class="strength-card" data-reveal="zoom">
           <span class="strength-num">01</span>
           <h3>徹底したヒアリング</h3>
           <p>お話をじっくり伺い、貴社になりきって考える。HPも映像も「自分ごと」として制作するから、本当に伝わるものが生まれます。</p>
         </div>
-        <div class="strength-card" data-reveal>
+        <div class="strength-card" data-reveal="zoom">
           <span class="strength-num">02</span>
           <h3>ワンストップ体制</h3>
           <p>SNS・映像・HP・プログラム開発・教育まで自社で対応。窓口ひとつで、戦略から制作・運用まで一貫してお任せいただけます。</p>
         </div>
-        <div class="strength-card" data-reveal>
+        <div class="strength-card" data-reveal="zoom">
           <span class="strength-num">03</span>
           <h3>確かな制作品質</h3>
           <p>映画品質のシネマカメラによる撮影と、国家資格保有者によるドローン空撮。クオリティに妥協しないものづくりをお約束します。</p>
         </div>
-        <div class="strength-card" data-reveal>
+        <div class="strength-card" data-reveal="zoom">
           <span class="strength-num">04</span>
           <h3>成果へのこだわり</h3>
           <p>作って終わりにしない。印刷会社様のHPは問い合わせ0件から月10件へ。ビジネスの成果に直結するクリエイティブを追求します。</p>
@@ -337,17 +341,17 @@
         <a href="#works" class="home-more" data-reveal>すべて見る <span>→</span></a>
       </div>
       <div class="home-works">
-        <a href="#works" class="home-work" data-reveal>
+        <a href="#works" class="home-work" data-reveal="zoom">
           <div class="home-work-img"><img src="assets/images/works/portal-job.jpg" alt="求人ポータルサイト構築・運営" loading="lazy" decoding="async"></div>
           <span class="home-work-cat">Portal Site</span>
           <h3 class="home-work-title">求人ポータルサイト構築・運営</h3>
         </a>
-        <a href="#works" class="home-work" data-reveal>
+        <a href="#works" class="home-work" data-reveal="zoom">
           <div class="home-work-img"><img src="assets/images/works/print-company.jpg" alt="印刷会社コーポレートサイト" loading="lazy" decoding="async"></div>
           <span class="home-work-cat">HP Renewal</span>
           <h3 class="home-work-title">印刷会社コーポレートサイト</h3>
         </a>
-        <a href="#works" class="home-work" data-reveal>
+        <a href="#works" class="home-work" data-reveal="zoom">
           <div class="home-work-img"><img src="assets/images/works/restaurant-movie.jpg" alt="飲食店ブランディング映像" loading="lazy" decoding="async"></div>
           <span class="home-work-cat">Brand Movie</span>
           <h3 class="home-work-title">飲食店ブランディング映像</h3>
@@ -363,7 +367,7 @@
       <p class="home-cta-eyebrow" data-reveal>Let's create together</p>
       <h2 class="home-cta-title" data-reveal>一緒に、<span class="aurora-text">次のステージ</span>へ。</h2>
       <p class="home-cta-sub" data-reveal>まずはお気軽にご相談ください。<br>貴社の課題に、最適なクリエイティブで応えます。</p>
-      <a href="#contact" class="home-cta-btn" data-reveal>お問い合わせ <span>→</span></a>
+      <a href="#contact" class="home-cta-btn" data-reveal="zoom" data-magnetic>お問い合わせ <span>→</span></a>
     </div>
   </section>
 
@@ -398,7 +402,7 @@
             映像制作は映画品質シネマカメラ、空撮は国家資格保有者によるドローン撮影で対応。<br>
             ViFightの名には「Video（映像）の力でFight（挑む）」という想いを込めています。
           </p>
-          <div class="about-stats" data-reveal>
+          <div class="about-stats" data-reveal="zoom">
             <div class="stat">
               <span class="stat-num" data-count="100">0</span><span class="stat-plus">+</span>
               <span class="stat-label">映像制作実績</span>
@@ -413,7 +417,7 @@
             </div>
           </div>
         </div>
-        <div class="about-image" data-reveal>
+        <div class="about-image" data-reveal="right">
           <div class="about-image-inner" data-parallax="0.1">
             <img src="assets/images/representative.jpg" alt="ViFight代表 久保歩夢" class="about-image-photo" width="659" height="659" loading="lazy" decoding="async">
           </div>
@@ -424,7 +428,7 @@
         </div>
       </div>
 
-      <div class="about-profile" data-reveal>
+      <div class="about-profile" data-reveal="blur">
         <h3 class="about-profile-title"><span>Company Profile</span>会社概要</h3>
         <dl class="profile-table">
           <div><dt>会社名</dt><dd>ViFight（ヴィファイト）</dd></div>
@@ -482,7 +486,7 @@
         <p class="section-sub" data-reveal>お客様の成果</p>
       </div>
       <div class="voice-grid">
-        <div class="voice-card" data-reveal>
+        <div class="voice-card" data-reveal="flip">
           <div class="voice-quote-mark">"</div>
           <p class="voice-text">
             問い合わせが月0件だったホームページが、リニューアル後は<br>
@@ -740,12 +744,12 @@
         </div>
       </div>
 
-      <div class="tab-callout" data-reveal>
+      <div class="tab-callout" data-reveal="blur">
         <div class="tab-callout-text">
           <h3>どのプランが合うか、一緒に考えます。</h3>
           <p>ご予算や目的に合わせて、最適な組み合わせとお見積もりをご提案します。ご相談・お見積もりは無料です。</p>
         </div>
-        <a href="#contact" class="tab-callout-btn">無料で相談する <span aria-hidden="true">→</span></a>
+        <a href="#contact" class="tab-callout-btn" data-magnetic>無料で相談する <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
@@ -783,7 +787,7 @@
         <p class="section-sub" data-reveal>制作実績</p>
         <p class="section-lead" data-reveal>ポータルサイト・コーポレートサイト・ブランディング映像・空撮まで。北海道を中心に手がけたプロジェクトの一部をご紹介します。各実績をクリックすると詳細をご覧いただけます。</p>
       </div>
-      <div class="works-highlights" data-reveal>
+      <div class="works-highlights" data-reveal="blur">
         <div class="wh-item"><span class="wh-num">100+</span><span class="wh-label">映像制作実績</span></div>
         <div class="wh-item"><span class="wh-num">0→10件</span><span class="wh-label">HP制作後の月間問い合わせ</span></div>
         <div class="wh-item"><span class="wh-num">6</span><span class="wh-label">提供サービス領域</span></div>
@@ -928,28 +932,28 @@
       </div>
       <div class="flow-timeline">
         <div class="flow-line"></div>
-        <div class="flow-step" data-reveal>
+        <div class="flow-step" data-reveal="left">
           <div class="flow-step-num">01</div>
           <div class="flow-step-content">
             <h3>お問い合わせ</h3>
             <p>まずはお気軽にご相談ください。フォームまたはお電話にて、お悩みやご要望をお聞かせください。</p>
           </div>
         </div>
-        <div class="flow-step" data-reveal>
+        <div class="flow-step" data-reveal="left">
           <div class="flow-step-num">02</div>
           <div class="flow-step-content">
             <h3>ヒアリング・ご提案</h3>
             <p>詳細なヒアリングを行い、課題や目標を明確化。最適なプランと見積もりをご提案します。</p>
           </div>
         </div>
-        <div class="flow-step" data-reveal>
+        <div class="flow-step" data-reveal="left">
           <div class="flow-step-num">03</div>
           <div class="flow-step-content">
             <h3>制作・開発</h3>
             <p>プロジェクトを進行。定期的な進捗共有と確認を行いながら、高品質な成果物を制作します。</p>
           </div>
         </div>
-        <div class="flow-step" data-reveal>
+        <div class="flow-step" data-reveal="left">
           <div class="flow-step-num">04</div>
           <div class="flow-step-content">
             <h3>納品・運用サポート</h3>
@@ -958,7 +962,7 @@
         </div>
       </div>
 
-      <div class="flow-assure" data-reveal>
+      <div class="flow-assure" data-reveal="zoom">
         <div class="flow-assure-item">
           <div class="fa-ico">¥0</div>
           <h4>ご相談・お見積もりは無料</h4>
@@ -1112,7 +1116,7 @@
         <p class="section-sub" data-reveal>お問い合わせ</p>
       </div>
       <div class="contact-grid">
-        <div class="contact-info" data-reveal>
+        <div class="contact-info" data-reveal="left">
           <p class="contact-lead">
             プロジェクトのご相談、お見積もり、<br>
             その他ご質問など、お気軽にお問い合わせください。
@@ -1142,7 +1146,7 @@
             </div>
           </div>
         </div>
-        <form class="contact-form" action="https://formsubmit.co/ayukun.0227@icloud.com" method="POST" data-reveal>
+        <form class="contact-form" action="https://formsubmit.co/ayukun.0227@icloud.com" method="POST" data-reveal="right">
           <div class="form-group">
             <label for="name">お名前 <span>*</span></label>
             <input type="text" id="name" name="name" required autocomplete="name">
@@ -1207,7 +1211,7 @@
     </div>
     <div class="container">
       <div class="footer-top">
-        <div class="footer-brand">
+        <div class="footer-brand" data-reveal>
           <div class="footer-logo">ViFight</div>
           <p class="footer-tagline">映像とコードの技術で、ビジネスを次のステージへ。</p>
           <dl class="footer-info">
@@ -1217,7 +1221,7 @@
             <div><dt>事業内容</dt><dd>SNS総合支援 / 映像制作 / HP制作 / プログラム開発 / 動画編集アカデミー / Claudeアカデミー</dd></div>
           </dl>
         </div>
-        <div class="footer-links">
+        <div class="footer-links" data-reveal>
           <a href="#about">About</a>
           <a href="#services">Services</a>
           <a href="#works">Works</a>
@@ -1226,7 +1230,7 @@
           <a href="#contact">Contact</a>
         </div>
       </div>
-      <div class="footer-bottom">
+      <div class="footer-bottom" data-reveal>
         <div class="footer-bottom-left">
           <p>&copy; 2023–2026 ViFight. All Rights Reserved.</p>
           <nav class="footer-legal">
@@ -1256,6 +1260,6 @@
     </div>
   </div>
 
-  <script src="assets/js/main.js?v=20260627a"></script>
+  <script src="assets/js/main.js?v=20260702a"></script>
 </body>
 </html>

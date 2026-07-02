@@ -212,8 +212,29 @@ document.addEventListener('DOMContentLoaded', () => {
   // light sections, so the header must use its solid / dark-text style there.
   let onHomeView = true;
   const progressBar = document.createElement('div');
-  progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent-brown),var(--accent));z-index:10001;width:0%;pointer-events:none;';
+  progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--aurora-green),var(--aurora-teal),var(--aurora-violet));z-index:10001;width:0%;pointer-events:none;';
   document.body.appendChild(progressBar);
+
+  // Fixed back-to-top button with an aurora scroll-progress ring.
+  // Appears past 600px; the ring fills as the page is scrolled.
+  const totop = document.createElement('a');
+  totop.id = 'totop-ring';
+  totop.href = '#';
+  totop.setAttribute('aria-label', 'ページ上部へ戻る');
+  totop.innerHTML =
+    '<svg viewBox="0 0 52 52" aria-hidden="true"><defs><linearGradient id="totop-grad" x1="0" y1="0" x2="1" y2="1">' +
+    '<stop offset="0" stop-color="#46e2a6"/><stop offset="0.5" stop-color="#5cd6d0"/><stop offset="1" stop-color="#9678d8"/>' +
+    '</linearGradient></defs><circle class="ring-bg" cx="26" cy="26" r="24"/><circle class="ring-fg" cx="26" cy="26" r="24"/></svg>' +
+    '<svg class="totop-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+  document.body.appendChild(totop);
+  const totopRing = totop.querySelector('.ring-fg');
+  const RING_LEN = 2 * Math.PI * 24;
+  totopRing.style.strokeDasharray = RING_LEN;
+  totopRing.style.strokeDashoffset = RING_LEN;
+  totop.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
 
   const parallaxEls = [...document.querySelectorAll('[data-parallax]')].map(el => ({
     el,
@@ -223,6 +244,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const scrollMarquee = document.querySelector('[data-scroll-speed]');
   let marqueeWidth = 0;
   let marqueePos = 0;
+  let marqueeSkew = 0;          // scroll-velocity skew, decays in mainLoop
+  let velScrollY = window.scrollY;
   let currentScrollY = window.scrollY;
   let ticking = false;
 
@@ -234,11 +257,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: true });
 
+  const heroScrollCue = document.querySelector('.hero-scroll');
+
   function onScrollFrame() {
     const scrollY = currentScrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     header.classList.toggle('scrolled', scrollY > 80 || !onHomeView);
     progressBar.style.width = ((scrollY / docHeight) * 100) + '%';
+    // back-to-top: show past 600px, ring tracks page progress
+    totop.classList.toggle('show', scrollY > 600);
+    totopRing.style.strokeDashoffset = RING_LEN * (1 - Math.min(scrollY / docHeight, 1));
+    // hero scroll cue fades once the journey begins
+    if (heroScrollCue) heroScrollCue.classList.toggle('faded', scrollY > 120);
+    // marquee leans with scroll velocity (decays each frame in mainLoop)
+    marqueeSkew = Math.max(-7, Math.min(7, (scrollY - velScrollY) * 0.15));
+    velScrollY = scrollY;
     for (const { el, speed } of parallaxEls) {
       const rect = el.getBoundingClientRect();
       const center = rect.top + rect.height / 2 - window.innerHeight / 2;
@@ -278,11 +311,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // 3. Marquee (paused for reduced-motion users)
+    // 3. Marquee (paused for reduced-motion users); leans with scroll velocity
     if (scrollMarquee && marqueeWidth > 0 && !reduceMotion) {
       marqueePos -= 1;
       if (Math.abs(marqueePos) >= marqueeWidth) marqueePos = 0;
-      scrollMarquee.style.transform = `translateX(${marqueePos}px)`;
+      marqueeSkew *= 0.92;
+      scrollMarquee.style.transform = `translateX(${marqueePos}px) skewX(${marqueeSkew.toFixed(2)}deg)`;
     }
 
     requestAnimationFrame(mainLoop);
@@ -365,11 +399,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const target = parseInt(el.getAttribute('data-count'));
     const start = performance.now();
     const duration = 2000;
+    // aurora glow on the figure while it counts up
+    const holder = el.closest('.home-stat, .stat');
+    if (holder) holder.classList.add('counting');
     function update(now) {
       const progress = Math.min((now - start) / duration, 1);
       el.textContent = Math.floor(target * (1 - Math.pow(1 - progress, 3)));
       if (progress < 1) requestAnimationFrame(update);
-      else el.textContent = target;
+      else {
+        el.textContent = target;
+        if (holder) setTimeout(() => holder.classList.remove('counting'), 500);
+      }
     }
     requestAnimationFrame(update);
   }
@@ -391,6 +431,29 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.service-item').forEach((el, i) => { el.style.transitionDelay = `${i * 0.08}s`; });
   document.querySelectorAll('.flow-step').forEach((el, i) => { el.style.transitionDelay = `${i * 0.12}s`; });
 
+  // Cards that both reveal AND hover-animate: stagger the reveal, then clear
+  // the inline delay after the first transition so hover stays instant.
+  const staggerGroups = [
+    ['.strength-grid .strength-card', 0.09],
+    ['.home-services .home-service', 0.07],
+    ['.home-works .home-work', 0.1],
+    ['.faq-list .faq-item', 0.06],
+  ];
+  staggerGroups.forEach(([sel, step]) => {
+    document.querySelectorAll(sel).forEach((el, i) => {
+      if (!i) return;
+      el.style.transitionDelay = `${(i * step).toFixed(2)}s`;
+      el.dataset.stagger = '1';
+    });
+  });
+  document.addEventListener('transitionend', (e) => {
+    const el = e.target;
+    if (el.dataset && el.dataset.stagger && el.classList.contains('visible')) {
+      el.style.transitionDelay = '';
+      delete el.dataset.stagger;
+    }
+  });
+
   // ---------- TAB ROUTER (single-page → per-tab views) ----------
   // The long one-pager is split into tabbed views; clicking a nav item shows
   // just that section. Hash routing keeps URLs (/#about) shareable and makes
@@ -407,6 +470,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const viewIdFromHash = (hash) => sectionToView[(hash || '').replace('#', '')] || null;
     let currentView = document.querySelector('.view.is-active') || views[0];
+
+    // Aurora wipe — a soft northern-lights sweep flourishes each tab change.
+    // One-shot transform/opacity animation on a fixed overlay (CSS-driven).
+    const auroraWipe = document.createElement('div');
+    auroraWipe.id = 'aurora-wipe';
+    document.body.appendChild(auroraWipe);
 
     // Reveal every animated element in a freshly-shown view at once; the
     // existing per-element transition delays still cascade them in nicely.
@@ -443,7 +512,13 @@ document.addEventListener('DOMContentLoaded', () => {
       // transition, jump to top, bloom the content in, and re-measure canvases.
       const heroEntrance = isInitial && viewId === 'view-home';
       if (!heroEntrance) {
-        if (!isInitial) window.scrollTo(0, 0);
+        if (!isInitial) {
+          window.scrollTo(0, 0);
+          // restart the aurora sweep for this tab change
+          auroraWipe.classList.remove('sweep');
+          void auroraWipe.offsetWidth;
+          auroraWipe.classList.add('sweep');
+        }
         revealView(target);
         window.dispatchEvent(new Event('resize'));
       }
@@ -1232,6 +1307,37 @@ document.addEventListener('DOMContentLoaded', () => {
       img.style.setProperty('--mx', (((e.clientX - r.left) / r.width) * 100).toFixed(1) + '%');
       img.style.setProperty('--my', (((e.clientY - r.top) / r.height) * 100).toFixed(1) + '%');
     }, { passive: true });
+  }
+
+  // ---------- DARK CARD AURORA GLOW ----------
+  // Same pattern as the works spotlight: an aurora glow inside the dark home
+  // cards follows the pointer (only fires while hovering those grids).
+  if (!isTouch) {
+    document.querySelectorAll('.strength-grid, .home-services').forEach(grid => {
+      grid.addEventListener('mousemove', (e) => {
+        const card = e.target.closest('.strength-card, .home-service');
+        if (!card) return;
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (((e.clientX - r.left) / r.width) * 100).toFixed(1) + '%');
+        card.style.setProperty('--my', (((e.clientY - r.top) / r.height) * 100).toFixed(1) + '%');
+      }, { passive: true });
+    });
+  }
+
+  // ---------- CLICK RIPPLE ----------
+  // A soft aurora ripple blooms from the click point on primary buttons.
+  if (!reduceMotion) {
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.home-cta-btn, .tab-callout-btn, .form-submit, .nav-cta, .tab-pager-link');
+      if (!btn) return;
+      const rect = btn.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const r = document.createElement('span');
+      r.className = 'fx-ripple';
+      r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size / 2}px;top:${e.clientY - rect.top - size / 2}px;`;
+      btn.appendChild(r);
+      r.addEventListener('animationend', () => r.remove());
+    });
   }
 
   // ---------- PAUSE SKY ANIMATIONS OFFSCREEN ----------
