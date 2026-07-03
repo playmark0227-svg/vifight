@@ -4479,3 +4479,42 @@ body.legal-page button { cursor: pointer; }
   outline: 2px solid var(--aurora-teal);
   outline-offset: 2px;
 }
+
+/* ---------- FINE-TUNING ---------- */
+/* anchor the (visually hidden) checkbox to the label so the browser's
+   "please check this box" validation bubble points at the right spot */
+.consent-label { position: relative; }
+
+/* keep the back-to-top ring clear of iOS home-indicator / notch insets */
+#totop-ring {
+  right: calc(clamp(18px, 3vw, 34px) + env(safe-area-inset-right, 0px));
+  bottom: calc(clamp(18px, 3vw, 34px) + env(safe-area-inset-bottom, 0px));
+}
+
+/* ---------- PRINT ---------- */
+/* People print the profile / policies for internal approval — make it clean. */
+@media print {
+  #loader, #cursor, #cursor-follower, canvas,
+  .hero-visual, .float-shapes, .mobile-menu, #header,
+  .hero-marquee, .marquee-section, .tab-pager, #totop-ring,
+  #aurora-wipe, .skip-link, .work-modal, #aurora-storm-overlay,
+  .section-divider, .hero-scroll, .sec-aurora, .home-aurora,
+  .philosophy-orb, .philosophy-aurora, .philosophy-aurora-curtain {
+    display: none !important;
+  }
+  body { cursor: auto; background: #fff; color: #000; }
+  body::after { display: none !important; }
+  .view { display: block !important; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; filter: none !important; }
+  .hero-line span { transform: none !important; color: #000 !important; text-shadow: none !important; }
+  .hero-line-accent span { -webkit-text-fill-color: #000 !important; filter: none !important; }
+  .hero, .home-section, .footer, .philosophy {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .hero-sub, .home-lead-sub, .home-stat-label, .strength-card p,
+  .home-service-desc, .trust-body p, .footer-info dd {
+    color: #333 !important;
+  }
+  a { color: #000; text-decoration: underline; }
+}
