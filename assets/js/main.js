@@ -327,10 +327,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
 
+  hamburger.setAttribute('aria-expanded', 'false');
+  hamburger.setAttribute('aria-controls', 'mobile-menu');
   hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('active');
     mobileMenu.classList.toggle('active');
-    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    const open = mobileMenu.classList.contains('active');
+    hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.style.overflow = open ? 'hidden' : '';
   });
 
   mobileMenu.querySelectorAll('[data-menu-link]').forEach(link => {
@@ -494,7 +498,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // sync nav highlight (Home has no nav link → all inactive)
       const sectionId = viewToSection[viewId] || '';
-      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + sectionId));
+      navLinks.forEach(l => {
+        const active = l.getAttribute('href') === '#' + sectionId;
+        l.classList.toggle('active', active);
+        if (active) l.setAttribute('aria-current', 'page');
+        else l.removeAttribute('aria-current');
+      });
 
       // header: solid / dark-text style on every tab except Home (hero)
       onHomeView = (viewId === 'view-home');
@@ -561,13 +570,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---------- FAQ ACCORDION ----------
   const faqItems = document.querySelectorAll('.faq-item');
+  const syncFaqAria = () => faqItems.forEach(i =>
+    i.querySelector('.faq-question').setAttribute('aria-expanded', i.classList.contains('active') ? 'true' : 'false'));
   faqItems.forEach(item => {
     item.querySelector('.faq-question').addEventListener('click', () => {
       const isActive = item.classList.contains('active');
       faqItems.forEach(i => i.classList.remove('active'));
       if (!isActive) item.classList.add('active');
+      syncFaqAria();
     });
   });
+  syncFaqAria();
 
   // ---------- FORM (FormSubmit AJAX) ----------
   const form = document.querySelector('.contact-form');
@@ -1416,6 +1429,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalLabel = document.getElementById('work-modal-label');
     const modalMeta = document.getElementById('work-modal-meta');
     const modalImg = document.getElementById('work-modal-img');
+    let modalLastFocus = null;
 
     const openWorkModal = (id) => {
       const data = workData[id];
@@ -1448,17 +1462,34 @@ document.addEventListener('DOMContentLoaded', () => {
       workModal.classList.add('active');
       workModal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('modal-open');
+      // move keyboard focus into the dialog; remember where it came from
+      modalLastFocus = document.activeElement;
+      const closeBtn = workModal.querySelector('.work-modal-close');
+      if (closeBtn) closeBtn.focus();
     };
 
     const closeWorkModal = () => {
       workModal.classList.remove('active');
       workModal.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('modal-open');
+      // hand keyboard focus back to the card that opened the dialog
+      if (modalLastFocus && modalLastFocus.focus) modalLastFocus.focus();
+      modalLastFocus = null;
     };
 
     document.querySelectorAll('.work-item[data-work-id]').forEach(item => {
       item.style.cursor = 'pointer';
+      // keyboard access: cards act as buttons that open the detail dialog
+      item.setAttribute('tabindex', '0');
+      item.setAttribute('role', 'button');
+      item.setAttribute('aria-haspopup', 'dialog');
       item.addEventListener('click', () => openWorkModal(item.getAttribute('data-work-id')));
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openWorkModal(item.getAttribute('data-work-id'));
+        }
+      });
     });
 
     workModal.querySelectorAll('[data-modal-close]').forEach(el => {
