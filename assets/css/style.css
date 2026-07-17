@@ -3371,6 +3371,156 @@ body::after {
   letter-spacing: 0.02em;
 }
 
+/* ===== HOME · お客様の声 (social proof) ===== */
+.home-voice-card {
+  position: relative;
+  max-width: 880px;
+  margin: clamp(6px, 2vw, 18px) auto 0;
+  padding: clamp(30px, 5vw, 56px) clamp(24px, 4vw, 52px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid var(--aurora-green);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(70, 226, 170, 0.08), rgba(150, 120, 220, 0.04) 60%, transparent);
+}
+.home-voice-mark {
+  position: absolute;
+  top: clamp(2px, 2vw, 10px);
+  left: clamp(16px, 3vw, 30px);
+  font-family: var(--font-en);
+  font-size: clamp(64px, 12vw, 120px);
+  line-height: 1;
+  color: rgba(70, 226, 170, 0.26);
+  pointer-events: none;
+}
+.home-voice-text {
+  position: relative;
+  font-size: clamp(15.5px, 2.1vw, 22px);
+  line-height: 1.95;
+  color: rgba(251, 247, 240, 0.92);
+  font-weight: 500;
+}
+.home-voice-text strong { color: var(--aurora-ice); font-weight: 600; }
+.home-voice-meta {
+  margin-top: clamp(20px, 3vw, 30px);
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 20px;
+}
+.home-voice-name { font-weight: 600; letter-spacing: 0.03em; }
+.home-voice-result { font-size: 14px; color: rgba(251, 247, 240, 0.58); }
+.home-voice-result strong { color: var(--aurora-green); font-family: var(--font-en); }
+
+/* ===== HOME · 代表メッセージ / founder (trust) ===== */
+.founder-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(30px, 5vw, 72px);
+  align-items: center;
+}
+.founder-photo { position: relative; }
+.founder-photo img {
+  width: 100%;
+  border-radius: 16px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+}
+.founder-photo::before {
+  content: '';
+  position: absolute;
+  inset: -16px -16px auto auto;
+  width: 60%;
+  height: 60%;
+  border-radius: 24px;
+  background: radial-gradient(circle at 70% 30%, rgba(70, 226, 170, 0.5), transparent 65%);
+  filter: blur(26px);
+  z-index: -1;
+}
+.founder-badge {
+  position: absolute;
+  left: clamp(12px, 2vw, 18px);
+  bottom: clamp(12px, 2vw, 18px);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 8px 8px;
+  border-radius: 100px;
+  background: rgba(21, 16, 11, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+.founder-badge-role {
+  font-family: var(--font-en);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #0d1a16;
+  background: linear-gradient(120deg, var(--aurora-green), var(--aurora-teal));
+  padding: 3px 9px;
+  border-radius: 100px;
+}
+.founder-title {
+  font-size: clamp(25px, 3.6vw, 42px);
+  font-weight: 600;
+  line-height: 1.42;
+  margin: 14px 0 20px;
+  word-break: keep-all;
+}
+.founder-text {
+  color: rgba(251, 247, 240, 0.74);
+  font-size: clamp(14px, 1.6vw, 16px);
+  line-height: 2;
+}
+.founder-creds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin: clamp(22px, 3vw, 30px) 0 24px;
+}
+.founder-creds li {
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  padding: 8px 16px;
+  border-radius: 100px;
+  border: 1px solid rgba(70, 226, 170, 0.35);
+  background: rgba(70, 226, 170, 0.06);
+  color: rgba(251, 247, 240, 0.9);
+}
+.founder-sign {
+  color: rgba(251, 247, 240, 0.66);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  margin-bottom: 26px;
+}
+.founder-sign strong { color: var(--white); font-size: 17px; font-weight: 600; }
+.founder-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 32px;
+  border-radius: 100px;
+  background: linear-gradient(100deg, var(--aurora-green), var(--aurora-teal));
+  color: #0d1a16;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 10px 38px rgba(70, 226, 170, 0.28);
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s, gap 0.3s;
+}
+.founder-cta span { transition: transform 0.3s; }
+.founder-cta:hover { transform: translateY(-3px); box-shadow: 0 16px 50px rgba(70, 226, 170, 0.4); gap: 15px; }
+.founder-cta:hover span { transform: translateX(4px); }
+
+@media (max-width: 760px) {
+  .founder-grid { grid-template-columns: 1fr; gap: 28px; }
+  .founder-photo { max-width: 360px; }
+}
+
 @media (max-width: 760px) {
   .home-services { grid-template-columns: 1fr; }
   .home-works { grid-template-columns: 1fr; gap: 28px; }
