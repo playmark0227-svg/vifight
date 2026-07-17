@@ -3073,6 +3073,8 @@ body::after {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  /* keep highlighted phrases whole so they never split across a line break */
+  white-space: nowrap;
 }
 
 /* ---------- Subtle aurora ambience on the light editorial tabs ---------- */
