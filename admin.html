@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>実績を投稿｜ViFight</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#14100b">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231c1611'/%3E%3Ctext x='32' y='44' font-family='Inter,Arial,sans-serif' font-size='38' font-weight='600' fill='%23b8946a' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/css/works.css?v=20260716d">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-page">
+  <div class="ad-wrap">
+    <div class="ad-head">
+      <h1>実績を投稿</h1>
+      <a href="works.html" class="ad-back">実績ページを見る →</a>
+    </div>
+
+    <!-- Firebase 未設定 -->
+    <section class="ad-card ad-hidden" id="config-missing">
+      <p class="ad-note">
+        まだ Firebase の設定が完了していません。<br>
+        <code>assets/js/firebase-config.js</code> に設定キーを貼り付けると、この画面から投稿できるようになります。<br><br>
+        手順は <a href="https://github.com/playmark0227-svg/vifight/blob/main/FIREBASE-SETUP.md" target="_blank" rel="noopener">FIREBASE-SETUP.md</a> をご覧ください。
+      </p>
+    </section>
+
+    <!-- ログイン -->
+    <section class="ad-card ad-hidden" id="login-view">
+      <p class="ad-note" style="margin-bottom:20px;">投稿にはログインが必要です。</p>
+      <form id="login-form">
+        <div class="ad-field">
+          <label for="login-email">メールアドレス</label>
+          <input type="email" id="login-email" autocomplete="username" required>
+        </div>
+        <div class="ad-field">
+          <label for="login-pass">パスワード</label>
+          <input type="password" id="login-pass" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="ad-btn" id="login-btn">ログイン</button>
+        <p class="ad-msg" id="login-msg"></p>
+      </form>
+    </section>
+
+    <!-- 投稿アプリ -->
+    <section class="ad-hidden" id="app-view">
+      <div class="ad-card">
+        <form id="post-form">
+          <div class="ad-field">
+            <label>写真</label>
+            <label class="ad-drop" for="file-input">
+              <strong>写真を選ぶ / 撮影する</strong>
+              <small>タップしてカメラまたはライブラリから選択</small>
+            </label>
+            <input type="file" id="file-input" accept="image/*" hidden>
+            <div class="ad-preview" id="preview">
+              <img id="preview-img" alt="プレビュー">
+              <button type="button" class="ad-preview-clear" id="preview-clear" aria-label="取り消し">×</button>
+            </div>
+          </div>
+          <div class="ad-field">
+            <label for="caption">一言（タイトル・説明）</label>
+            <textarea id="caption" placeholder="例：飲食店のブランディング映像を制作しました" maxlength="140"></textarea>
+          </div>
+          <div class="ad-field">
+            <label for="category">カテゴリ</label>
+            <select id="category">
+              <option value="映像制作">映像制作</option>
+              <option value="ホームページ制作">ホームページ制作</option>
+              <option value="システム開発">システム開発</option>
+              <option value="SNS運用">SNS運用</option>
+              <option value="ドローン空撮">ドローン空撮</option>
+              <option value="その他">その他</option>
+            </select>
+          </div>
+          <div class="ad-field">
+            <label for="client">クライアント名・補足（任意）</label>
+            <input type="text" id="client" placeholder="例：kunioffice 様 / 2026" maxlength="60">
+          </div>
+          <button type="submit" class="ad-btn" id="post-btn" disabled>投稿する</button>
+          <div class="ad-progress" id="progress"><span id="progress-bar"></span></div>
+          <p class="ad-msg" id="post-msg"></p>
+        </form>
+      </div>
+
+      <div class="ad-list">
+        <h2>投稿した実績</h2>
+        <div class="ad-posts" id="my-posts"></div>
+      </div>
+
+      <button type="button" class="ad-signout" id="signout">ログアウト（<span id="who"></span>）</button>
+    </section>
+  </div>
+
+  <script type="module" src="assets/js/admin.js?v=20260716d"></script>
+</body>
+</html>
