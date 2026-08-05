@@ -1365,58 +1365,58 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------- WORK MODAL ----------
   const workData = {
     '1': {
-      cat: 'ポータルサイト',
-      label: 'Portal Site',
-      title: '求人ポータルサイト構築・運営',
-      year: '2024 — 継続中',
-      desc: '地域企業の採用課題に応えるため、求人ポータルサイトを企画・設計・開発から運営まで一貫して担当。応募導線の最適化と検索性の高いUIにより、掲載企業からの継続率を高めています。',
-      meta: { Service: 'ポータルサイト構築・運営', Scope: '企画 / 設計 / 開発 / 運営', Period: '2024年〜継続中' },
-      img: 'assets/images/works/portal-job.jpg'
+      cat: 'Webアプリ',
+      label: 'Web App',
+      title: 'SWIPLY｜求人マッチングアプリ',
+      year: '2026',
+      desc: '写真と30秒動画で求人を見て、スワイプで応募する求人マッチングアプリ。相互マッチからチャット、ビデオ面接、AIによる面接の振り返りまでをアプリ1つで完結させました。LIFFとMessaging APIを2チャネル構成で連携し、LINEからのプッシュ通知も実現しています。',
+      meta: { Service: 'Webアプリ開発', Stack: 'Next.js / Firebase / LINE LIFF', Point: 'ビデオ面接＋AI分析レポート' },
+      img: 'assets/images/portfolio/swiply.jpg'
     },
     '2': {
-      cat: 'HP制作',
-      label: 'HP Renewal',
-      title: '印刷会社コーポレートサイト',
-      year: '2024',
-      desc: '徹底したヒアリングをもとに、強みと想いを「自分たちの言葉」で伝えるコーポレートサイトへリニューアル。公開後、月0件だった問い合わせが毎月10件以上へと変化しました。',
-      meta: { Service: 'コーポレートサイト制作', Result: '問い合わせ 0 → 10件 / 月', Period: '2024年' },
-      img: 'assets/images/works/print-company.jpg'
+      cat: 'ECサイト',
+      label: 'EC Site',
+      title: 'Grit.｜古着屋 HP＋オンラインストア',
+      year: '2026',
+      desc: '札幌・琴似の古着屋の公式サイト。店舗紹介とブログ、Stripe決済のオンラインストア、店主がスマホで運用できる管理画面までを一体で構築しました。古着＝全商品1点物のため、決済時に商品を30分ホールドして二重販売を防ぐ仕組みを組んでいます。',
+      meta: { Service: 'ECサイト構築', Stack: 'Firebase / Cloud Functions / Stripe', Point: '1点物の二重販売を防ぐ在庫設計' },
+      img: 'assets/images/portfolio/grit.jpg'
     },
     '3': {
-      cat: '映像制作',
-      label: 'Brand Movie',
-      title: '飲食店ブランディング映像',
-      year: '2024',
-      desc: '店主の哲学と料理が生まれる瞬間を、シネマカメラで丁寧に捉えたブランディング映像。映像越しに「行ってみたい」と感じてもらえる空気感を大切に制作しました。',
-      meta: { Service: 'ブランディング映像', Equipment: 'シネマカメラ', Period: '2024年' },
-      img: 'assets/images/works/restaurant-movie.jpg'
+      cat: 'Webアプリ',
+      label: 'AI App',
+      title: 'ほっかいどう旅手帳｜AI旅程プランナー',
+      year: '2026',
+      desc: '北海道専門のAIプランナーと対話しながら旅程を組み立てるアプリ。地図・チャット・プランナーの3画面が連動し、行き先選びからプラン確定・共有まで完結します。AIの提案を構造化データで受け取ることで、確実に地図と連動させました。',
+      meta: { Service: 'Webアプリ開発', Stack: 'Claude API / Cloudflare Workers / Leaflet', Point: 'AI応答のストリーミング表示' },
+      img: 'assets/images/portfolio/hokkaido.jpg'
     },
     '4': {
-      cat: 'HP制作',
-      label: 'Web Site',
-      title: '飲食店コーポレートサイト',
-      year: '2025',
-      desc: '料理の世界観とお店の温度感を一枚一枚に込めたコーポレートサイト。予約導線とSNS連携を整理し、来店までの体験をシームレスに設計しました。',
-      meta: { Service: 'コーポレートサイト制作', Scope: '設計 / デザイン / 実装', Period: '2025年' },
-      img: 'assets/images/works/restaurant-site.jpg'
+      cat: 'コーポレートサイト',
+      label: 'Corporate',
+      title: '丸幸木材店｜創業70余年の木材店',
+      year: '2026',
+      desc: '北海道旭川で昭和二十七年創業の木材店のコーポレートサイト。道産銘木の取り扱いと、木と歩んだ70年の理念を、設計者や工務店に向けて静かに伝えます。アニメーションを意図的に最小限にし、余白と速度で老舗の落ち着きを表現しました。',
+      meta: { Service: 'コーポレートサイト制作', Scope: '設計 / デザイン / 実装', Point: '明朝体と文字組みで品格を表現' },
+      img: 'assets/images/portfolio/marukou.jpg'
     },
     '5': {
-      cat: '映像制作',
-      label: 'Drone Shoot',
-      title: '空撮プロモーション映像',
-      year: '2025',
-      desc: '国家資格保有者によるドローン撮影で、地域の風景を上空から捉えたプロモーション映像。視点の高さでしか伝えられないスケール感を演出しました。',
-      meta: { Service: '空撮プロモーション映像', Equipment: 'ドローン（国家資格）', Period: '2025年' },
-      img: 'assets/images/works/drone-aerial.jpg'
+      cat: 'コーポレートサイト',
+      label: 'Corporate',
+      title: '株式会社YOLO｜イベント運営会社',
+      year: '2026',
+      desc: 'イベントの企画・運営とコンサルティングを行う会社の公式サイト。3つのコミュニティと全道の会場網を紹介するマルチページ構成です。会場情報をデータファイルに外出しし、追記するだけで地図のピンと一覧の両方が増える設計にしました。',
+      meta: { Service: 'コーポレートサイト制作', Scope: 'トップ＋事業別LP 4ページ', Point: 'データ駆動の北海道会場マップ' },
+      img: 'assets/images/portfolio/yolo.jpg'
     },
     '6': {
-      cat: 'ポータルサイト',
-      label: 'Portal Site',
-      title: '地域情報ポータル開発・運営',
-      year: '2025 — 継続中',
-      desc: '地域の魅力を発信し続けるための情報ポータルを開発・運営。地元の事業者と訪れる人をつなぐハブとして、継続的にコンテンツと機能を拡張しています。',
-      meta: { Service: '地域情報ポータル', Scope: '開発 / コンテンツ / 運営', Period: '2025年〜継続中' },
-      img: 'assets/images/works/portal-local.jpg'
+      cat: '業務ツール',
+      label: 'Sales Tool',
+      title: 'tell partner｜AI営業リスト生成',
+      year: '2026',
+      desc: '自社の商材を入力すると、AIが理想の顧客像を組み立て、ウェブ検索で実在企業を発見。各社のホームページをAIが実際に読み込んで、購入適合度を100点満点で採点する営業支援ツールです。点数の根拠まで提示するので、なぜその企業なのかが分かります。',
+      meta: { Service: '業務ツール開発', Stack: 'Claude API / Cloudflare Workers / Brave Search', Point: '20種以上の購買シグナルで加点' },
+      img: 'assets/images/portfolio/tell.jpg'
     }
   };
 
@@ -1438,7 +1438,9 @@ document.addEventListener('DOMContentLoaded', () => {
       modalTitle.textContent = data.title;
       modalYear.textContent = data.year;
       modalDesc.textContent = data.desc;
-      modalLabel.textContent = data.label;
+      // ラベルは実スクリーンショットが無い場合の代替表示。画像がある案件では隠す。
+      modalLabel.textContent = data.label || '';
+      modalLabel.hidden = !!data.img;
       if (modalImg) {
         if (data.img) {
           modalImg.src = data.img;

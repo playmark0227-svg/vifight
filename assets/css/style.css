@@ -1943,8 +1943,17 @@ body.on-dark .cursor-follower.view::after {
 
 .works-cta {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
   justify-content: center;
   margin-top: clamp(50px, 6vw, 80px);
+}
+.works-cta-note {
+  font-size: 13.5px;
+  color: var(--text-light);
+  letter-spacing: 0.02em;
+  text-align: center;
 }
 
 .btn-circle {
