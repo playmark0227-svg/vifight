@@ -1,7 +1,7 @@
 /* =============================================================
    ViFight — ポートフォリオ（案件一覧）
    ============================================================= */
-import { PROJECTS, CATEGORIES } from './portfolio-data.js?v=20260805a';
+import { PROJECTS, CATEGORIES } from './portfolio-data.js?v=20260805b';
 
 const $ = (id) => document.getElementById(id);
 const gridEl = $('pf-grid');
@@ -25,15 +25,15 @@ function cardMarkup(p, i) {
           data-slug="${esc(p.slug)}" aria-label="${esc(p.name)}の詳細を見る">
     <span class="pf-thumb">
       ${thumbMarkup(p, 'pf-thumb-img')}
-      <span class="pf-thumb-tag">${esc(p.category)}</span>
       <span class="pf-thumb-name">${esc(p.name)}<span class="pf-thumb-sub">${esc(p.jp)}</span></span>
     </span>
     <span class="pf-body">
-      <span class="pf-cat">${esc(p.year)}</span>
-      <span class="pf-name">${esc(p.tagline)}</span>
-      <span class="pf-desc">${esc(p.summary.length > 82 ? p.summary.slice(0, 82) + '…' : p.summary)}</span>
-      <span class="pf-stack">${p.stack.slice(0, 4).map((t) => `<span class="pf-tech">${esc(t)}</span>`).join('')}</span>
-      <span class="pf-more">こだわりを見る <span aria-hidden="true">→</span></span>
+      <span class="pf-name">${esc(p.name)}</span>
+      <span class="pf-desc">${esc(p.tagline)}</span>
+      <span class="pf-tags">
+        <span class="pf-tag">${esc(p.category)}</span>
+        ${p.stack.slice(0, 2).map((t) => `<span class="pf-tag">${esc(t)}</span>`).join('')}
+      </span>
     </span>
   </button>`;
 }
