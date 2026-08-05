@@ -4736,6 +4736,136 @@ body.legal-page button { cursor: pointer; }
 
 /* ---------- PRINT ---------- */
 /* People print the profile / policies for internal approval — make it clean. */
+/* ============================================================
+   MOBILE REFINEMENT — 実機（320〜430px）での操作性・可読性
+   タップ領域は最低44px、本文は12px以上を確保する
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* --- タップ領域の確保（Appleの推奨44px） --- */
+  .nav-hamburger {
+    width: 44px;
+    height: 44px;
+    padding: 9px 7px;
+    margin-right: -7px;      /* 見た目の位置は変えずに当たり判定だけ広げる */
+    justify-content: center;
+  }
+
+  /* 法務ページ・404 の「トップへ戻る」 */
+  .legal-back {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 6px 2px;
+    font-size: 13.5px;
+  }
+  /* 文中のインラインリンク：行の高さは保ったまま、タップ判定だけ広げる。
+     （padding を足すと行間が崩れるので、疑似要素で当たり判定を拡張する） */
+  .legal p a,
+  .legal li a,
+  .legal dd a,
+  .faq-answer a,
+  .consent-text a,
+  .contact-payment a {
+    position: relative;
+    text-underline-offset: 4px;
+  }
+  .legal p a::after,
+  .legal li a::after,
+  .legal dd a::after,
+  .faq-answer a::after,
+  .consent-text a::after,
+  .contact-payment a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 44px;
+    transform: translateY(-50%);
+    /* 見た目には出さず、指のタップだけ受ける */
+  }
+  .legal-footer-links a,
+  .footer-legal a,
+  .footer-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+  }
+
+  /* 問い合わせ・SNS・支払いリンク */
+  .contact-detail a,
+  .contact-social a,
+  .contact-payment a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+  }
+
+  /* --- 小さすぎる文字の底上げ（10〜11px → 12px以上） --- */
+  .work-cat,
+  .home-work-cat,
+  .tab-pager-dir,
+  .home-stat-label,
+  .wh-label,
+  .stat-label,
+  .footer-legal a,
+  .voice-result,
+  .home-cta-note {
+    font-size: 12.5px;
+  }
+  .section-sub { font-size: 13px; }
+  .hero-tag span { font-size: 12px; letter-spacing: 2.5px; }
+  /* 連絡先などの項目ラベルも読める大きさに（Scroll/円形ボタンは装飾のため据え置き） */
+  .contact-label { font-size: 12px; }
+
+  /* --- 装飾レイヤーが画面外へ広がるのを抑える（横スクロール予防） --- */
+  .hero-visual,
+  .sec-aurora,
+  .home-aurora,
+  .philosophy-aurora,
+  .philosophy-orb,
+  .hero-aurora,
+  .aurora-band,
+  .aurora-curtain {
+    max-width: 100vw;
+  }
+  .float-shapes,
+  .hero-visual { overflow: hidden; }
+
+  /* --- フォーム：iOSで自動ズームしないよう16px以上を維持 --- */
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 16px;
+  }
+  .form-submit { min-height: 52px; }
+  /* チェックボックスの当たり判定 */
+  .consent-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    min-height: 44px;
+    padding: 4px 0;
+  }
+}
+
+/* --- 小型端末（〜380px）でのさらなる調整 --- */
+@media (max-width: 380px) {
+  .container { padding: 0 18px; }
+  .hero-content { padding: 0 18px; }
+  .hero-cta { gap: 12px 16px; }
+  .hero-cta-btn { padding: 15px 26px; font-size: 15px; }
+  .home-cta-btn, .tab-callout-btn { padding: 15px 26px; }
+  .trust-item, .flow-assure-item { padding: 20px 18px; }
+  .profile-table > div { flex-direction: column; gap: 4px; }
+  .profile-table dt { min-width: 0; }
+  .about-message-body p { font-size: 14px; }
+  .founder-creds li { font-size: 12.5px; padding: 7px 13px; }
+  .works-highlights { gap: 20px 24px; }
+  .wh-num { font-size: clamp(28px, 8.5vw, 38px); }
+}
+
 @media print {
   #loader, #cursor, #cursor-follower, canvas,
   .hero-visual, .float-shapes, .mobile-menu, #header,

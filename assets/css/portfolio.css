@@ -220,3 +220,46 @@ ul { list-style:none; }
   *, *::before, *::after { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
   .pf-reveal { opacity:1; transform:none; }
 }
+
+/* ============================================================
+   MOBILE REFINEMENT — 実機での操作性・可読性（320〜430px）
+   ============================================================ */
+@media (max-width: 768px) {
+  /* フィルターチップ：指で押せる高さに */
+  .pf-chip {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    font-size: 13.5px;
+  }
+  /* フィルター自体の左右パディングを画面端まで使い、端の切れを自然に */
+  .pf-filter { padding-left: 16px; padding-right: 16px; scroll-padding-left: 16px; }
+  .pf-filter::after { content: ''; flex: 0 0 4px; }
+
+  /* タグ・補足文字の底上げ（11px → 12px） */
+  .pf-tag { font-size: 12px; padding: 4px 10px; }
+  .pf-thumb-sub { font-size: 12px; }
+  .pf-stat-label { font-size: 12.5px; }
+
+  /* ヘッダーのリンクを押しやすく */
+  .pf-nav a { display: inline-flex; align-items: center; min-height: 40px; }
+  .pf-nav-cta { min-height: 40px; }
+  .pf-footer-nav a { display: inline-flex; align-items: center; min-height: 40px; }
+
+  /* モーダル：閉じるボタンをセーフエリア考慮の位置に */
+  .pf-modal-close {
+    top: max(14px, env(safe-area-inset-top));
+    right: 14px;
+    width: 46px; height: 46px;
+  }
+  .pf-m-btn { width: 100%; justify-content: center; min-height: 52px; }
+}
+
+@media (max-width: 380px) {
+  .pf-hero { padding-left: 18px; padding-right: 18px; }
+  .pf-grid { padding-left: 18px; padding-right: 18px; }
+  .pf-stats { gap: 16px 26px; }
+  .pf-m-body { padding: 20px 18px; }
+  .pf-point { padding: 14px 15px; }
+}
