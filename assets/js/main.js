@@ -1394,11 +1394,11 @@ document.addEventListener('DOMContentLoaded', () => {
     '4': {
       cat: 'コーポレートサイト',
       label: 'Corporate',
-      title: '丸幸木材店｜創業70余年の木材店',
+      title: 'ES Beauty｜札幌の複合ビューティーサロン',
       year: '2026',
-      desc: '北海道旭川で昭和二十七年創業の木材店のコーポレートサイト。道産銘木の取り扱いと、木と歩んだ70年の理念を、設計者や工務店に向けて静かに伝えます。アニメーションを意図的に最小限にし、余白と速度で老舗の落ち着きを表現しました。',
-      meta: { Service: 'コーポレートサイト制作', Scope: '設計 / デザイン / 実装', Point: '明朝体と文字組みで品格を表現' },
-      img: 'assets/images/portfolio/marukou.jpg'
+      desc: 'ネイル・エステ・アイ・ピラティス・ドッグサロン・バーを展開する複合サロンのブランドサイト。8つのブランドを1つの世界観の下にまとめ、各サービスの詳細ページへ送客します。バーのページだけ配色をナイトモードに切り替え、ブランドごとの空気感を1サイトで両立させました。',
+      meta: { Service: 'ブランドサイト制作', Scope: 'ブランド別 7ページ構成', Point: 'Instagram最新投稿の自動掲載' },
+      img: 'assets/images/portfolio/shogosan.jpg'
     },
     '5': {
       cat: 'コーポレートサイト',

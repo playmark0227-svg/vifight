@@ -23,9 +23,7 @@
 | vifight.jpg         | ViFight                   |
 | yolo.jpg            | 株式会社YOLO              |
 | shogosan.jpg        | ES Beauty                 |
-| kannakamuy.jpg      | KANNA KAMUY               |
 | sunnyway.jpg        | 株式会社Sunnyway          |
-| marukou.jpg         | 丸幸木材店                |
 | iface.jpg           | 合同会社アイフェイス      |
 
 ## 推奨サイズ
