@@ -266,3 +266,24 @@ body.pf-page a.pf-cta-btn {
   .pf-m-body { padding: 20px 18px; }
   .pf-point { padding: 14px 15px; }
 }
+
+/* ---------- Roots: フッターの社名・注記 ---------- */
+.pf-footer-org {
+  font-family: var(--font-en);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--pf-ink);
+}
+.pf-footer-note {
+  max-width: 560px;
+  font-size: 12.5px;
+  line-height: 1.9;
+  color: var(--pf-ink-soft);
+}
+.pf-footer-note a {
+  color: var(--pf-ink-mid);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.pf-footer-note a:hover { color: var(--pf-accent); }

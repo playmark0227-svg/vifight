@@ -1,5 +1,5 @@
 /* =============================================================
-   ViFight — ポートフォリオ（案件一覧）
+   合同会社Roots — ポートフォリオ（案件一覧）
    ============================================================= */
 import { PROJECTS, CATEGORIES } from './portfolio-data.js?v=20260805f';
 
@@ -116,7 +116,7 @@ function openModal(slug) {
 
       <div class="pf-m-actions">
         ${p.url ? `<a class="pf-m-btn" href="${esc(p.url)}" target="_blank" rel="noopener">サイトを見る <span aria-hidden="true">↗</span></a>` : ''}
-        <a class="pf-m-btn pf-m-btn--ghost" href="index.html#contact">似た制作を相談する</a>
+        <a class="pf-m-btn pf-m-btn--ghost" href="mailto:ayumu.k@vifight.com?subject=%E5%88%B6%E4%BD%9C%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87%EF%BC%88Roots%EF%BC%89">似た制作を相談する</a>
       </div>
     </div>`;
   modal.classList.add('open');
