@@ -1417,6 +1417,15 @@ document.addEventListener('DOMContentLoaded', () => {
       desc: '自社の商材を入力すると、AIが理想の顧客像を組み立て、ウェブ検索で実在企業を発見。各社のホームページをAIが実際に読み込んで、購入適合度を100点満点で採点する営業支援ツールです。点数の根拠まで提示するので、なぜその企業なのかが分かります。',
       meta: { Service: '業務ツール開発', Stack: 'Claude API / Cloudflare Workers / Brave Search', Point: '20種以上の購買シグナルで加点' },
       img: 'assets/images/portfolio/tell.jpg'
+    },
+    '7': {
+      cat: 'コーポレートサイト',
+      label: 'Corporate',
+      title: '丸幸木材店｜創業70余年の木材店',
+      year: '2026',
+      desc: '北海道旭川で昭和二十七年創業の木材店のコーポレートサイト。道産銘木の取り扱いと、木と歩んだ70年の理念を、設計者や工務店に向けて静かに伝えます。アニメーションを意図的に最小限にし、余白と速度で老舗の落ち着きを表現しました。',
+      meta: { Service: 'コーポレートサイト制作', Scope: '設計 / デザイン / 実装', Point: '明朝体と文字組みで品格を表現' },
+      img: 'assets/images/portfolio/marukou.jpg'
     }
   };
 

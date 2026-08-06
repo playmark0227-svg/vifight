@@ -25,6 +25,8 @@
 | shogosan.jpg        | ES Beauty                 |
 | sunnyway.jpg        | 株式会社Sunnyway          |
 | iface.jpg           | 合同会社アイフェイス      |
+| marukou.jpg         | 丸幸木材店                |
+| kannakamuy.jpg      | KANNA KAMUY               |
 
 ## 推奨サイズ
 

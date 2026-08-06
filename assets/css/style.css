@@ -1814,6 +1814,13 @@ body.on-dark .cursor-follower.view::after {
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(20px, 3vw, 40px);
 }
+/* 3列の最終段が1枚だけ余るとき、中央に置いて収まりを良くする
+   （7件掲載時の7枚目。件数が3の倍数なら何も起きない） */
+@media (min-width: 769px) {
+  .works-grid > .work-item:last-child:nth-child(3n + 1) {
+    grid-column: 2;
+  }
+}
 
 .work-item {
   position: relative;
