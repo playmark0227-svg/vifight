@@ -358,9 +358,18 @@ document.addEventListener('DOMContentLoaded', () => {
       if (el.hasAttribute('data-reveal-title')) el.querySelectorAll('.char').forEach(c => c.classList.add('visible'));
       if (el.hasAttribute('data-reveal-words')) el.querySelectorAll('.word').forEach(w => w.classList.add('visible'));
       if (el.hasAttribute('data-count')) animateCount(el);
+      // グループ（カード群）は親に .is-in を付けて、子をCSSで順次表示させる
+      if (el.hasAttribute('data-group')) el.classList.add('is-in');
+      if (el.classList.contains('home-lead')) el.classList.add('is-lit');
       revealObserver.unobserve(el);
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  /* --- 順次アニメーションのグループを監視対象に登録 ---
+     （data-reveal と同じ revealObserver に相乗りさせ、発火の取りこぼしを防ぐ） */
+  document.querySelectorAll(
+    '.strength-grid, .trust-strip, .flow-assure, .home-services, .home-works, .home-stats'
+  ).forEach(el => el.setAttribute('data-group', ''));
 
   document.querySelectorAll('[data-reveal-title]').forEach(title => {
     const frag = document.createDocumentFragment();
@@ -395,7 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealObserver.observe(el);
   });
 
-  document.querySelectorAll('[data-reveal], [data-count]').forEach(el => revealObserver.observe(el));
+  document.querySelectorAll('[data-reveal], [data-count], [data-group]').forEach(el => revealObserver.observe(el));
 
   function animateCount(el) {
     if (el.dataset.counted) return;   // guard: reveal observer + tab router may both call
@@ -488,6 +497,9 @@ document.addEventListener('DOMContentLoaded', () => {
       viewEl.querySelectorAll('[data-reveal-title]').forEach(el => { el.querySelectorAll('.char').forEach(c => c.classList.add('visible')); revealObserver.unobserve(el); });
       viewEl.querySelectorAll('[data-reveal-words]').forEach(el => { el.querySelectorAll('.word').forEach(w => w.classList.add('visible')); revealObserver.unobserve(el); });
       viewEl.querySelectorAll('[data-count]').forEach(el => { animateCount(el); revealObserver.unobserve(el); });
+      // 順次アニメのグループも開放（タブ切替で画面外だった分を取りこぼさない）
+      viewEl.querySelectorAll('.strength-grid, .trust-strip, .flow-assure, .home-services, .home-works, .home-stats')
+        .forEach(el => el.classList.add('is-in'));
     }
 
     function showView(viewId, isInitial) {

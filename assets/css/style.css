@@ -3186,18 +3186,39 @@ body::after {
 .home-stats {
   display: flex;
   flex-wrap: wrap;
-  gap: clamp(26px, 6vw, 70px);
-  margin-top: clamp(40px, 6vw, 68px);
+  gap: clamp(26px, 5vw, 64px);
+  margin-top: clamp(44px, 6vw, 76px);
+  padding-top: clamp(32px, 4vw, 46px);
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
 }
-.home-stat { display: flex; flex-direction: column; gap: 8px; }
+/* 数字は主役。区切り線と発光で「実績」を目に飛び込ませる */
+.home-stat {
+  position: relative;
+  display: flex; flex-direction: column; gap: 10px;
+  padding-right: clamp(20px, 4vw, 52px);
+  transition: transform 0.45s var(--ease-out);
+}
+.home-stat + .home-stat::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * clamp(13px, 2.5vw, 32px));
+  top: 6%; bottom: 22%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.16), transparent);
+}
+.home-stat:hover { transform: translateY(-4px); }
 .home-stat-figure { display: flex; align-items: baseline; gap: 2px; }
 .home-stat-num {
   font-family: var(--font-en);
-  font-size: clamp(40px, 6vw, 66px);
-  font-weight: 600;
-  line-height: 1;
+  font-size: clamp(52px, 9vw, 104px);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  filter: drop-shadow(0 0 26px rgba(70, 226, 170, 0.28));
+  transition: filter 0.45s;
 }
-.home-stat-plus { font-family: var(--font-en); font-size: clamp(20px, 3vw, 30px); font-weight: 600; }
+.home-stat:hover .home-stat-num { filter: drop-shadow(0 0 38px rgba(70, 226, 170, 0.5)); }
+.home-stat-plus { font-family: var(--font-en); font-size: clamp(24px, 3.6vw, 40px); font-weight: 700; }
 .home-stat-num, .home-stat-plus {
   background: linear-gradient(120deg, var(--aurora-green), var(--aurora-ice));
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
@@ -4897,4 +4918,233 @@ body.legal-page button { cursor: pointer; }
     color: #333 !important;
   }
   a { color: #000; text-decoration: underline; }
+}
+
+/* ============================================================
+   VISUAL RHYTHM — セクションとカードに表情の幅をつける
+   （全部同じ黒・同じカードで単調になっていたのを解消）
+   ============================================================ */
+
+/* --- 1. セクションごとに地の明度を変えてリズムを作る --- */
+.home-strengths {
+  background: linear-gradient(180deg, #15100b 0%, #221b13 46%, #191309 100%);
+}
+.home-trust {
+  background: linear-gradient(180deg, #191309 0%, #12100c 100%);
+  padding-top: clamp(56px, 8vw, 96px);
+  padding-bottom: clamp(56px, 8vw, 96px);   /* 帯として軽く、間延びを防ぐ */
+}
+.home-voice {
+  background: linear-gradient(180deg, #12100c 0%, #1d1710 55%, #15100b 100%);
+}
+.home-founder {
+  background: linear-gradient(180deg, #15100b 0%, #201a12 50%, #15100b 100%);
+}
+
+/* --- 2. 強みカード：番号を主役にした立体的な作りへ --- */
+.strength-card {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(30px, 3.4vw, 46px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  background:
+    linear-gradient(150deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.012) 46%, transparent 100%);
+  transition: transform 0.5s var(--ease-out), border-color 0.45s, box-shadow 0.5s;
+}
+/* 巨大な連番を背景に置いて、カードごとの個性を出す */
+.strength-card::after {
+  content: attr(data-num);
+  position: absolute;
+  right: -6px; bottom: -26px;
+  font-family: var(--font-en);
+  font-size: clamp(84px, 10vw, 140px);
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.075);
+  pointer-events: none;
+  transition: color 0.5s, transform 0.6s var(--ease-out);
+}
+.strength-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(70, 226, 170, 0.42);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+}
+.strength-card:hover::after {
+  color: rgba(70, 226, 170, 0.2);
+  transform: translateY(-6px) scale(1.04);
+}
+/* 上端に光の線を走らせる */
+.strength-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(70,226,170,0.6), transparent);
+  transform: scaleX(0);
+  transition: transform 0.6s var(--ease-out);
+}
+.strength-card:hover::before { transform: scaleX(1); }
+.strength-num { position: relative; z-index: 1; }
+.strength-card h3, .strength-card p { position: relative; z-index: 1; }
+
+/* --- 3. 信頼バッジ：横一列の「帯」として軽快に --- */
+.trust-item {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.028);
+  border-color: rgba(255, 255, 255, 0.08);
+  transition: transform 0.4s var(--ease-out), border-color 0.4s, background 0.4s;
+}
+.trust-item:hover {
+  transform: translateY(-4px);
+  background: rgba(70, 226, 170, 0.06);
+  border-color: rgba(70, 226, 170, 0.34);
+}
+.trust-ico { transition: transform 0.5s var(--ease-out); }
+.trust-item:hover .trust-ico { transform: scale(1.12) rotate(-6deg); }
+
+/* --- 4. サービス行：ホバーで奥行きを出す --- */
+.home-service {
+  position: relative;
+  transition: transform 0.45s var(--ease-out), background 0.4s, padding-left 0.45s var(--ease-out);
+}
+.home-service::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+  background: linear-gradient(180deg, var(--aurora-green), var(--aurora-teal));
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform 0.45s var(--ease-out);
+}
+.home-service:hover::before { transform: scaleY(1); }
+.home-service:hover { padding-left: 18px; }
+.home-service-num { transition: color 0.4s, transform 0.45s var(--ease-out); }
+.home-service:hover .home-service-num { color: var(--aurora-green); transform: translateY(-2px); }
+
+/* --- 5. セクション見出しに光のアンダーライン --- */
+.home-preview-title { position: relative; display: inline-block; }
+.home-preview-title::after {
+  content: '';
+  position: absolute; left: 0; bottom: -10px; height: 3px; width: 100%;
+  background: linear-gradient(90deg, var(--aurora-green), var(--aurora-teal), transparent);
+  border-radius: 3px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1s var(--ease-out) 0.2s;
+}
+.home-preview-title.visible::after,
+[data-reveal].visible .home-preview-title::after { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .strength-card::before,
+  .home-preview-title::after { transform: none; }
+}
+
+/* ============================================================
+   SCROLL CHOREOGRAPHY — スクロールに連動した見せ場
+   ============================================================ */
+
+/* --- カードが順番に立ち上がる（親のvisibleを待って子が続く） --- */
+.strength-grid .strength-card,
+.trust-strip .trust-item,
+.flow-assure .flow-assure-item {
+  opacity: 0;
+  transform: translateY(28px) scale(0.985);
+  transition: opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out);
+}
+.strength-grid.is-in .strength-card,
+.trust-strip.is-in .trust-item,
+.flow-assure.is-in .flow-assure-item {
+  opacity: 1;
+  transform: none;
+}
+/* 1枚ずつ遅らせて「流れ」を作る */
+.strength-grid.is-in .strength-card:nth-child(1),
+.trust-strip.is-in .trust-item:nth-child(1),
+.flow-assure.is-in .flow-assure-item:nth-child(1) { transition-delay: 0.05s; }
+.strength-grid.is-in .strength-card:nth-child(2),
+.trust-strip.is-in .trust-item:nth-child(2),
+.flow-assure.is-in .flow-assure-item:nth-child(2) { transition-delay: 0.16s; }
+.strength-grid.is-in .strength-card:nth-child(3),
+.trust-strip.is-in .trust-item:nth-child(3),
+.flow-assure.is-in .flow-assure-item:nth-child(3) { transition-delay: 0.27s; }
+.strength-grid.is-in .strength-card:nth-child(4),
+.trust-strip.is-in .trust-item:nth-child(4) { transition-delay: 0.38s; }
+
+/* --- サービス行が左から順に入る --- */
+.home-services .home-service {
+  opacity: 0;
+  transform: translateX(-22px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+.home-services.is-in .home-service { opacity: 1; transform: none; }
+.home-services.is-in .home-service:nth-child(1) { transition-delay: 0.04s; }
+.home-services.is-in .home-service:nth-child(2) { transition-delay: 0.12s; }
+.home-services.is-in .home-service:nth-child(3) { transition-delay: 0.20s; }
+.home-services.is-in .home-service:nth-child(4) { transition-delay: 0.28s; }
+.home-services.is-in .home-service:nth-child(5) { transition-delay: 0.36s; }
+.home-services.is-in .home-service:nth-child(6) { transition-delay: 0.44s; }
+
+/* --- 実績カードがめくれるように現れる --- */
+.home-works .home-work {
+  opacity: 0;
+  transform: translateY(34px) rotateX(6deg);
+  transform-origin: bottom center;
+  transition: opacity 0.85s var(--ease-out), transform 0.85s var(--ease-out);
+}
+.home-works.is-in .home-work { opacity: 1; transform: none; }
+.home-works.is-in .home-work:nth-child(2) { transition-delay: 0.13s; }
+.home-works.is-in .home-work:nth-child(3) { transition-delay: 0.26s; }
+
+/* --- 数字が下からせり上がる --- */
+.home-stats .home-stat {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+.home-stats.is-in .home-stat { opacity: 1; transform: none; }
+.home-stats.is-in .home-stat:nth-child(2) { transition-delay: 0.14s; }
+.home-stats.is-in .home-stat:nth-child(3) { transition-delay: 0.28s; }
+
+/* --- 見出しに「光が走る」演出 --- */
+.home-lead, .home-cta-title {
+  background-size: 200% 100%;
+}
+.home-lead.is-lit {
+  animation: leadSheen 2.4s var(--ease-out) 1;
+}
+@keyframes leadSheen {
+  0%   { filter: brightness(1); }
+  35%  { filter: brightness(1.28) drop-shadow(0 0 30px rgba(70,226,170,0.25)); }
+  100% { filter: brightness(1); }
+}
+
+/* --- 代表の顔写真：ゆっくり浮遊 --- */
+.founder-photo img {
+  animation: founderFloat 7s ease-in-out infinite;
+}
+@keyframes founderFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-9px); }
+}
+
+/* --- お客様の声：引用符がゆっくり脈打つ --- */
+.home-voice-mark { animation: voicePulse 5s ease-in-out infinite; }
+@keyframes voicePulse {
+  0%, 100% { opacity: 0.26; transform: scale(1); }
+  50%      { opacity: 0.42; transform: scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strength-grid .strength-card,
+  .trust-strip .trust-item,
+  .flow-assure .flow-assure-item,
+  .home-services .home-service,
+  .home-works .home-work,
+  .home-stats .home-stat {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .founder-photo img,
+  .home-voice-mark,
+  .home-lead.is-lit { animation: none !important; }
 }
