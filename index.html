@@ -1,188 +1,1541 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>ViFight｜これ、作れますか。— 北海道の開発・映像スタジオ</title>
-<meta name="description" content="ViFight（北海道 中標津・札幌）。HP・LP制作、アプリ・システム開発、映像・写真、SNS運用、AI導入まで。奥へ続く工房を一本で通り抜ける、スクロール連動のコーポレートサイト。">
-<meta name="robots" content="index, follow">
-<meta name="theme-color" content="#0B1420">
-<link rel="canonical" href="https://vifight.com/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230B1420'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='700' fill='%23C9A227' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>システム開発・映像制作なら北海道のViFight｜アプリ・HP制作・SNS運用</title>
+  <meta name="description" content="北海道・札幌のViFight（ヴィファイト）は、Web・アプリ・業務システム・AI開発から映像制作・ホームページ制作・SNS運用まで自社で一貫する「映像もつくれる開発会社」。問い合わせ0件→月10件の成果実績。初回相談・お見積もりは無料、2営業日以内に返信。中標津・道東も対応。">
+  <meta name="author" content="ViFight">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#1c1611">
+  <link rel="canonical" href="https://vifight.com/">
 
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="ViFight">
-<meta property="og:title" content="ViFight｜これ、作れますか。">
-<meta property="og:description" content="HP・アプリ・システム・映像・SNS・AI導入まで。北海道から、一本の通路を通り抜けるように見せるコーポレートサイト。">
-<meta property="og:url" content="https://vifight.com/">
-<meta property="og:image" content="https://vifight.com/assets/frames/pc/f_0060.webp">
-<meta name="twitter:card" content="summary_large_image">
+  <!-- Favicon (inline SVG, no extra request) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231c1611'/%3E%3Ctext x='32' y='44' font-family='Inter,Arial,sans-serif' font-size='38' font-weight='600' fill='%23b8946a' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E">
 
-<link rel="preload" as="image" href="assets/frames/pc/f_0001.webp" media="(min-width:760px)">
-<link rel="preload" as="image" href="assets/frames/mobile/f_0001.webp" media="(max-width:759px)">
-<link rel="stylesheet" href="assets/css/camera.css?v=20260807a">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&family=Noto+Sans+JP:wght@400;500&family=JetBrains+Mono:wght@400&display=swap">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ViFight">
+  <meta property="og:title" content="システム開発・映像制作なら北海道のViFight｜映像もつくれる開発会社">
+  <meta property="og:description" content="Web・アプリ・業務システム・AI開発から映像制作・HP制作・SNS運用まで、北海道で自社ワンストップ。問い合わせ0→月10件の成果実績。初回相談・お見積もり無料、中標津・道東も対応。">
+  <meta property="og:url" content="https://vifight.com/">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:image" content="https://vifight.com/assets/images/hero/hero-cover.jpg">
+  <meta property="og:image:alt" content="北海道の夜空とオーロラを背景にしたViFightのブランドビジュアル">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1280">
 
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"ViFight","alternateName":"ヴィファイト",
-"url":"https://vifight.com/","email":"ayumu.k@vifight.com","founder":{"@type":"Person","name":"久保 歩夢"},
-"foundingDate":"2023-06",
-"address":{"@type":"PostalAddress","addressRegion":"北海道","addressLocality":"標津郡中標津町","addressCountry":"JP"},
-"areaServed":[{"@type":"AdministrativeArea","name":"北海道"},{"@type":"City","name":"札幌市"},{"@type":"City","name":"中標津町"}],
-"description":"HP・LP制作、アプリ・システム開発、映像・写真、SNS運用・編集アカデミー、AI導入・Claude活用支援。",
-"sameAs":["https://www.instagram.com/a._.k227"]}
-</script>
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="システム開発・映像制作なら北海道のViFight｜映像もつくれる開発会社">
+  <meta name="twitter:description" content="Web・アプリ・業務システム・AI開発から映像制作・HP制作・SNS運用まで自社ワンストップ。問い合わせ0→月10件の実績、初回相談無料。北海道 札幌・中標津・道東対応。">
+  <meta name="twitter:image" content="https://vifight.com/assets/images/hero/hero-cover.jpg">
+
+  <link rel="preload" as="image" href="assets/images/hero/hero-cover.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260806e">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Interのみ同期（Latin文字・軽量）、Noto Sans JPは非同期で遅延読み込み -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" onload="this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet"></noscript>
+
+  <!-- No-JS fallback: default cursor, no loader, all content visible, tabs stacked -->
+  <noscript>
+    <style>
+      #loader, #cursor, #cursor-follower { display: none !important; }
+      body, a, button, input, select, textarea, label { cursor: auto !important; }
+      [data-reveal] { opacity: 1 !important; transform: none !important; filter: none !important; }
+      .hero-line span { transform: none !important; }
+      .hero-sub { opacity: 1 !important; transform: none !important; }
+      .view { display: block !important; }
+    </style>
+  </noscript>
+
+  <!-- Web app manifest -->
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- Structured data: LocalBusiness / professional service -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "@id": "https://vifight.com/#organization",
+    "name": "ViFight",
+    "alternateName": "ヴィファイト",
+    "description": "北海道・札幌の「映像もつくれる開発会社」。Web・アプリ・業務システム・AI開発（システム開発／プログラム開発）から、映像制作・動画制作・ホームページ制作（HP制作）・SNS運用代行・動画編集アカデミー・Claude（AI）研修まで自社で一貫提供。問い合わせ0→月10件の成果実績。",
+    "slogan": "北海道の、映像もつくれる開発会社。",
+    "url": "https://vifight.com/",
+    "foundingDate": "2023-06",
+    "image": "https://vifight.com/assets/images/representative.jpg",
+    "logo": "https://vifight.com/assets/images/representative.jpg",
+    "priceRange": "¥¥",
+    "founder": { "@type": "Person", "name": "久保 歩夢" },
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": "北海道",
+      "addressLocality": "標津郡中標津町",
+      "addressCountry": "JP"
+    },
+    "areaServed": [
+      { "@type": "AdministrativeArea", "name": "北海道" },
+      { "@type": "City", "name": "札幌市" },
+      { "@type": "City", "name": "中標津町" },
+      { "@type": "City", "name": "釧路市" },
+      { "@type": "City", "name": "根室市" },
+      { "@type": "City", "name": "帯広市" },
+      { "@type": "City", "name": "旭川市" }
+    ],
+    "knowsAbout": [
+      "映像制作", "動画制作", "企業VP", "採用動画", "CM制作", "ドローン空撮",
+      "ホームページ制作", "LP制作", "ECサイト制作", "SNS運用代行", "Instagram運用",
+      "システム開発", "Webアプリ開発", "AI自動化", "動画編集スクール", "Claude 研修"
+    ],
+    "email": "ayumu.k@vifight.com",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "email": "ayumu.k@vifight.com",
+      "availableLanguage": "Japanese",
+      "url": "https://vifight.com/#contact"
+    },
+    "makesOffer": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SNS運用代行・SNS総合支援", "description": "Instagram等の戦略設計・コンテンツ制作・運用代行・分析改善・インフルエンサー施策。北海道・札幌対応。" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "映像制作・動画制作", "description": "企業VP・CM・採用動画・MV・イベント映像。映画品質シネマカメラと国家資格保有者によるドローン空撮。実績100件以上。" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "ホームページ制作（HP制作）", "description": "コーポレートサイト・LP・ECを月額10,000円〜。問い合わせ0→月10件の成果直結サイト。" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "システム開発・プログラム開発", "description": "業務システム・Webアプリ・スマホアプリ・AI自動化ツールの受託開発。" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "動画編集アカデミー", "description": "審査制・完全マンツーマンの動画編集スクール。案件保証付き（月2万円以上の仕事を紹介）。" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Claude（AI）研修・Claudeアカデミー", "description": "法人向けの生成AI・Claude活用研修。業務効率化を実装まで伴走。" } }
+    ],
+    "sameAs": [
+      "https://www.instagram.com/a._.k227",
+      "https://line.me/ti/p/IrKoxdYw0F"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "初回相談は無料ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい、初回のご相談・お見積もりは無料です。お気軽にお問い合わせください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "対応エリアはどこですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "北海道全域に対応しています。中標津・札幌に拠点があり、釧路・根室・帯広・旭川など道東・道内各地やオンラインでのお打ち合わせも可能です。撮影など現地対応もお気軽にご相談ください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "制作期間はどのくらいですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "案件の規模により異なりますが、一般的にHP制作で1〜2ヶ月、映像制作で2週間〜1ヶ月程度です。お急ぎの場合もご相談ください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "動画編集アカデミーは未経験でも大丈夫ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい、完全未経験の方でも安心して受講いただけます。審査制・少数精鋭のマンツーマン指導で、プロレベルまで仕上げます。月額¥20,000のサブスク受講生には、毎月¥20,000以上のお仕事を必ずご紹介しています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "料金体系・費用の相場を教えてください。",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "目安として、ホームページ制作は月額¥10,000〜、映像制作・動画制作は内容により個別お見積もりです。初回のご相談・お見積もりは無料。ご要望や規模に応じて、ご予算に合わせた最適なプランをご提案します。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "個人事業主や小さな会社でも依頼できますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい。個人事業主様・小規模事業者様から企業様まで、幅広くご依頼いただけます。「何から始めればいいか分からない」といった段階のご相談も歓迎です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "複数のサービスをまとめて依頼できますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "可能です。SNS・映像・HP・プログラム開発などを組み合わせ、戦略から制作・運用までワンストップでご対応します。窓口がひとつにまとまるので、やりとりもスムーズです。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "お支払い方法・請求書の発行について教えてください。",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "銀行振込のほか、ご契約後にご案内する決済サービス（クレジットカード対応）がご利用いただけます。お見積もり書・請求書は正式に発行いたしますので、法人様の稟議・経理処理にも対応できます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "キャンセルや返金はできますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "制作・作業の着手前であれば、原則キャンセルを承ります。着手後の取り扱いを含む詳細は返金・キャンセルポリシーに明記していますので、ご契約前にご確認いただけます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "相談した内容が外部に漏れることはありませんか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ご相談内容・お預かりした資料は秘密厳守で取り扱い、ご本人の同意なく第三者へ提供することはありません。秘密保持契約（NDA）の締結にも対応します。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "打ち合わせはオンラインでも可能ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい。オンラインでのお打ち合わせに対応しており、北海道内どこからでもご相談いただけます。撮影など現地対応が必要な場合は、別途ご相談ください。"
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
-<div class="loadbar" id="loadbar"></div>
+  <a href="#views" class="skip-link">本文へスキップ</a>
 
-<!-- 映像ステージ（固定） -->
-<div id="stage"><canvas id="cam" aria-hidden="true"></canvas></div>
+  <!-- ========== LOADING SCREEN ========== -->
+  <div id="loader">
+    <div class="loader-aurora" aria-hidden="true"></div>
+    <div class="loader-rays" aria-hidden="true"></div>
+    <div class="loader-inner">
+      <div class="loader-logo">
+        <span class="loader-letter" style="--i:0">V</span>
+        <span class="loader-letter" style="--i:1">i</span>
+        <span class="loader-letter" style="--i:2">F</span>
+        <span class="loader-letter" style="--i:3">i</span>
+        <span class="loader-letter" style="--i:4">g</span>
+        <span class="loader-letter" style="--i:5">h</span>
+        <span class="loader-letter" style="--i:6">t</span>
+      </div>
+      <div class="loader-bar">
+        <div class="loader-bar-fill"></div>
+      </div>
+      <p class="loader-text">Loading Experience...</p>
+    </div>
+  </div>
 
-<!-- 前景UI：映像が落ちても機能する独立DOM（§7） -->
-<div class="ui">
-  <a class="logo" href="/">ViFight</a>
-  <nav class="nav" aria-label="章">
-    <button class="cam-chip" type="button">00 Entrance</button>
-    <button class="cam-chip" type="button">01 Web</button>
-    <button class="cam-chip" type="button">02 System</button>
-    <button class="cam-chip" type="button">03 Film</button>
-    <button class="cam-chip" type="button">04 Social</button>
-    <button class="cam-chip" type="button">05 AI</button>
-    <button class="cam-chip" type="button">06 Contact</button>
+  <!-- ========== CUSTOM CURSOR ========== -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursor-follower"></div>
+
+  <!-- ========== NAVIGATION ========== -->
+  <header id="header">
+    <nav class="nav">
+      <a href="#hero" class="nav-logo" data-magnetic>
+        <span>ViFight</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about" data-magnetic>About</a></li>
+        <li><a href="#services" data-magnetic>Services</a></li>
+        <li><a href="#works" data-magnetic>Works</a></li>
+        <li><a href="#flow" data-magnetic>Flow</a></li>
+        <li><a href="#faq" data-magnetic>FAQ</a></li>
+        <li><a href="#contact" class="nav-cta" data-magnetic>Contact</a></li>
+      </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="メニュー">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ========== MOBILE MENU ========== -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-bg"></div>
+    <div class="mobile-menu-content">
+      <ul class="mobile-menu-links">
+        <li><a href="#about" data-menu-link>About</a></li>
+        <li><a href="#services" data-menu-link>Services</a></li>
+        <li><a href="#works" data-menu-link>Works</a></li>
+        <li><a href="#flow" data-menu-link>Flow</a></li>
+        <li><a href="#faq" data-menu-link>FAQ</a></li>
+        <li><a href="#contact" data-menu-link>Contact</a></li>
+      </ul>
+      <div class="mobile-menu-footer">
+        <p>ayumu.k@vifight.com</p>
+      </div>
+    </div>
+  </div>
+
+  <main id="views">
+
+  <!-- ========== HERO ========== -->
+  <div class="view view--home is-active" id="view-home">
+  <section id="hero" class="hero">
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-visual-layer hero-visual-base"></div>
+      <div class="hero-visual-layer hero-visual-grain"></div>
+      <div class="hero-visual-layer hero-visual-orb hero-orb-1"></div>
+      <div class="hero-visual-layer hero-visual-orb hero-orb-2"></div>
+      <div class="hero-visual-layer hero-visual-orb hero-orb-3"></div>
+      <div class="hero-visual-layer hero-visual-orb hero-orb-4"></div>
+      <!-- twinkling night sky + a lone shooting star -->
+      <div class="hero-visual-layer hero-stars"></div>
+      <div class="hero-visual-layer hero-stars-2"></div>
+      <div class="hero-shooting-star"></div>
+      <!-- Aurora borealis — Hokkaido night sky -->
+      <div class="hero-aurora">
+        <div class="aurora-band aurora-band-1"></div>
+        <div class="aurora-band aurora-band-2"></div>
+        <div class="aurora-band aurora-band-3"></div>
+        <div class="aurora-band aurora-band-4"></div>
+      </div>
+      <!-- vertical curtain rays — the signature aurora drape -->
+      <div class="aurora-curtain"></div>
+      <!-- interactive aurora: glides/brightens toward the pointer (see main.js) -->
+      <canvas class="hero-aurora-interactive" id="hero-aurora-canvas" aria-hidden="true"></canvas>
+      <div class="hero-visual-layer hero-visual-streak hero-streak-1"></div>
+      <div class="hero-visual-layer hero-visual-streak hero-streak-2"></div>
+      <canvas class="hero-particles" id="hero-particles"></canvas>
+      <!-- Patagonia-style sunset + layered mountain skyline -->
+      <div class="hero-sunset"></div>
+      <svg class="hero-ridge hero-ridge-3" viewBox="0 0 1440 400" preserveAspectRatio="none"><polygon points="0,400 0,250 110,270 190,150 250,225 330,80 405,205 470,140 560,235 650,45 735,200 820,120 905,235 1000,95 1085,215 1175,145 1270,240 1350,175 1440,225 1440,400"/></svg>
+      <svg class="hero-ridge hero-ridge-2" viewBox="0 0 1440 400" preserveAspectRatio="none"><polygon points="0,400 0,300 95,285 175,210 255,300 330,180 430,290 520,205 610,300 700,150 790,275 880,210 980,300 1070,200 1165,290 1255,225 1350,300 1440,255 1440,400"/></svg>
+      <svg class="hero-ridge hero-ridge-1" viewBox="0 0 1440 400" preserveAspectRatio="none"><polygon points="0,400 0,335 130,320 240,285 360,335 470,275 590,330 700,260 820,325 940,280 1060,335 1180,295 1300,330 1440,300 1440,400"/></svg>
+    </div>
+    <div class="hero-content">
+      <div class="hero-tag" data-reveal>
+        <span>北海道｜札幌・中標津・道東</span>
+      </div>
+      <h1 class="hero-title hero-title--jp">
+        <span class="hero-line hero-line-outline" data-reveal><span>北海道の、映像も</span></span>
+        <span class="hero-line hero-line-accent" data-reveal><span>つくれる開発会社。</span></span>
+      </h1>
+      <p class="hero-sub" data-reveal>
+        Web・アプリ・業務システム・AI開発から映像制作まで、北海道で自社ワンストップ。<br class="pc-br">
+        問い合わせ0件→月10件の成果実績。初回相談・お見積もりは無料、2営業日以内にご返信します。
+      </p>
+      <div class="hero-cta" data-reveal>
+        <a href="#contact" class="hero-cta-btn" data-magnetic>無料で相談する<span aria-hidden="true">→</span></a>
+        <a href="#works" class="hero-cta-ghost" data-magnetic>制作実績を見る</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+    <div class="hero-marquee">
+      <div class="marquee-track">
+        <span>ViFight — SNS Support — Video Production — Web Creation — Editing School —&nbsp;</span>
+        <span>ViFight — SNS Support — Video Production — Web Creation — Editing School —&nbsp;</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOME · brand intro ===== -->
+  <section class="home-section home-intro">
+    <div class="home-aurora" aria-hidden="true"></div>
+    <div class="container">
+      <p class="home-eyebrow" data-reveal>北海道・札幌｜映像もつくれる開発会社</p>
+      <h2 class="home-lead" data-reveal>映像もシステムも、北海道で<span class="aurora-text">まるごと</span>つくる。</h2>
+      <p class="home-lead-sub" data-reveal>
+        Webサイト・アプリ・業務システム・AI活用ツールの開発から、映像制作・SNS運用代行まで。北海道 中標津・札幌の会社が、企画から開発・運用まで自社で一貫。「どんなソフトも、映像も」——つくれる範囲の広さで、貴社の課題を成果に直結させます。
+      </p>
+      <div class="home-stats">
+        <div class="home-stat">
+          <span class="home-stat-figure"><span class="home-stat-num" data-count="100">0</span><span class="home-stat-plus">+</span></span>
+          <span class="home-stat-label">映像制作実績</span>
+        </div>
+        <div class="home-stat">
+          <span class="home-stat-figure"><span class="home-stat-num" data-count="100">0</span><span class="home-stat-plus">+</span></span>
+          <span class="home-stat-label">取引クライアント</span>
+        </div>
+        <div class="home-stat">
+          <span class="home-stat-figure"><span class="home-stat-num" data-count="10">0</span><span class="home-stat-plus">件</span></span>
+          <span class="home-stat-label">HP制作後の月間問い合わせ</span>
+        </div>
+      </div>
+      <a href="#about" class="home-more" data-reveal>ViFightについて <span>→</span></a>
+    </div>
+  </section>
+
+  <!-- ===== HOME · strengths ===== -->
+  <section class="home-section home-strengths">
+    <div class="home-aurora home-aurora--right" aria-hidden="true"></div>
+    <div class="container">
+      <div class="home-preview-head">
+        <div class="home-preview-heading">
+          <span class="home-preview-num">—</span>
+          <h2 class="home-preview-title" data-reveal>Why ViFight</h2>
+          <p class="home-preview-sub" data-reveal>選ばれる理由</p>
+        </div>
+      </div>
+      <div class="strength-grid">
+        <div class="strength-card" data-num="01">
+          <span class="strength-num">01</span>
+          <h3>徹底したヒアリング</h3>
+          <p>お話をじっくり伺い、貴社になりきって考える。HPも映像も「自分ごと」として制作するから、本当に伝わるものが生まれます。</p>
+        </div>
+        <div class="strength-card" data-num="02">
+          <span class="strength-num">02</span>
+          <h3>ワンストップ体制</h3>
+          <p>SNS・映像・HP・プログラム開発・教育まで自社で対応。窓口ひとつで、戦略から制作・運用まで一貫してお任せいただけます。</p>
+        </div>
+        <div class="strength-card" data-num="03">
+          <span class="strength-num">03</span>
+          <h3>確かな制作品質</h3>
+          <p>映画品質のシネマカメラによる撮影と、国家資格保有者によるドローン空撮。クオリティに妥協しないものづくりをお約束します。</p>
+        </div>
+        <div class="strength-card" data-num="04">
+          <span class="strength-num">04</span>
+          <h3>成果へのこだわり</h3>
+          <p>作って終わりにしない。印刷会社様のHPは問い合わせ0件から月10件へ。ビジネスの成果に直結するクリエイティブを追求します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOME · trust strip ===== -->
+  <section class="home-section home-trust">
+    <div class="container">
+      <div class="trust-strip">
+        <div class="trust-item">
+          <span class="trust-ico">¥0</span>
+          <div class="trust-body">
+            <h3>ご相談・お見積もり無料</h3>
+            <p>初回のご相談からお見積もりまで、費用は一切かかりません。</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <span class="trust-ico">◈</span>
+          <div class="trust-body">
+            <h3>国家資格保有のドローン空撮</h3>
+            <p>空撮は国家資格保有者が担当。安全と品質を両立します。</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <span class="trust-ico">✦</span>
+          <div class="trust-body">
+            <h3>映画品質のシネマカメラ</h3>
+            <p>撮影は映画制作にも使われるシネマカメラで対応します。</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <span class="trust-ico">◎</span>
+          <div class="trust-body">
+            <h3>北海道全域・オンライン対応</h3>
+            <p>中標津・札幌を拠点に、道内全域とオンラインで対応します。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOME · services preview ===== -->
+  <section class="home-section home-preview">
+    <div class="home-aurora home-aurora--right" aria-hidden="true"></div>
+    <div class="container">
+      <div class="home-preview-head">
+        <div class="home-preview-heading">
+          <span class="home-preview-num">01</span>
+          <h2 class="home-preview-title" data-reveal>Services</h2>
+          <p class="home-preview-sub" data-reveal>わたしたちができること</p>
+        </div>
+        <a href="#services" class="home-more" data-reveal>すべて見る <span>→</span></a>
+      </div>
+      <div class="home-services">
+        <a href="#services" class="home-service">
+          <span class="home-service-num">01</span>
+          <div class="home-service-body">
+            <h3 class="home-service-name">SNS運用代行・総合支援</h3>
+            <p class="home-service-desc">Instagram等の戦略設計から制作・運用代行・分析まで一気通貫。SNSに最適化したクリエイティブで集客を最大化します。</p>
+          </div>
+          <span class="home-service-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="#services" class="home-service">
+          <span class="home-service-num">02</span>
+          <div class="home-service-body">
+            <h3 class="home-service-name">映像制作・動画制作</h3>
+            <p class="home-service-desc">企業VP・CM・採用動画を企画から撮影・編集までワンストップ。実績100件以上、映画品質シネマカメラと国家資格者のドローン空撮で対応。</p>
+          </div>
+          <span class="home-service-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="#services" class="home-service">
+          <span class="home-service-num">03</span>
+          <div class="home-service-body">
+            <h3 class="home-service-name">ホームページ制作（HP制作）</h3>
+            <p class="home-service-desc">成果直結のコーポレートサイト・LP・ECを月額¥10,000〜。「問い合わせ0→毎月10件」を生んだ制作力。</p>
+          </div>
+          <span class="home-service-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="#services" class="home-service">
+          <span class="home-service-num">04</span>
+          <div class="home-service-body">
+            <h3 class="home-service-name">システム開発・プログラム開発</h3>
+            <p class="home-service-desc">業務システム・Webアプリ・スマホアプリからAI自動化ツールまで受託開発。「人の手間」を減らし、仕組みで強くします。</p>
+          </div>
+          <span class="home-service-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="#services" class="home-service">
+          <span class="home-service-num">05</span>
+          <div class="home-service-body">
+            <h3 class="home-service-name">動画編集アカデミー（スクール）</h3>
+            <p class="home-service-desc">審査制・完全マンツーマンでプロレベルへ。案件保証付きで、サブスク入会者には毎月の案件を必ずご紹介します。</p>
+          </div>
+          <span class="home-service-arrow" aria-hidden="true">→</span>
+        </a>
+        <a href="#services" class="home-service">
+          <span class="home-service-num">06</span>
+          <div class="home-service-body">
+            <h3 class="home-service-name">Claude（AI）研修・アカデミー</h3>
+            <p class="home-service-desc">法人向けの生成AI・Claude活用研修。現場で「効くAI」の使い方を、導入から実装まで伴走します。</p>
+          </div>
+          <span class="home-service-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOME · works preview ===== -->
+  <section class="home-section home-preview">
+    <div class="home-aurora" aria-hidden="true"></div>
+    <div class="container">
+      <div class="home-preview-head">
+        <div class="home-preview-heading">
+          <span class="home-preview-num">02</span>
+          <h2 class="home-preview-title" data-reveal>Works</h2>
+          <p class="home-preview-sub" data-reveal>制作実績</p>
+        </div>
+        <a href="portfolio.html" class="home-more" data-reveal>制作事例を見る <span>→</span></a>
+      </div>
+      <div class="home-works">
+        <a href="portfolio.html" class="home-work">
+          <div class="home-work-img"><img src="assets/images/portfolio/swiply.jpg" alt="SWIPLY 求人マッチングアプリ" loading="lazy" decoding="async"></div>
+          <span class="home-work-cat">Web App</span>
+          <h3 class="home-work-title">SWIPLY｜求人マッチングアプリ</h3>
+        </a>
+        <a href="portfolio.html" class="home-work">
+          <div class="home-work-img"><img src="assets/images/portfolio/grit.jpg" alt="Grit. 古着屋のHPとオンラインストア" loading="lazy" decoding="async"></div>
+          <span class="home-work-cat">EC Site</span>
+          <h3 class="home-work-title">Grit.｜古着屋 HP＋EC</h3>
+        </a>
+        <a href="portfolio.html" class="home-work">
+          <div class="home-work-img"><img src="assets/images/portfolio/shogosan.jpg" alt="ES Beauty 複合ビューティーサロン" loading="lazy" decoding="async"></div>
+          <span class="home-work-cat">Corporate</span>
+          <h3 class="home-work-title">ES Beauty｜複合サロン</h3>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOME · お客様の声 (social proof) ===== -->
+  <section class="home-section home-voice">
+    <div class="home-aurora home-aurora--right" aria-hidden="true"></div>
+    <div class="container">
+      <div class="home-preview-head">
+        <div class="home-preview-heading">
+          <span class="home-preview-num">03</span>
+          <h2 class="home-preview-title" data-reveal>Voice</h2>
+          <p class="home-preview-sub" data-reveal>お客様の成果</p>
+        </div>
+      </div>
+      <blockquote class="home-voice-card" data-reveal="zoom">
+        <span class="home-voice-mark" aria-hidden="true">“</span>
+        <p class="home-voice-text">問い合わせが月0件だったホームページが、リニューアル後は<strong>毎月10件以上の問い合わせ</strong>が入るようになりました。こちらの想いをしっかりヒアリングしてくれて、「自分たちの言葉」で伝わるサイトに仕上げてくれました。</p>
+        <div class="home-voice-meta">
+          <span class="home-voice-name">kunioffice 様</span>
+          <span class="home-voice-result">問い合わせ <strong>0 → 10件 / 月</strong></span>
+        </div>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ===== HOME · 代表メッセージ / founder (trust) ===== -->
+  <section class="home-section home-founder">
+    <div class="home-aurora" aria-hidden="true"></div>
+    <div class="container">
+      <div class="founder-grid">
+        <div class="founder-photo" data-reveal="right">
+          <img src="assets/images/representative.jpg" alt="ViFight代表 久保歩夢" width="659" height="659" loading="lazy" decoding="async">
+          <div class="founder-badge"><span class="founder-badge-role">代表</span>久保 歩夢</div>
+        </div>
+        <div class="founder-body">
+          <p class="home-eyebrow" data-reveal>Message ｜ 代表メッセージ</p>
+          <h2 class="founder-title" data-reveal>「つくる」前に、<br class="pc-br">とことん「聴く」。</h2>
+          <p class="founder-text" data-reveal>
+            はじめまして、ViFight代表の久保 歩夢です。映像もソフトウェアも、貴社の想いとお客様の気持ちがつながって、はじめて成果になります。だから私たちは、貴社になりきるほど徹底的にヒアリングしてから、つくり始めます。「問い合わせ0件が、毎月10件を超えた」——そんな変化を、北海道から一社でも多く実現したい。「こんなの作れる？」のご相談だけでも、お気軽にどうぞ。
+          </p>
+          <ul class="founder-creds" data-reveal>
+            <li>Web・アプリ・業務システム・AI開発まで内製</li>
+            <li>映像制作 100件以上</li>
+            <li>国家資格保有のドローン空撮</li>
+            <li>納品後も伴走する徹底ヒアリング型</li>
+          </ul>
+          <p class="founder-sign">ViFight 代表　<strong>久保 歩夢</strong></p>
+          <a href="#contact" class="founder-cta" data-reveal data-magnetic>久保に無料で相談する <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOME · CTA ===== -->
+  <section class="home-section home-cta">
+    <div class="home-aurora home-aurora--center" aria-hidden="true"></div>
+    <div class="container">
+      <p class="home-cta-eyebrow" data-reveal>無料相談・お見積もり受付中</p>
+      <h2 class="home-cta-title" data-reveal>まずは、<span class="aurora-text">無料相談</span>から。</h2>
+      <p class="home-cta-sub" data-reveal>初回のご相談・お見積もりは無料です。2営業日以内にご返信します。北海道全域・オンライン対応、ご相談内容は秘密厳守。「何から始めればいいか分からない」段階のご相談も歓迎です。</p>
+      <a href="#contact" class="home-cta-btn" data-reveal="zoom" data-magnetic>無料で相談する <span>→</span></a>
+      <p class="home-cta-note" data-reveal>またはLINE・InstagramのDMからもお気軽にどうぞ。</p>
+    </div>
+  </section>
+
+  </div><!-- /view-home -->
+
+  <!-- ========== ABOUT ========== -->
+  <div class="view" id="view-about">
+  <section id="about" class="section about">
+    <div class="sec-aurora" aria-hidden="true"></div>
+    <div class="float-shapes" aria-hidden="true">
+      <div class="float-shape tri s5"></div>
+      <div class="float-shape diamond s6"></div>
+    </div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num" data-reveal>01</span>
+        <h2 class="section-title" data-reveal-title>About</h2>
+        <p class="section-sub" data-reveal>ViFightについて</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p class="about-lead" data-reveal>
+            映像とWebの力で「伝わる」を創る、<br class="pc-br">北海道の広告クリエイティブエージェンシーです。
+          </p>
+          <p class="about-desc" data-reveal>
+            ViFightは、SNS運用代行・映像制作・ホームページ制作・システム開発・動画編集アカデミー・Claude（AI）研修を展開する、北海道 中標津・札幌の広告クリエイティブエージェンシー（2023年6月設立）です。札幌はもちろん、中標津・釧路・根室など道東エリアやオンラインでも対応しています。<br><br>
+            私たちが大切にしているのは、徹底したヒアリング。お話を伺い、貴社になりきって、ホームページも映像も「自分ごと」として制作します。だからこそ、印刷会社様のホームページは問い合わせ0件から月10件へと変わりました。<br><br>
+            映像制作は映画品質のシネマカメラ、空撮は国家資格保有者によるドローン撮影で対応。ViFightの名には「Video（映像）の力でFight（挑む）」という想いを込めています。
+          </p>
+          <div class="about-stats" data-reveal="zoom">
+            <div class="stat">
+              <span class="stat-num" data-count="100">0</span><span class="stat-plus">+</span>
+              <span class="stat-label">映像制作実績</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num" data-count="100">0</span><span class="stat-plus">+</span>
+              <span class="stat-label">取引クライアント数</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num" data-count="10">0</span><span class="stat-plus">件</span>
+              <span class="stat-label">HP制作後の月間問い合わせ増加</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-image" data-reveal="right">
+          <div class="about-image-inner" data-parallax="0.1">
+            <img src="assets/images/representative.jpg" alt="ViFight代表 久保歩夢" class="about-image-photo" width="659" height="659" loading="lazy" decoding="async">
+          </div>
+          <div class="about-image-caption">
+            <span class="caption-name">久保 歩夢</span>
+            <span class="caption-role">代表</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-message" data-reveal="blur">
+        <h3 class="about-message-title"><span>Message</span>代表メッセージ</h3>
+        <div class="about-message-body">
+          <p>
+            はじめまして。ViFight 代表の久保 歩夢です。数あるサイトの中から、私たちのページをご覧いただきありがとうございます。
+          </p>
+          <p>
+            ViFightが何より大切にしているのは、「つくること」の前にある「聴くこと」です。
+            どんなに美しい映像も、どんなに整ったホームページも、貴社の想いとお客様の気持ちが
+            つながっていなければ、成果にはつながりません。だからこそ私たちは、お打ち合わせに
+            時間をかけ、貴社になりきって考えるところから始めます。
+          </p>
+          <p>
+            「問い合わせが0件だったホームページが、毎月10件を超えるようになった」——
+            そんな変化を、これからも一社でも多くのお客様と実現していきたい。
+            納品して終わりではなく、成果が出るまで、出てからも、伴走し続けるパートナーでありたいと考えています。
+          </p>
+          <p>
+            まずは「話を聞いてみたい」だけでも構いません。どうぞお気軽にご相談ください。
+          </p>
+          <p class="about-message-sign">ViFight 代表<strong>久保 歩夢</strong></p>
+        </div>
+      </div>
+
+      <div class="about-profile" data-reveal="blur">
+        <h3 class="about-profile-title"><span>Company Profile</span>会社概要</h3>
+        <dl class="profile-table">
+          <div><dt>会社名</dt><dd>ViFight（ヴィファイト）</dd></div>
+          <div><dt>設立</dt><dd>2023年6月</dd></div>
+          <div><dt>代表</dt><dd>久保 歩夢</dd></div>
+          <div><dt>拠点</dt><dd>北海道 中標津町・札幌</dd></div>
+          <div><dt>事業内容</dt><dd>SNS運用代行・総合支援 / 映像制作・動画制作 / ホームページ制作（HP制作） / システム開発・プログラム開発 / 動画編集アカデミー / Claude（AI）研修</dd></div>
+          <div><dt>対応エリア</dt><dd>北海道全域（札幌・中標津・釧路・根室・帯広・旭川 ほか／オンライン相談も対応）</dd></div>
+          <div><dt>お問い合わせ</dt><dd>ayumu.k@vifight.com</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- angular divider: about(white) → philosophy(espresso) -->
+  <div class="section-divider" style="background:var(--white);color:#1c1611" aria-hidden="true">
+    <svg viewBox="0 0 1440 72" preserveAspectRatio="none"><polygon points="0,72 0,40 144,56 288,20 432,50 576,14 720,46 864,18 1008,52 1152,24 1296,54 1440,30 1440,72"/></svg>
+  </div>
+
+  <!-- ========== PHILOSOPHY ========== -->
+  <section class="section philosophy">
+    <div class="philosophy-bg" data-parallax="0.05" aria-hidden="true"></div>
+    <div class="philosophy-orb philosophy-orb-1" aria-hidden="true"></div>
+    <div class="philosophy-orb philosophy-orb-2" aria-hidden="true"></div>
+    <div class="philosophy-aurora" aria-hidden="true"></div>
+    <div class="philosophy-aurora-curtain" aria-hidden="true"></div>
+    <canvas class="philosophy-particles" id="philosophy-particles" aria-hidden="true"></canvas>
+    <div class="container">
+      <div class="philosophy-content">
+        <div class="philosophy-deco-quote" aria-hidden="true">"</div>
+        <blockquote class="philosophy-quote" data-reveal-words>
+          ViFightには、言葉を超える力がある。その力で、まだ届いていない想いを届ける手助けをする。
+        </blockquote>
+        <div class="philosophy-accent-line"></div>
+        <p class="philosophy-attr" data-reveal>— ViFight Philosophy</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- angular divider: philosophy(espresso) → voice(white) -->
+  <div class="section-divider" style="background:#15100b;color:var(--white)" aria-hidden="true">
+    <svg viewBox="0 0 1440 72" preserveAspectRatio="none"><polygon points="0,72 0,34 144,58 288,26 432,54 576,22 720,50 864,16 1008,48 1152,28 1296,56 1440,36 1440,72"/></svg>
+  </div>
+
+  <!-- ========== VOICE / TESTIMONIAL ========== -->
+  <section class="section voice">
+    <div class="float-shapes" aria-hidden="true">
+      <div class="float-shape diamond s1"></div>
+      <div class="float-shape tri s3"></div>
+    </div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num" data-reveal>—</span>
+        <h2 class="section-title" data-reveal-title>Voice</h2>
+        <p class="section-sub" data-reveal>お客様の成果</p>
+      </div>
+      <div class="voice-grid">
+        <div class="voice-card" data-reveal="flip">
+          <div class="voice-quote-mark">"</div>
+          <p class="voice-text">
+            問い合わせが月0件だったホームページが、リニューアル後は<strong>毎月10件以上の問い合わせが入るように</strong>なりました。こちらの想いをしっかりヒアリングしてくれて、「自分たちの言葉」で伝わるサイトに仕上げてくれました。
+          </p>
+          <div class="voice-meta">
+            <span class="voice-industry">kunioffice</span>
+            <span class="voice-result">問い合わせ <strong>0 → 10件 / 月</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <nav class="tab-pager" aria-label="ページ切り替え">
+    <a href="#hero" class="tab-pager-link tab-pager-prev"><span class="tab-pager-dir">← Prev</span><span class="tab-pager-name">Home</span></a>
+    <a href="#services" class="tab-pager-link tab-pager-next"><span class="tab-pager-dir">Next →</span><span class="tab-pager-name">Services</span></a>
   </nav>
-  <a class="cta" href="#contact">相談する</a>
+  </div><!-- /view-about -->
 
-  <div class="copy" id="copy">
-    <span class="copy-num" id="copy-num">00</span>
-    <p class="copy-title" id="copy-title">これ、作れますか。</p>
-    <p class="copy-note" id="copy-note">ドア越しに光。まだ何も見えない。</p>
-  </div>
+  <!-- ========== SERVICES ========== -->
+  <div class="view" id="view-services">
+  <section id="services" class="section services">
+    <div class="sec-aurora sec-aurora--left" aria-hidden="true"></div>
+    <div class="float-shapes" aria-hidden="true">
+      <div class="float-shape tri s1"></div>
+      <div class="float-shape diamond s2"></div>
+      <div class="float-shape tri s3"></div>
+    </div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num" data-reveal>02</span>
+        <h2 class="section-title" data-reveal-title>Services</h2>
+        <p class="section-sub" data-reveal>事業内容</p>
+        <p class="section-lead" data-reveal>SNSから映像、Web、開発、人材育成まで。広告クリエイティブに必要な領域を自社で一貫して提供します。それぞれ単体でも、組み合わせてのご依頼も可能です。</p>
+      </div>
+      <div class="services-list">
+        <!-- Service 1 -->
+        <div class="service-item" data-reveal>
+          <div class="service-item-inner" data-cursor-expand>
+            <div class="service-num">01</div>
+            <div class="service-content">
+              <h3 class="service-title">SNS運用代行・SNS総合支援</h3>
+              <p class="service-desc">
+                戦略設計からコンテンツ制作、運用代行、分析改善まで。映像制作100件以上の実績を持つチームが、Instagram等のSNSに最適化されたクリエイティブで、北海道の事業者の集客を最大化します。
+              </p>
+              <ul class="service-tags">
+                <li>戦略設計</li>
+                <li>コンテンツ制作</li>
+                <li>運用代行</li>
+                <li>分析・改善</li>
+                <li>インフルエンサー施策</li>
+              </ul>
+            </div>
+            <div class="service-icon">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="1"/>
+                <circle cx="50" cy="50" r="25" stroke="currentColor" stroke-width="1"/>
+                <circle cx="50" cy="50" r="8" fill="currentColor"/>
+                <line x1="50" y1="5" x2="50" y2="20" stroke="currentColor" stroke-width="1"/>
+                <line x1="50" y1="80" x2="50" y2="95" stroke="currentColor" stroke-width="1"/>
+                <line x1="5" y1="50" x2="20" y2="50" stroke="currentColor" stroke-width="1"/>
+                <line x1="80" y1="50" x2="95" y2="50" stroke="currentColor" stroke-width="1"/>
+              </svg>
+            </div>
+            <div class="service-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <!-- Service 2 -->
+        <div class="service-item" data-reveal>
+          <div class="service-item-inner" data-cursor-expand>
+            <div class="service-num">02</div>
+            <div class="service-content">
+              <h3 class="service-title">映像制作・動画制作</h3>
+              <p class="service-desc">
+                制作実績100件以上。企業VP・CM・採用動画・MV・イベント映像など、企画・撮影・編集までワンストップで対応。映画品質のシネマカメラと国家資格保有者によるドローン空撮で、ブランドの世界観を最大限に引き出します。
+              </p>
+              <ul class="service-tags">
+                <li>企業VP</li>
+                <li>CM・広告映像</li>
+                <li>MV制作</li>
+                <li>イベント撮影</li>
+                <li>ドローン撮影</li>
+              </ul>
+            </div>
+            <div class="service-icon">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="25" width="55" height="50" rx="4" stroke="currentColor" stroke-width="1"/>
+                <polygon points="75,35 95,25 95,75 75,65" stroke="currentColor" stroke-width="1" fill="none"/>
+                <circle cx="37" cy="50" r="12" stroke="currentColor" stroke-width="1"/>
+                <circle cx="37" cy="50" r="4" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="service-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <!-- Service 3 -->
+        <div class="service-item" data-reveal>
+          <div class="service-item-inner" data-cursor-expand>
+            <div class="service-num">03</div>
+            <div class="service-content">
+              <h3 class="service-title">ホームページ制作（HP制作）</h3>
+              <p class="service-desc">
+                「問い合わせが0件だったのに、毎月10件来るようになった」。成果直結のコーポレートサイト・LP・ECを制作します。月額¥10,000〜のリーズナブルな料金で、ブログ・EC機能付きも対応。札幌はもちろん、中標津・道東エリアもお任せください。
+              </p>
+              <ul class="service-tags">
+                <li>月額¥10,000〜</li>
+                <li>初月EC/ブログ¥50,000</li>
+                <li>コーポレートサイト</li>
+                <li>LP制作</li>
+                <li>ECサイト</li>
+              </ul>
+            </div>
+            <div class="service-icon">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="15" width="80" height="55" rx="4" stroke="currentColor" stroke-width="1"/>
+                <line x1="10" y1="30" x2="90" y2="30" stroke="currentColor" stroke-width="1"/>
+                <circle cx="18" cy="22" r="3" fill="currentColor"/>
+                <circle cx="28" cy="22" r="3" fill="currentColor"/>
+                <circle cx="38" cy="22" r="3" fill="currentColor"/>
+                <line x1="50" y1="70" x2="50" y2="85" stroke="currentColor" stroke-width="1"/>
+                <line x1="35" y1="85" x2="65" y2="85" stroke="currentColor" stroke-width="1"/>
+              </svg>
+            </div>
+            <div class="service-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <!-- Service 4: プログラム開発 -->
+        <div class="service-item" data-reveal>
+          <div class="service-item-inner" data-cursor-expand>
+            <div class="service-num">04</div>
+            <div class="service-content">
+              <h3 class="service-title">システム開発・プログラム開発</h3>
+              <p class="service-desc">
+                業務システム・Webアプリ・スマホアプリ・AI自動化ツールまで、パッケージに縛られず"つくりたいもの"をゼロから受託開発。「こんなソフトが欲しい」を形にし、「人の手間」を減らして、ビジネスを仕組みで強くします。
+              </p>
+              <ul class="service-tags">
+                <li>業務システム・Web開発</li>
+                <li>スマホアプリ開発</li>
+                <li>AI・自動化ツール</li>
+                <li>業務効率化</li>
+                <li>受託開発</li>
+              </ul>
+            </div>
+            <div class="service-icon">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M34 32 L14 50 L34 68" stroke="currentColor" stroke-width="1"/>
+                <path d="M66 32 L86 50 L66 68" stroke="currentColor" stroke-width="1"/>
+                <line x1="58" y1="28" x2="42" y2="72" stroke="currentColor" stroke-width="1"/>
+              </svg>
+            </div>
+            <div class="service-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <!-- Service 5: 動画編集アカデミー -->
+        <div class="service-item" data-reveal>
+          <div class="service-item-inner" data-cursor-expand>
+            <div class="service-num">05</div>
+            <div class="service-content">
+              <h3 class="service-title">動画編集アカデミー（動画編集スクール）</h3>
+              <p class="service-desc">
+                審査制・完全マンツーマンでプロレベルまで仕上げるオンライン対応の動画編集スクール。月額¥20,000のサブスクに入会した方には、毎月¥20,000以上のお仕事を必ずご紹介（案件保証）。現受講生には月¥100,000の案件を実現中。
+              </p>
+              <ul class="service-tags">
+                <li>入会金¥150,000</li>
+                <li>月額¥20,000〜</li>
+                <li>審査制・少数精鋭</li>
+                <li>案件保証付き</li>
+                <li>マンツーマン</li>
+              </ul>
+            </div>
+            <div class="service-icon">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 15 L85 35 L85 65 L50 85 L15 65 L15 35 Z" stroke="currentColor" stroke-width="1" fill="none"/>
+                <path d="M50 15 L50 85" stroke="currentColor" stroke-width="1"/>
+                <path d="M15 35 L85 65" stroke="currentColor" stroke-width="0.5"/>
+                <path d="M85 35 L15 65" stroke="currentColor" stroke-width="0.5"/>
+                <polygon points="43,42 60,50 43,58" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="service-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <!-- Service 6: Claudeアカデミー -->
+        <div class="service-item" data-reveal>
+          <div class="service-item-inner" data-cursor-expand>
+            <div class="service-num">06</div>
+            <div class="service-content">
+              <h3 class="service-title">Claude（AI）研修・Claudeアカデミー</h3>
+              <p class="service-desc">
+                Claudeをはじめとする生成AIを、企業の現場で使えるように。法人向けにAI活用を導入・研修し、日々の業務に「効くAI」の使い方を、実装まで伴走してお伝えします。
+              </p>
+              <ul class="service-tags">
+                <li>企業向けAI研修</li>
+                <li>Claude活用</li>
+                <li>業務へのAI導入</li>
+                <li>チーム研修</li>
+                <li>実装まで伴走</li>
+              </ul>
+            </div>
+            <div class="service-icon">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="currentColor" stroke-width="1">
+                  <line x1="50" y1="12" x2="50" y2="40"/>
+                  <line x1="50" y1="60" x2="50" y2="88"/>
+                  <line x1="12" y1="50" x2="40" y2="50"/>
+                  <line x1="60" y1="50" x2="88" y2="50"/>
+                  <line x1="25" y1="25" x2="42" y2="42"/>
+                  <line x1="58" y1="58" x2="75" y2="75"/>
+                  <line x1="75" y1="25" x2="58" y2="42"/>
+                  <line x1="42" y1="58" x2="25" y2="75"/>
+                </g>
+                <circle cx="50" cy="50" r="6" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="service-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <div class="bar" aria-hidden="true"><div class="bar-fill" id="bar-fill"></div></div>
-  <div class="hint" id="hint">SCROLL<span></span></div>
-</div>
+      <div class="tab-callout" data-reveal="blur">
+        <div class="tab-callout-text">
+          <h3>どのプランが合うか、一緒に考えます。</h3>
+          <p>ご予算や目的に合わせて、最適な組み合わせとお見積もりをご提案します。ご相談・お見積もりは無料です。</p>
+        </div>
+        <a href="#contact" class="tab-callout-btn" data-magnetic>無料で相談する <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
 
-<!-- 高さを稼ぐためだけの空要素（§4-1） -->
-<div class="spacer" aria-hidden="true"></div>
-
-<!-- 章データ（UIが読む） -->
-<script type="application/json" id="chapter-data">
-[{"title":"これ、作れますか。","note":"ドア越しに光。まだ何も見えない。"},
- {"title":"見られる前提で、作る。","note":"設計図と画面のモックが並ぶ製図台。HP・LP制作。"},
- {"title":"業務に、道具を合わせる。","note":"既製品に合わせない。アプリ・システム開発。"},
- {"title":"撮って、切って、届ける。","note":"照明・レンズ・タイムライン。映像・写真。"},
- {"title":"続けられる形にして渡す。","note":"複数モニタに縦型が並ぶ編集卓。SNS運用・編集アカデミー。"},
- {"title":"外に出せない情報も、扱う。","note":"ラックと閉じた扉。AI導入・Claude活用支援。"},
- {"title":"まず、話を聞かせてください。","note":"工房の最奥。ここから、次の一台がはじまる。"}]
-</script>
-
-<!-- 検索エンジン向け：全章のテキストを通常のDOMとして置く（§8-4） -->
-<div class="vh">
-  <h1>ViFight — これ、作れますか。</h1>
-  <h2>見られる前提で、作る。</h2><p>ホームページ・LP制作。設計図と画面のモックが並ぶ製図台。</p>
-  <h2>業務に、道具を合わせる。</h2><p>アプリ・システム開発。既製品に業務を合わせない受託開発。</p>
-  <h2>撮って、切って、届ける。</h2><p>映像制作・写真。照明・レンズ・編集まで一貫。</p>
-  <h2>続けられる形にして渡す。</h2><p>SNS運用代行・動画編集アカデミー。縦型の運用まで。</p>
-  <h2>外に出せない情報も、扱う。</h2><p>AI導入・Claude活用支援。閉じた環境での構成も設計します。</p>
-  <h2>まず、話を聞かせてください。</h2>
-  <p>ViFight（ヴィファイト）／代表 久保 歩夢／北海道 標津郡中標津町・札幌／ayumu.k@vifight.com</p>
-</div>
-
-<!-- 動きを減らす設定のときに出す静止画版（§8-3）。これも完成品として作る -->
-<div class="rm">
-  <div class="rm-head">
-    <h1>これ、作れますか。</h1>
-    <p>ViFight は、北海道 中標津・札幌の開発・映像スタジオです。奥へ続く工房を、章ごとにご覧ください。</p>
-  </div>
-  <section class="rm-ch"><img src="assets/frames/pc/f_0020.webp" alt="入口の扉" loading="lazy" decoding="async">
-    <span class="copy-num">00</span><p class="copy-title">これ、作れますか。</p><p class="copy-note">ドア越しに光。まだ何も見えない。</p></section>
-  <section class="rm-ch"><img src="assets/frames/pc/f_0077.webp" alt="製図台の部屋" loading="lazy" decoding="async">
-    <span class="copy-num">01</span><p class="copy-title">見られる前提で、作る。</p><p class="copy-note">設計図と画面のモックが並ぶ。HP・LP制作。</p></section>
-  <section class="rm-ch"><img src="assets/frames/pc/f_0129.webp" alt="基板と端末の部屋" loading="lazy" decoding="async">
-    <span class="copy-num">02</span><p class="copy-title">業務に、道具を合わせる。</p><p class="copy-note">既製品に合わせない。アプリ・システム開発。</p></section>
-  <section class="rm-ch"><img src="assets/frames/pc/f_0180.webp" alt="撮影ブース" loading="lazy" decoding="async">
-    <span class="copy-num">03</span><p class="copy-title">撮って、切って、届ける。</p><p class="copy-note">照明・レンズ・タイムライン。映像・写真。</p></section>
-  <section class="rm-ch"><img src="assets/frames/pc/f_0231.webp" alt="編集卓" loading="lazy" decoding="async">
-    <span class="copy-num">04</span><p class="copy-title">続けられる形にして渡す。</p><p class="copy-note">複数モニタに縦型が並ぶ。SNS運用・編集アカデミー。</p></section>
-  <section class="rm-ch"><img src="assets/frames/pc/f_0283.webp" alt="サーバー室" loading="lazy" decoding="async">
-    <span class="copy-num">05</span><p class="copy-title">外に出せない情報も、扱う。</p><p class="copy-note">ラックと閉じた扉。AI導入・Claude活用支援。</p></section>
-  <section class="rm-ch"><img src="assets/frames/pc/f_0355.webp" alt="最奥の作業机" loading="lazy" decoding="async">
-    <span class="copy-num">06</span><p class="copy-title">まず、話を聞かせてください。</p><p class="copy-note">工房の最奥。ここから、次の一台がはじまる。</p></section>
-</div>
-
-<!-- 章06の遷移先：問い合わせ -->
-<section class="final" id="contact">
-  <div class="final-in">
-    <h2>まず、話を聞かせてください。</h2>
-    <p>要件が固まっていない段階のご相談も歓迎です。初回のご相談・お見積もりは無料、2営業日以内にご返信します。</p>
-    <form action="https://formsubmit.co/ayukun.0227@icloud.com" method="POST" id="cform">
-      <input type="hidden" name="_subject" value="【ViFight】Webサイトからお問い合わせ">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_autoresponse" value="【ViFight】お問い合わせありがとうございます。内容を確認のうえ、2営業日以内に担当よりご返信いたします。今しばらくお待ちください。（本メールは自動送信です） ViFight 代表 久保 歩夢 / ayumu.k@vifight.com / https://vifight.com/">
-      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-      <div class="fld"><label for="f-name">お名前</label><input id="f-name" type="text" name="name" required autocomplete="name"></div>
-      <div class="fld"><label for="f-co">会社名・団体名（任意）</label><input id="f-co" type="text" name="company" autocomplete="organization"></div>
-      <div class="fld"><label for="f-mail">メールアドレス</label><input id="f-mail" type="email" name="email" required autocomplete="email"></div>
-      <div class="fld"><label for="f-svc">ご相談の種類</label>
-        <select id="f-svc" name="service">
-          <option>ホームページ・LP制作</option><option>アプリ・システム開発</option>
-          <option>映像・写真</option><option>SNS運用・編集アカデミー</option>
-          <option>AI導入・Claude活用支援</option><option>その他・未定</option>
-        </select></div>
-      <div class="fld"><label for="f-msg">ご相談内容</label><textarea id="f-msg" name="message" required></textarea></div>
-      <label class="consent"><input type="checkbox" name="privacy_consent" required>
-        <span><a href="privacy.html">プライバシーポリシー</a>に同意のうえ送信します。</span></label>
-      <button class="submit" type="submit">送信する</button>
-      <p class="formmsg" id="formmsg" role="status"></p>
-    </form>
-  </div>
-</section>
-
-<footer class="foot">
-  <p>&copy; 2023–2026 ViFight. 北海道 標津郡中標津町・札幌</p>
-  <nav>
-    <a href="portfolio.html">制作事例</a><a href="works.html">実績</a>
-    <a href="privacy.html">プライバシーポリシー</a><a href="tokushoho.html">特定商取引法</a>
-    <a href="refund.html">返金ポリシー</a><a href="mailto:ayumu.k@vifight.com">ayumu.k@vifight.com</a>
+  <!-- ========== HORIZONTAL SCROLL TEXT ========== -->
+  <section class="section marquee-section">
+    <div class="marquee-large">
+      <div class="marquee-large-track" data-scroll-speed>
+        <span>Strategy — Create — Deliver — Inspire —&nbsp;</span>
+        <span>Strategy — Create — Deliver — Inspire —&nbsp;</span>
+        <span>Strategy — Create — Deliver — Inspire —&nbsp;</span>
+        <span>Strategy — Create — Deliver — Inspire —&nbsp;</span>
+      </div>
+    </div>
+  </section>
+  <nav class="tab-pager" aria-label="ページ切り替え">
+    <a href="#about" class="tab-pager-link tab-pager-prev"><span class="tab-pager-dir">← Prev</span><span class="tab-pager-name">About</span></a>
+    <a href="#works" class="tab-pager-link tab-pager-next"><span class="tab-pager-dir">Next →</span><span class="tab-pager-name">Works</span></a>
   </nav>
-</footer>
+  </div><!-- /view-services -->
 
-<noscript>
-  <div class="nojs">
-    <h1>ViFight — これ、作れますか。</h1>
-    <p>北海道 中標津・札幌の開発・映像スタジオです。以下のとおり承っています。</p>
-    <h2>見られる前提で、作る。</h2><p>ホームページ・LP制作。</p>
-    <h2>業務に、道具を合わせる。</h2><p>アプリ・システム開発。</p>
-    <h2>撮って、切って、届ける。</h2><p>映像制作・写真。</p>
-    <h2>続けられる形にして渡す。</h2><p>SNS運用代行・動画編集アカデミー。</p>
-    <h2>外に出せない情報も、扱う。</h2><p>AI導入・Claude活用支援。</p>
-    <h2>お問い合わせ</h2>
-    <p>ayumu.k@vifight.com ／ 代表 久保 歩夢<br>下のフォームからも送信できます。</p>
+  <!-- ========== WORKS ========== -->
+  <div class="view" id="view-works">
+  <section id="works" class="section works">
+    <div class="sec-aurora" aria-hidden="true"></div>
+    <div class="float-shapes" aria-hidden="true">
+      <div class="float-shape diamond s1"></div>
+      <div class="float-shape tri s2"></div>
+      <div class="float-shape diamond s4"></div>
+    </div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num" data-reveal>03</span>
+        <h2 class="section-title" data-reveal-title>Works</h2>
+        <p class="section-sub" data-reveal>制作実績</p>
+        <p class="section-lead" data-reveal>Webアプリ・ECサイト・業務ツール・コーポレートサイトまで。北海道から手がけた実際の制作物をご紹介します。各実績をクリックすると、こだわった点と使用技術をご覧いただけます。</p>
+      </div>
+      <div class="works-highlights" data-reveal="blur">
+        <div class="wh-item"><span class="wh-num">100+</span><span class="wh-label">映像制作実績</span></div>
+        <div class="wh-item"><span class="wh-num">0→10件</span><span class="wh-label">HP制作後の月間問い合わせ</span></div>
+        <div class="wh-item"><span class="wh-num">6</span><span class="wh-label">提供サービス領域</span></div>
+        <div class="wh-item"><span class="wh-num">北海道</span><span class="wh-label">全域が対応エリア</span></div>
+      </div>
+      <div class="works-grid">
+        <div class="work-item" data-reveal data-cursor-view data-work-id="1">
+          <div class="work-image">
+            <img class="work-photo" src="assets/images/portfolio/swiply.jpg" alt="SWIPLY 求人マッチングアプリ" loading="lazy" decoding="async">
+            <div class="work-image-overlay"></div>
+          </div>
+          <div class="work-info">
+            <span class="work-cat">Webアプリ</span>
+            <h3 class="work-title">SWIPLY｜求人マッチングアプリ</h3>
+            <p class="work-year">2026 — スワイプ応募・ビデオ面接・AI分析</p>
+          </div>
+        </div>
+        <div class="work-item" data-reveal data-cursor-view data-work-id="2">
+          <div class="work-image">
+            <img class="work-photo" src="assets/images/portfolio/grit.jpg" alt="Grit. 古着屋のHPとオンラインストア" loading="lazy" decoding="async">
+            <div class="work-image-overlay"></div>
+          </div>
+          <div class="work-info">
+            <span class="work-cat">ECサイト</span>
+            <h3 class="work-title">Grit.｜古着屋 HP＋オンラインストア</h3>
+            <p class="work-year">2026 — Stripe決済・1点物の在庫管理</p>
+          </div>
+        </div>
+        <div class="work-item" data-reveal data-cursor-view data-work-id="3">
+          <div class="work-image">
+            <img class="work-photo" src="assets/images/portfolio/hokkaido.jpg" alt="ほっかいどう旅手帳 AI旅程プランナー" loading="lazy" decoding="async">
+            <div class="work-image-overlay"></div>
+          </div>
+          <div class="work-info">
+            <span class="work-cat">Webアプリ</span>
+            <h3 class="work-title">ほっかいどう旅手帳｜AI旅程プランナー</h3>
+            <p class="work-year">2026 — AIと対話して旅程をつくる</p>
+          </div>
+        </div>
+        <div class="work-item" data-reveal data-cursor-view data-work-id="4">
+          <div class="work-image">
+            <img class="work-photo" src="assets/images/portfolio/shogosan.jpg" alt="ES Beauty 複合ビューティーサロン" loading="lazy" decoding="async">
+            <div class="work-image-overlay"></div>
+          </div>
+          <div class="work-info">
+            <span class="work-cat">コーポレートサイト</span>
+            <h3 class="work-title">ES Beauty｜札幌の複合ビューティーサロン</h3>
+            <p class="work-year">2026 — 8ブランドを1つの世界観に</p>
+          </div>
+        </div>
+        <div class="work-item" data-reveal data-cursor-view data-work-id="5">
+          <div class="work-image">
+            <img class="work-photo" src="assets/images/portfolio/yolo.jpg" alt="株式会社YOLO コーポレートサイト" loading="lazy" decoding="async">
+            <div class="work-image-overlay"></div>
+          </div>
+          <div class="work-info">
+            <span class="work-cat">コーポレートサイト</span>
+            <h3 class="work-title">株式会社YOLO｜イベント運営会社</h3>
+            <p class="work-year">2026 — 会場マップ・和モダンの明朝設計</p>
+          </div>
+        </div>
+        <div class="work-item" data-reveal data-cursor-view data-work-id="6">
+          <div class="work-image">
+            <img class="work-photo" src="assets/images/portfolio/tell.jpg" alt="tell partner AI営業リスト生成ツール" loading="lazy" decoding="async">
+            <div class="work-image-overlay"></div>
+          </div>
+          <div class="work-info">
+            <span class="work-cat">業務ツール</span>
+            <h3 class="work-title">tell partner｜AI営業リスト生成</h3>
+            <p class="work-year">2026 — AIがHPを読んで適合度を採点</p>
+          </div>
+        </div>
+        <div class="work-item" data-reveal data-cursor-view data-work-id="7">
+          <div class="work-image">
+            <img class="work-photo" src="assets/images/portfolio/marukou.jpg" alt="丸幸木材店 コーポレートサイト" loading="lazy" decoding="async">
+            <div class="work-image-overlay"></div>
+          </div>
+          <div class="work-info">
+            <span class="work-cat">コーポレートサイト</span>
+            <h3 class="work-title">丸幸木材店｜創業70余年の木材店</h3>
+            <p class="work-year">2026 — 老舗の風格を余白と明朝体で</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== WORK MODAL ========== -->
+      <div class="work-modal" id="work-modal" aria-hidden="true">
+        <div class="work-modal-backdrop" data-modal-close></div>
+        <div class="work-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="work-modal-title">
+          <button class="work-modal-close" data-modal-close aria-label="閉じる">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M6 6l12 12M18 6L6 18"/>
+            </svg>
+          </button>
+          <div class="work-modal-visual">
+            <img class="work-modal-photo" id="work-modal-img" alt="" loading="lazy" decoding="async">
+            <span class="work-modal-label" id="work-modal-label" hidden></span>
+          </div>
+          <div class="work-modal-body">
+            <span class="work-modal-cat" id="work-modal-cat">カテゴリ</span>
+            <h3 class="work-modal-title" id="work-modal-title">タイトル</h3>
+            <p class="work-modal-year" id="work-modal-year">年</p>
+            <p class="work-modal-desc" id="work-modal-desc">説明</p>
+            <dl class="work-modal-meta" id="work-modal-meta"></dl>
+          </div>
+        </div>
+      </div>
+      <div class="works-cta" data-reveal>
+        <a href="portfolio.html" class="btn-circle" data-magnetic>
+          <span>View All<br>Works</span>
+        </a>
+        <p class="works-cta-note">制作事例19件を、こだわりと使用技術つきでご覧いただけます。</p>
+      </div>
+    </div>
+  </section>
+  <nav class="tab-pager" aria-label="ページ切り替え">
+    <a href="#services" class="tab-pager-link tab-pager-prev"><span class="tab-pager-dir">← Prev</span><span class="tab-pager-name">Services</span></a>
+    <a href="#flow" class="tab-pager-link tab-pager-next"><span class="tab-pager-dir">Next →</span><span class="tab-pager-name">Flow</span></a>
+  </nav>
+  </div><!-- /view-works -->
+
+  <!-- ========== FLOW ========== -->
+  <div class="view" id="view-flow">
+  <section id="flow" class="section flow">
+    <div class="sec-aurora sec-aurora--left" aria-hidden="true"></div>
+    <div class="float-shapes" aria-hidden="true">
+      <div class="float-shape tri s2"></div>
+      <div class="float-shape diamond s5"></div>
+    </div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num" data-reveal>04</span>
+        <h2 class="section-title" data-reveal-title>Flow</h2>
+        <p class="section-sub" data-reveal>ご依頼の流れ</p>
+        <p class="section-lead" data-reveal>初回のお問い合わせから納品・運用まで。ViFightがどのようにプロジェクトを進めるのか、4つのステップでご紹介します。まずはお気軽にご相談ください。</p>
+      </div>
+      <div class="flow-timeline">
+        <div class="flow-line"></div>
+        <div class="flow-step" data-reveal="left">
+          <div class="flow-step-num">01</div>
+          <div class="flow-step-content">
+            <h3>お問い合わせ</h3>
+            <p>まずはお気軽にご相談ください。フォームまたはお電話にて、お悩みやご要望をお聞かせください。</p>
+          </div>
+        </div>
+        <div class="flow-step" data-reveal="left">
+          <div class="flow-step-num">02</div>
+          <div class="flow-step-content">
+            <h3>ヒアリング・ご提案</h3>
+            <p>詳細なヒアリングを行い、課題や目標を明確化。最適なプランと見積もりをご提案します。</p>
+          </div>
+        </div>
+        <div class="flow-step" data-reveal="left">
+          <div class="flow-step-num">03</div>
+          <div class="flow-step-content">
+            <h3>制作・開発</h3>
+            <p>プロジェクトを進行。定期的な進捗共有と確認を行いながら、高品質な成果物を制作します。</p>
+          </div>
+        </div>
+        <div class="flow-step" data-reveal="left">
+          <div class="flow-step-num">04</div>
+          <div class="flow-step-content">
+            <h3>納品・運用サポート</h3>
+            <p>成果物を納品後も、運用サポートや改善提案を継続。長期的なパートナーとして伴走します。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-assure">
+        <div class="flow-assure-item">
+          <div class="fa-ico">¥0</div>
+          <h4>ご相談・お見積もりは無料</h4>
+          <p>初回のご相談からお見積もりまで無料です。「まず話を聞いてみたい」だけでも、お気軽にどうぞ。</p>
+        </div>
+        <div class="flow-assure-item">
+          <div class="fa-ico">◎</div>
+          <h4>北海道全域に対応</h4>
+          <p>お打ち合わせはオンラインでも可能。中標津・札幌を拠点に、北海道全域のご依頼を承っています。</p>
+        </div>
+        <div class="flow-assure-item">
+          <div class="fa-ico">∞</div>
+          <h4>納品後も伴走</h4>
+          <p>作って終わりにしません。運用サポートや改善提案を続け、長期的なパートナーとして並走します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <nav class="tab-pager" aria-label="ページ切り替え">
+    <a href="#works" class="tab-pager-link tab-pager-prev"><span class="tab-pager-dir">← Prev</span><span class="tab-pager-name">Works</span></a>
+    <a href="#faq" class="tab-pager-link tab-pager-next"><span class="tab-pager-dir">Next →</span><span class="tab-pager-name">FAQ</span></a>
+  </nav>
+  </div><!-- /view-flow -->
+
+  <!-- ========== FAQ ========== -->
+  <div class="view" id="view-faq">
+  <section id="faq" class="section faq">
+    <div class="sec-aurora" aria-hidden="true"></div>
+    <div class="float-shapes" aria-hidden="true">
+      <div class="float-shape diamond s3"></div>
+      <div class="float-shape tri s6"></div>
+    </div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num" data-reveal>05</span>
+        <h2 class="section-title" data-reveal-title>FAQ</h2>
+        <p class="section-sub" data-reveal>よくある質問</p>
+        <p class="section-lead" data-reveal>ご依頼前によくいただくご質問をまとめました。ここに掲載のない疑問やご不明点も、お気軽にお問い合わせください。</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item" data-reveal>
+          <button class="faq-question">
+            <span>初回相談は無料ですか？</span>
+            <span class="faq-icon">
+              <span></span><span></span>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>はい、初回のご相談・お見積もりは無料です。お気軽にお問い合わせください。</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-question">
+            <span>対応エリアはどこですか？</span>
+            <span class="faq-icon">
+              <span></span><span></span>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>北海道全域に対応しています。中標津・札幌に拠点があり、釧路・根室・帯広・旭川など道東・道内各地やオンラインでのお打ち合わせも可能です。撮影など現地対応もお気軽にご相談ください。</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-question">
+            <span>制作期間はどのくらいですか？</span>
+            <span class="faq-icon">
+              <span></span><span></span>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>案件の規模により異なりますが、一般的にHP制作で1〜2ヶ月、映像制作で2週間〜1ヶ月程度です。お急ぎの場合もご相談ください。</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-question">
+            <span>動画編集アカデミーは未経験でも大丈夫ですか？</span>
+            <span class="faq-icon">
+              <span></span><span></span>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>はい、完全未経験の方でも安心して受講いただけます。審査制・少数精鋭のマンツーマン指導で、プロレベルまで仕上げます。月額¥20,000のサブスク受講生には、毎月¥20,000以上のお仕事を必ずご紹介しています。</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-question">
+            <span>料金体系・費用の相場を教えてください。</span>
+            <span class="faq-icon">
+              <span></span><span></span>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>目安として、ホームページ制作は月額¥10,000〜、映像制作・動画制作は内容により個別お見積もりです。初回のご相談・お見積もりは無料。ご要望や規模に応じて、ご予算に合わせた最適なプランをご提案します。</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-question">
+            <span>個人事業主や小さな会社でも依頼できますか？</span>
+            <span class="faq-icon">
+              <span></span><span></span>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>はい。個人事業主様・小規模事業者様から企業様まで、幅広くご依頼いただけます。「何から始めればいいか分からない」といった段階のご相談も歓迎です。</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-question">
+            <span>複数のサービスをまとめて依頼できますか？</span>
+            <span class="faq-icon">
+              <span></span><span></span>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>可能です。SNS・映像・HP・プログラム開発などを組み合わせ、戦略から制作・運用までワンストップでご対応します。窓口がひとつにまとまるので、やりとりもスムーズです。</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-question">
+            <span>お支払い方法・請求書の発行について教えてください。</span>
+            <span class="faq-icon">
+              <span></span><span></span>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>銀行振込のほか、ご契約後にご案内する決済サービス（クレジットカード対応）がご利用いただけます。お見積もり書・請求書は正式に発行いたしますので、法人様の稟議・経理処理にも対応できます。</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-question">
+            <span>キャンセルや返金はできますか？</span>
+            <span class="faq-icon">
+              <span></span><span></span>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>制作・作業の着手前であれば、原則キャンセルを承ります。着手後の取り扱いを含む詳細は<a href="refund.html" target="_blank" rel="noopener">返金・キャンセルポリシー</a>に明記していますので、ご契約前にご確認いただけます。</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-question">
+            <span>相談した内容が外部に漏れることはありませんか？</span>
+            <span class="faq-icon">
+              <span></span><span></span>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>ご相談内容・お預かりした資料は秘密厳守で取り扱い、ご本人の同意なく第三者へ提供することはありません。取り扱いの詳細は<a href="privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a>をご覧ください。秘密保持契約（NDA）の締結にも対応します。</p>
+          </div>
+        </div>
+        <div class="faq-item" data-reveal>
+          <button class="faq-question">
+            <span>打ち合わせはオンラインでも可能ですか？</span>
+            <span class="faq-icon">
+              <span></span><span></span>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>はい。オンラインでのお打ち合わせに対応しており、北海道内どこからでもご相談いただけます。撮影など現地対応が必要な場合は、別途ご相談ください。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <nav class="tab-pager" aria-label="ページ切り替え">
+    <a href="#flow" class="tab-pager-link tab-pager-prev"><span class="tab-pager-dir">← Prev</span><span class="tab-pager-name">Flow</span></a>
+    <a href="#contact" class="tab-pager-link tab-pager-next"><span class="tab-pager-dir">Next →</span><span class="tab-pager-name">Contact</span></a>
+  </nav>
+  </div><!-- /view-faq -->
+
+  <!-- ========== CONTACT ========== -->
+  <div class="view" id="view-contact">
+  <section id="contact" class="section contact">
+    <div class="sec-aurora sec-aurora--left" aria-hidden="true"></div>
+    <div class="float-shapes" aria-hidden="true">
+      <div class="float-shape tri s1"></div>
+      <div class="float-shape diamond s2"></div>
+      <div class="float-shape tri s4"></div>
+    </div>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num" data-reveal>06</span>
+        <h2 class="section-title" data-reveal-title>Contact</h2>
+        <p class="section-sub" data-reveal>お問い合わせ</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info" data-reveal="left">
+          <p class="contact-lead">
+            映像制作・ホームページ制作・SNS運用・システム開発のご相談、お見積もり、その他ご質問など、お気軽にお問い合わせください。北海道全域・オンライン対応です。
+          </p>
+          <ul class="contact-trust" aria-label="お問い合わせにあたっての安心ポイント">
+            <li>ご相談・お見積もりは<strong>無料</strong></li>
+            <li><strong>2営業日以内</strong>にご返信します</li>
+            <li>ご相談内容は<strong>秘密厳守</strong>で取り扱います</li>
+          </ul>
+          <div class="contact-details">
+            <div class="contact-detail">
+              <span class="contact-label">Email</span>
+              <a href="mailto:ayumu.k@vifight.com">ayumu.k@vifight.com</a>
+            </div>
+            <div class="contact-detail">
+              <span class="contact-label">代表SNS</span>
+              <div class="contact-social">
+                <a href="https://www.instagram.com/a._.k227" target="_blank" rel="noopener" data-magnetic aria-label="Instagram">Instagram</a>
+                <a href="https://line.me/ti/p/IrKoxdYw0F" target="_blank" rel="noopener" data-magnetic aria-label="LINE">LINE</a>
+              </div>
+            </div>
+            <div class="contact-detail">
+              <span class="contact-label">拠点</span>
+              <p class="contact-address">北海道 中標津町・札幌</p>
+            </div>
+            <div class="contact-detail">
+              <span class="contact-label">お支払い</span>
+              <p class="contact-payment">
+                料金はすべて<strong>日本円（税込）</strong>。お支払いはご契約後にご案内する外部の安全な決済サービス（Stripe 等）または銀行振込で承ります。クレジットカード（Visa / Mastercard / JCB / American Express 等）に対応します。<br>
+                <a href="refund.html">返金・キャンセルポリシー</a>　<a href="tokushoho.html">特定商取引法に基づく表記</a>　<a href="privacy.html">プライバシーポリシー</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form" action="https://formsubmit.co/ayukun.0227@icloud.com" method="POST" data-reveal="right">
+          <div class="form-group">
+            <label for="name">お名前 <span>*</span></label>
+            <input type="text" id="name" name="name" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="company">会社名</label>
+            <input type="text" id="company" name="company" autocomplete="organization">
+          </div>
+          <div class="form-group">
+            <label for="email">メールアドレス <span>*</span></label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="service">ご相談内容</label>
+            <select id="service" name="service">
+              <option value="" disabled selected>選択してください</option>
+              <option value="sns">SNS総合支援</option>
+              <option value="video">映像制作</option>
+              <option value="web">HP制作</option>
+              <option value="dev">プログラム開発</option>
+              <option value="school">動画編集アカデミー</option>
+              <option value="ai-academy">Claudeアカデミー</option>
+              <option value="other">その他</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">メッセージ <span>*</span></label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+          <!-- FormSubmit settings (formsubmit.co) -->
+          <input type="hidden" name="_subject" value="【ViFight】Webサイトからお問い合わせ">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_autoresponse" value="【ViFight】お問い合わせありがとうございます。内容を確認のうえ、2営業日以内に担当よりご返信いたします。今しばらくお待ちください。（本メールは自動送信です） ViFight 代表 久保 歩夢 / ayumu.k@vifight.com / https://vifight.com/">
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;">
+          <div class="form-consent">
+            <label class="consent-label">
+              <input type="checkbox" name="privacy_consent" value="同意済み" required>
+              <span class="consent-box" aria-hidden="true"></span>
+              <span class="consent-text"><a href="privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a>に同意する <span class="req">*</span></span>
+            </label>
+          </div>
+          <button type="submit" class="form-submit" data-magnetic>
+            <span>送信する</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+  <nav class="tab-pager" aria-label="ページ切り替え">
+    <a href="#faq" class="tab-pager-link tab-pager-prev"><span class="tab-pager-dir">← Prev</span><span class="tab-pager-name">FAQ</span></a>
+    <a href="#hero" class="tab-pager-link tab-pager-next"><span class="tab-pager-dir">Next →</span><span class="tab-pager-name">Home</span></a>
+  </nav>
+  </div><!-- /view-contact -->
+  </main>
+
+  <!-- angular divider: active view → footer(espresso); transparent top works over both light tabs and the dark home -->
+  <div class="section-divider" style="background:transparent;color:#1c1611" aria-hidden="true">
+    <svg viewBox="0 0 1440 72" preserveAspectRatio="none"><polygon points="0,72 0,38 144,54 288,22 432,52 576,16 720,48 864,20 1008,50 1152,26 1296,56 1440,32 1440,72"/></svg>
   </div>
-</noscript>
 
-<script type="module" src="assets/js/camera.js?v=20260807a"></script>
-<script>
-/* フォーム送信（ページ遷移させない） */
-(function(){
-  var f=document.getElementById('cform'), m=document.getElementById('formmsg');
-  if(!f) return;
-  f.addEventListener('submit',function(e){
-    e.preventDefault();
-    var btn=f.querySelector('.submit'); btn.disabled=true; m.className='formmsg'; m.textContent='送信中…';
-    fetch(f.action,{method:'POST',body:new FormData(f),headers:{Accept:'application/json'}})
-      .then(function(r){ if(!r.ok) throw new Error(r.status);
-        m.className='formmsg ok'; m.textContent='送信しました。2営業日以内にご返信します。'; f.reset(); })
-      .catch(function(){ m.className='formmsg err';
-        m.textContent='送信に失敗しました。お手数ですが ayumu.k@vifight.com までご連絡ください。'; })
-      .then(function(){ btn.disabled=false; });
-  });
-})();
-</script>
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="float-shapes float-shapes--dark" aria-hidden="true">
+      <div class="float-shape tri s2"></div>
+      <div class="float-shape diamond s3"></div>
+    </div>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand" data-reveal>
+          <div class="footer-logo">ViFight</div>
+          <p class="footer-tagline">北海道 札幌・中標津の広告クリエイティブエージェンシー。映像制作・ホームページ制作・SNS運用代行・システム開発をワンストップで。</p>
+          <dl class="footer-info">
+            <div><dt>設立</dt><dd>2023年6月</dd></div>
+            <div><dt>所在地</dt><dd>北海道 中標津町・札幌</dd></div>
+            <div><dt>代表</dt><dd>久保 歩夢</dd></div>
+            <div><dt>事業内容</dt><dd>SNS運用代行 / 映像制作・動画制作 / ホームページ制作 / システム開発 / 動画編集アカデミー / Claude（AI）研修</dd></div>
+            <div><dt>対応エリア</dt><dd>北海道全域（札幌・中標津・釧路・根室・帯広・旭川 ほか）</dd></div>
+          </dl>
+        </div>
+        <div class="footer-links" data-reveal>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="portfolio.html">制作事例</a>
+          <a href="works.html">実績（Works）</a>
+          <a href="#flow">Flow</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+      <div class="footer-bottom" data-reveal>
+        <div class="footer-bottom-left">
+          <p>&copy; 2023–2026 ViFight. All Rights Reserved.</p>
+          <nav class="footer-legal">
+            <a href="privacy.html">プライバシーポリシー</a>
+            <a href="tokushoho.html">特定商取引法に基づく表記</a>
+            <a href="refund.html">返金・キャンセルポリシー</a>
+          </nav>
+        </div>
+        <a href="#hero" class="footer-totop" data-magnetic>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== AURORA STORM (hidden easter egg) ========== -->
+  <!-- Secret full-screen northern-lights reveal. Triggers: Konami code,
+       typing "aurora" / "vifight", or 5 quick taps on the logo. See main.js. -->
+  <div id="aurora-storm-overlay" aria-hidden="true">
+    <canvas id="aurora-storm"></canvas>
+    <div class="aurora-storm-msg">
+      <span class="aurora-storm-label">✦ Aurora Unlocked ✦</span>
+      <p class="aurora-storm-line">ViFightには、言葉を超える力がある。</p>
+      <span class="aurora-storm-sign">— ViFight</span>
+    </div>
+  </div>
+
+  <script src="assets/js/main.js?v=20260806e"></script>
 </body>
 </html>

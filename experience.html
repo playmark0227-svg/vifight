@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>これ、作れますか。｜ViFight — 奥へ続く工房を通り抜ける</title>
+<meta name="description" content="ViFight（北海道 中標津・札幌）。HP・LP制作、アプリ・システム開発、映像・写真、SNS運用、AI導入まで。奥へ続く工房を一本で通り抜ける、スクロール連動のコーポレートサイト。">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0B1420">
+<link rel="canonical" href="https://vifight.com/experience.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230B1420'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='700' fill='%23C9A227' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ViFight">
+<meta property="og:title" content="ViFight｜これ、作れますか。">
+<meta property="og:description" content="HP・アプリ・システム・映像・SNS・AI導入まで。北海道から、一本の通路を通り抜けるように見せるコーポレートサイト。">
+<meta property="og:url" content="https://vifight.com/experience.html">
+<meta property="og:image" content="https://vifight.com/assets/frames/pc/f_0060.webp">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preload" as="image" href="assets/frames/pc/f_0001.webp" media="(min-width:760px)">
+<link rel="preload" as="image" href="assets/frames/mobile/f_0001.webp" media="(max-width:759px)">
+<link rel="stylesheet" href="assets/css/camera.css?v=20260807a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&family=Noto+Sans+JP:wght@400;500&family=JetBrains+Mono:wght@400&display=swap">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"ViFight","alternateName":"ヴィファイト",
+"url":"https://vifight.com/","email":"ayumu.k@vifight.com","founder":{"@type":"Person","name":"久保 歩夢"},
+"foundingDate":"2023-06",
+"address":{"@type":"PostalAddress","addressRegion":"北海道","addressLocality":"標津郡中標津町","addressCountry":"JP"},
+"areaServed":[{"@type":"AdministrativeArea","name":"北海道"},{"@type":"City","name":"札幌市"},{"@type":"City","name":"中標津町"}],
+"description":"HP・LP制作、アプリ・システム開発、映像・写真、SNS運用・編集アカデミー、AI導入・Claude活用支援。",
+"sameAs":["https://www.instagram.com/a._.k227"]}
+</script>
+</head>
+<body>
+
+<div class="loadbar" id="loadbar"></div>
+
+<!-- 映像ステージ（固定） -->
+<div id="stage"><canvas id="cam" aria-hidden="true"></canvas></div>
+
+<!-- 前景UI：映像が落ちても機能する独立DOM（§7） -->
+<div class="ui">
+  <a class="logo" href="index.html">ViFight</a>
+  <nav class="nav" aria-label="章">
+    <button class="cam-chip" type="button">00 Entrance</button>
+    <button class="cam-chip" type="button">01 Web</button>
+    <button class="cam-chip" type="button">02 System</button>
+    <button class="cam-chip" type="button">03 Film</button>
+    <button class="cam-chip" type="button">04 Social</button>
+    <button class="cam-chip" type="button">05 AI</button>
+    <button class="cam-chip" type="button">06 Contact</button>
+  </nav>
+  <a class="cta" href="index.html#contact">相談する</a>
+
+  <div class="copy" id="copy">
+    <span class="copy-num" id="copy-num">00</span>
+    <p class="copy-title" id="copy-title">これ、作れますか。</p>
+    <p class="copy-note" id="copy-note">ドア越しに光。まだ何も見えない。</p>
+  </div>
+
+  <div class="bar" aria-hidden="true"><div class="bar-fill" id="bar-fill"></div></div>
+  <div class="hint" id="hint">SCROLL<span></span></div>
+</div>
+
+<!-- 高さを稼ぐためだけの空要素（§4-1） -->
+<div class="spacer" aria-hidden="true"></div>
+
+<!-- 章データ（UIが読む） -->
+<script type="application/json" id="chapter-data">
+[{"title":"これ、作れますか。","note":"ドア越しに光。まだ何も見えない。"},
+ {"title":"見られる前提で、作る。","note":"設計図と画面のモックが並ぶ製図台。HP・LP制作。"},
+ {"title":"業務に、道具を合わせる。","note":"既製品に合わせない。アプリ・システム開発。"},
+ {"title":"撮って、切って、届ける。","note":"照明・レンズ・タイムライン。映像・写真。"},
+ {"title":"続けられる形にして渡す。","note":"複数モニタに縦型が並ぶ編集卓。SNS運用・編集アカデミー。"},
+ {"title":"外に出せない情報も、扱う。","note":"ラックと閉じた扉。AI導入・Claude活用支援。"},
+ {"title":"まず、話を聞かせてください。","note":"工房の最奥。ここから、次の一台がはじまる。"}]
+</script>
+
+<!-- 検索エンジン向け：全章のテキストを通常のDOMとして置く（§8-4） -->
+<div class="vh">
+  <h1>ViFight — これ、作れますか。</h1>
+  <h2>見られる前提で、作る。</h2><p>ホームページ・LP制作。設計図と画面のモックが並ぶ製図台。</p>
+  <h2>業務に、道具を合わせる。</h2><p>アプリ・システム開発。既製品に業務を合わせない受託開発。</p>
+  <h2>撮って、切って、届ける。</h2><p>映像制作・写真。照明・レンズ・編集まで一貫。</p>
+  <h2>続けられる形にして渡す。</h2><p>SNS運用代行・動画編集アカデミー。縦型の運用まで。</p>
+  <h2>外に出せない情報も、扱う。</h2><p>AI導入・Claude活用支援。閉じた環境での構成も設計します。</p>
+  <h2>まず、話を聞かせてください。</h2>
+  <p>ViFight（ヴィファイト）／代表 久保 歩夢／北海道 標津郡中標津町・札幌／ayumu.k@vifight.com</p>
+</div>
+
+<!-- 動きを減らす設定のときに出す静止画版（§8-3）。これも完成品として作る -->
+<div class="rm">
+  <div class="rm-head">
+    <h1>これ、作れますか。</h1>
+    <p>ViFight は、北海道 中標津・札幌の開発・映像スタジオです。奥へ続く工房を、章ごとにご覧ください。</p>
+  </div>
+  <section class="rm-ch"><img src="assets/frames/pc/f_0020.webp" alt="入口の扉" loading="lazy" decoding="async">
+    <span class="copy-num">00</span><p class="copy-title">これ、作れますか。</p><p class="copy-note">ドア越しに光。まだ何も見えない。</p></section>
+  <section class="rm-ch"><img src="assets/frames/pc/f_0077.webp" alt="製図台の部屋" loading="lazy" decoding="async">
+    <span class="copy-num">01</span><p class="copy-title">見られる前提で、作る。</p><p class="copy-note">設計図と画面のモックが並ぶ。HP・LP制作。</p></section>
+  <section class="rm-ch"><img src="assets/frames/pc/f_0129.webp" alt="基板と端末の部屋" loading="lazy" decoding="async">
+    <span class="copy-num">02</span><p class="copy-title">業務に、道具を合わせる。</p><p class="copy-note">既製品に合わせない。アプリ・システム開発。</p></section>
+  <section class="rm-ch"><img src="assets/frames/pc/f_0180.webp" alt="撮影ブース" loading="lazy" decoding="async">
+    <span class="copy-num">03</span><p class="copy-title">撮って、切って、届ける。</p><p class="copy-note">照明・レンズ・タイムライン。映像・写真。</p></section>
+  <section class="rm-ch"><img src="assets/frames/pc/f_0231.webp" alt="編集卓" loading="lazy" decoding="async">
+    <span class="copy-num">04</span><p class="copy-title">続けられる形にして渡す。</p><p class="copy-note">複数モニタに縦型が並ぶ。SNS運用・編集アカデミー。</p></section>
+  <section class="rm-ch"><img src="assets/frames/pc/f_0283.webp" alt="サーバー室" loading="lazy" decoding="async">
+    <span class="copy-num">05</span><p class="copy-title">外に出せない情報も、扱う。</p><p class="copy-note">ラックと閉じた扉。AI導入・Claude活用支援。</p></section>
+  <section class="rm-ch"><img src="assets/frames/pc/f_0355.webp" alt="最奥の作業机" loading="lazy" decoding="async">
+    <span class="copy-num">06</span><p class="copy-title">まず、話を聞かせてください。</p><p class="copy-note">工房の最奥。ここから、次の一台がはじまる。</p></section>
+</div>
+
+<!-- 章06の遷移先：問い合わせ -->
+<section class="final" id="contact">
+  <div class="final-in">
+    <h2>まず、話を聞かせてください。</h2>
+    <p>要件が固まっていない段階のご相談も歓迎です。初回のご相談・お見積もりは無料、2営業日以内にご返信します。</p>
+    <form action="https://formsubmit.co/ayukun.0227@icloud.com" method="POST" id="cform">
+      <input type="hidden" name="_subject" value="【ViFight】Webサイトからお問い合わせ">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_autoresponse" value="【ViFight】お問い合わせありがとうございます。内容を確認のうえ、2営業日以内に担当よりご返信いたします。今しばらくお待ちください。（本メールは自動送信です） ViFight 代表 久保 歩夢 / ayumu.k@vifight.com / https://vifight.com/">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="fld"><label for="f-name">お名前</label><input id="f-name" type="text" name="name" required autocomplete="name"></div>
+      <div class="fld"><label for="f-co">会社名・団体名（任意）</label><input id="f-co" type="text" name="company" autocomplete="organization"></div>
+      <div class="fld"><label for="f-mail">メールアドレス</label><input id="f-mail" type="email" name="email" required autocomplete="email"></div>
+      <div class="fld"><label for="f-svc">ご相談の種類</label>
+        <select id="f-svc" name="service">
+          <option>ホームページ・LP制作</option><option>アプリ・システム開発</option>
+          <option>映像・写真</option><option>SNS運用・編集アカデミー</option>
+          <option>AI導入・Claude活用支援</option><option>その他・未定</option>
+        </select></div>
+      <div class="fld"><label for="f-msg">ご相談内容</label><textarea id="f-msg" name="message" required></textarea></div>
+      <label class="consent"><input type="checkbox" name="privacy_consent" required>
+        <span><a href="privacy.html">プライバシーポリシー</a>に同意のうえ送信します。</span></label>
+      <button class="submit" type="submit">送信する</button>
+      <p class="formmsg" id="formmsg" role="status"></p>
+    </form>
+  </div>
+</section>
+
+<footer class="foot">
+  <p>&copy; 2023–2026 ViFight. 北海道 標津郡中標津町・札幌</p>
+  <nav>
+    <a href="index.html">ViFight トップ</a><a href="portfolio.html">制作事例</a><a href="works.html">実績</a>
+    <a href="privacy.html">プライバシーポリシー</a><a href="tokushoho.html">特定商取引法</a>
+    <a href="refund.html">返金ポリシー</a><a href="mailto:ayumu.k@vifight.com">ayumu.k@vifight.com</a>
+  </nav>
+</footer>
+
+<noscript>
+  <div class="nojs">
+    <h1>ViFight — これ、作れますか。</h1>
+    <p>北海道 中標津・札幌の開発・映像スタジオです。以下のとおり承っています。</p>
+    <h2>見られる前提で、作る。</h2><p>ホームページ・LP制作。</p>
+    <h2>業務に、道具を合わせる。</h2><p>アプリ・システム開発。</p>
+    <h2>撮って、切って、届ける。</h2><p>映像制作・写真。</p>
+    <h2>続けられる形にして渡す。</h2><p>SNS運用代行・動画編集アカデミー。</p>
+    <h2>外に出せない情報も、扱う。</h2><p>AI導入・Claude活用支援。</p>
+    <h2>お問い合わせ</h2>
+    <p>ayumu.k@vifight.com ／ 代表 久保 歩夢<br>下のフォームからも送信できます。</p>
+  </div>
+</noscript>
+
+<script type="module" src="assets/js/camera.js?v=20260807a"></script>
+<script>
+/* フォーム送信（ページ遷移させない） */
+(function(){
+  var f=document.getElementById('cform'), m=document.getElementById('formmsg');
+  if(!f) return;
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var btn=f.querySelector('.submit'); btn.disabled=true; m.className='formmsg'; m.textContent='送信中…';
+    fetch(f.action,{method:'POST',body:new FormData(f),headers:{Accept:'application/json'}})
+      .then(function(r){ if(!r.ok) throw new Error(r.status);
+        m.className='formmsg ok'; m.textContent='送信しました。2営業日以内にご返信します。'; f.reset(); })
+      .catch(function(){ m.className='formmsg err';
+        m.textContent='送信に失敗しました。お手数ですが ayumu.k@vifight.com までご連絡ください。'; })
+      .then(function(){ btn.disabled=false; });
+  });
+})();
+</script>
+</body>
+</html>
