@@ -1,0 +1,162 @@
+/* =============================================================
+   ViFight — スクロール連動カメラ演出
+   配色は既存資料のトークンに揃える。新色は追加しない（§2-3）
+   ============================================================= */
+:root{
+  --navy-900:#0B1420; --navy-700:#142337; --navy-500:#24374F;
+  --gold-500:#C9A227; --gold-200:#E8D9A0;
+  --paper:#F2EFE9;    --paper-dim:rgba(242,239,233,.58);
+  --f-serif:'Noto Serif JP',serif;
+  --f-sans:'Noto Sans JP',system-ui,sans-serif;
+  --f-mono:'JetBrains Mono','SFMono-Regular',Menlo,monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--navy-900); color:var(--paper);
+  font-family:var(--f-sans); font-size:14px; line-height:1.85;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+img{max-width:100%;display:block}
+ul{list-style:none}
+::selection{background:var(--gold-500);color:var(--navy-900)}
+
+/* 視覚的に隠すが読み上げ・検索には残す（§8-4） */
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;
+    clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+
+/* ---- 高さを稼ぐだけの空要素（§4-1） ---- */
+.spacer{height:720vh}
+
+/* ---- 固定ステージ ---- */
+#stage{position:fixed;inset:0;z-index:0;background:#06090F}
+#cam{width:100%;height:100%;display:block}
+#stage::after{               /* 暗部を締める */
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 90% at 50% 45%,transparent 42%,rgba(3,6,11,.55) 100%);
+}
+
+/* ---- 前景UI（§7）。映像とは独立したDOM ---- */
+.ui{position:fixed;inset:0;z-index:2;pointer-events:none}
+.ui > *{pointer-events:auto}
+
+.logo{position:fixed;top:26px;left:clamp(18px,3vw,44px);
+  font-family:var(--f-serif);font-weight:700;font-size:20px;letter-spacing:.02em;
+  text-shadow:0 2px 18px rgba(0,0,0,.8)}
+
+.nav{position:fixed;top:28px;left:50%;transform:translateX(-50%);
+  display:flex;gap:clamp(8px,1.4vw,20px)}
+.cam-chip{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--paper-dim);padding:6px 2px;
+  border-bottom:1px solid transparent;transition:color .3s,border-color .3s}
+.cam-chip:hover{color:var(--paper)}
+.cam-chip.is-on{color:var(--gold-200);border-bottom-color:var(--gold-500)}
+.cam-chip:focus-visible{outline:2px solid var(--gold-500);outline-offset:3px}
+
+.cta{position:fixed;top:22px;right:clamp(18px,3vw,44px);
+  font-size:12.5px;letter-spacing:.04em;padding:10px 20px;border-radius:2px;
+  border:1px solid rgba(201,162,39,.55);color:var(--gold-200);
+  background:rgba(11,20,32,.42);backdrop-filter:blur(6px);
+  transition:background .35s,color .35s,transform .35s,border-color .35s}
+.cta:hover{background:var(--gold-500);color:var(--navy-900);border-color:var(--gold-500)}
+body[data-chapter="06"] .cta{transform:scale(1.14);
+  background:var(--gold-500);color:var(--navy-900);border-color:var(--gold-500)}
+
+/* コピー：白い箱は置かず、影で読ませる（§7） */
+.copy{position:fixed;left:clamp(18px,3.4vw,64px);bottom:clamp(46px,8vh,96px);
+  max-width:min(520px,74vw);
+  transition:opacity .26s ease,transform .26s ease}
+.copy.is-out{opacity:0!important;transform:translateY(7px)!important}
+.copy-num{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;
+  color:var(--gold-500);display:block;margin-bottom:12px}
+.copy-title{font-family:var(--f-serif);font-weight:700;
+  font-size:clamp(23px,3.5vw,40px);line-height:1.45;letter-spacing:-.01em;word-break:keep-all;
+  text-shadow:0 3px 26px rgba(3,6,11,.92),0 1px 4px rgba(3,6,11,.8)}
+.copy-note{margin-top:14px;font-size:13px;line-height:1.85;color:var(--paper-dim);
+  text-shadow:0 2px 16px rgba(3,6,11,.9)}
+
+.bar{position:fixed;right:clamp(14px,2vw,30px);top:24vh;bottom:24vh;width:1px;
+  background:rgba(242,239,233,.16)}
+.bar-fill{position:absolute;inset:0;background:linear-gradient(180deg,var(--gold-200),var(--gold-500));
+  transform:scaleY(0);transform-origin:top;will-change:transform}
+
+.hint{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.24em;color:var(--paper-dim);
+  transition:opacity .5s}
+.hint.is-gone{opacity:0;pointer-events:none}
+.hint span{display:block;width:1px;height:26px;margin:9px auto 0;
+  background:linear-gradient(180deg,var(--gold-500),transparent)}
+
+.loadbar{position:fixed;left:0;top:0;height:2px;width:100%;
+  background:linear-gradient(90deg,var(--gold-500),var(--gold-200));
+  transform:scaleX(0);transform-origin:left;transition:transform .4s ease,opacity .6s}
+.loadbar.is-done{opacity:0}
+
+/* ---- 最終章：問い合わせ（章06の遷移先） ---- */
+.final{position:relative;z-index:3;background:linear-gradient(180deg,rgba(6,9,15,0) 0%,var(--navy-900) 22%);
+  padding:clamp(60px,10vh,120px) clamp(18px,4vw,44px) clamp(50px,8vh,90px)}
+.final-in{max-width:660px;margin:0 auto}
+.final h2{font-family:var(--f-serif);font-size:clamp(22px,3.2vw,32px);line-height:1.5;font-weight:700}
+.final p{margin:16px 0 30px;color:var(--paper-dim);font-size:13.5px}
+.fld{margin-bottom:16px}
+.fld label{display:block;font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--paper-dim);margin-bottom:7px}
+.fld input,.fld select,.fld textarea{
+  width:100%;padding:13px 14px;font-family:inherit;font-size:16px;
+  background:rgba(242,239,233,.05);border:1px solid rgba(242,239,233,.16);
+  border-radius:2px;color:var(--paper);min-height:48px}
+.fld textarea{min-height:112px;resize:vertical;line-height:1.8}
+.fld input:focus,.fld select:focus,.fld textarea:focus{
+  outline:none;border-color:var(--gold-500)}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;
+  color:var(--paper-dim);min-height:44px;margin-bottom:18px}
+.consent a{color:var(--gold-200);text-decoration:underline;text-underline-offset:3px}
+.submit{width:100%;min-height:54px;border-radius:2px;font-weight:700;letter-spacing:.04em;
+  background:var(--gold-500);color:var(--navy-900);transition:filter .3s,transform .3s}
+.submit:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.formmsg{margin-top:14px;font-size:13px;min-height:1.2em}
+.formmsg.ok{color:var(--gold-200)} .formmsg.err{color:#E2867E}
+
+.foot{position:relative;z-index:3;background:var(--navy-900);
+  border-top:1px solid rgba(242,239,233,.10);
+  padding:26px clamp(18px,4vw,44px);text-align:center;
+  font-size:12px;color:var(--paper-dim)}
+.foot nav{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 20px;margin-top:12px}
+.foot nav a{display:inline-flex;align-items:center;min-height:40px}
+.foot nav a:hover{color:var(--paper)}
+
+/* ---- モバイル（§8-2） ---- */
+@media (max-width:759px){
+  .nav{display:none}
+  .logo{top:18px;font-size:18px}
+  .cta{top:14px;padding:9px 15px;font-size:12px}
+  .copy{bottom:clamp(52px,10vh,92px);max-width:82vw}
+  .bar{top:20vh;bottom:20vh;right:10px}
+}
+
+/* ---- §8-3 動きを減らす設定：静止画版も完成品として成立させる ---- */
+@media (prefers-reduced-motion:reduce){
+  .spacer{display:none}
+  #stage,.ui{position:static!important;inset:auto!important}
+  #stage{display:none}
+  .logo,.nav,.cta,.copy,.bar,.hint,.loadbar{position:static!important;
+    transform:none!important;opacity:1!important;display:none}
+  .rm{display:block!important}
+}
+.rm{display:none}
+.rm-ch{position:relative;min-height:auto;padding:clamp(38px,7vh,74px) clamp(18px,4vw,44px);
+  border-bottom:1px solid rgba(242,239,233,.10);max-width:860px;margin:0 auto}
+.rm-ch img{width:100%;border-radius:3px;margin-bottom:22px;border:1px solid rgba(242,239,233,.10)}
+.rm-ch .copy-num{position:static}
+.rm-head{max-width:860px;margin:0 auto;padding:clamp(44px,8vh,92px) clamp(18px,4vw,44px) 0}
+.rm-head h1{font-family:var(--f-serif);font-size:clamp(26px,4vw,42px);line-height:1.45;font-weight:700}
+.rm-head p{margin-top:16px;color:var(--paper-dim)}
+
+/* JavaScript が無い場合も全章が読める */
+.nojs{max-width:860px;margin:0 auto;padding:clamp(40px,8vh,90px) clamp(18px,4vw,44px)}
+.nojs h2{font-family:var(--f-serif);font-size:22px;margin:30px 0 8px}
+
+/* 通路を抜けたら固定ステージを畳む */
+body.is-past #stage,body.is-past .ui{opacity:0;pointer-events:none;transition:opacity .5s}

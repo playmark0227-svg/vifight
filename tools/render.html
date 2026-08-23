@@ -1,0 +1,65 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}
+</style></head><body>
+<canvas id="cv"></canvas>
+<script type="module">
+import { drawScene, SCENE } from './scene.js';
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d', { alpha: false });
+const off = document.createElement('canvas');
+const octx = off.getContext('2d', { alpha: false });
+const clamp=(v,a,b)=>v<a?a:v>b?b:v, smooth=k=>k*k*(3-2*k);
+
+/* §2-6 F 最後の引き：工房が机上の一台の中にあったと分かる画で終える */
+function renderFrame(t, W, H) {
+  cv.width = W; cv.height = H;
+  const P = SCENE.PULL_START;
+  if (t <= P) { drawScene(ctx, t, W, H); return; }
+
+  const k = smooth(clamp((t - P) / (1 - P), 0, 1));
+  off.width = W; off.height = H;
+  drawScene(octx, P, W, H);          // 工房側は止まったまま
+
+  // 外側：一台が置かれた机
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, '#05090F'); bg.addColorStop(1, '#0B1420');
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+  const sc = 1 - 0.62 * k;                       // 画面 → 一台の中へ
+  const dw = W * sc, dh = H * sc;
+  const dx = (W - dw) / 2, dy = (H - dh) / 2 - H * 0.05 * k;
+
+  // 筐体
+  const bez = Math.max(2, W * 0.012 * k);
+  ctx.fillStyle = '#0A121C';
+  ctx.fillRect(dx - bez, dy - bez, dw + bez * 2, dh + bez * 2 + H * 0.03 * k);
+  ctx.strokeStyle = `rgba(201,162,39,${0.30 * k})`;
+  ctx.lineWidth = Math.max(1, W * 0.0016);
+  ctx.strokeRect(dx - bez, dy - bez, dw + bez * 2, dh + bez * 2 + H * 0.03 * k);
+
+  ctx.drawImage(off, dx, dy, dw, dh);
+
+  // 机と手元灯
+  if (k > 0.05) {
+    const deskY = dy + dh + bez + H * 0.03 * k;
+    const dg = ctx.createLinearGradient(0, deskY, 0, H);
+    dg.addColorStop(0, `rgba(28,42,62,${0.95 * k})`);
+    dg.addColorStop(1, `rgba(8,13,20,${0.98 * k})`);
+    ctx.fillStyle = dg; ctx.fillRect(0, deskY, W, H - deskY);
+    ctx.save(); ctx.globalCompositeOperation = 'lighter';
+    const g = ctx.createRadialGradient(W * 0.78, deskY - H * 0.02, 0, W * 0.78, deskY - H * 0.02, H * 0.55);
+    g.addColorStop(0, `rgba(201,162,39,${0.22 * k})`);
+    g.addColorStop(1, 'rgba(201,162,39,0)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+    // 画面の映り込み
+    ctx.fillStyle = `rgba(232,217,160,${0.05 * k})`;
+    ctx.fillRect(dx, deskY, dw, H * 0.045 * k);
+  }
+  const vg = ctx.createRadialGradient(W/2, H/2, H*0.3, W/2, H/2, H*1.0);
+  vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,`rgba(0,0,0,${0.55*k})`);
+  ctx.fillStyle = vg; ctx.fillRect(0,0,W,H);
+}
+window.__frame = (t, W, H, q) => { renderFrame(t, W, H); return cv.toDataURL('image/webp', q); };
+window.__ready = true;
+</script></body></html>
