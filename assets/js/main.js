@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // parse "x,y x,y ..." into vertices; fix those sitting on the baseline
     const verts = poly.getAttribute('points').trim().split(/\s+/).map(p => {
       const [x, y] = p.split(',').map(Number);
-      return { x, baseY: y, fixed: y >= H * 0.9, phase: Math.random() * Math.PI * 2,
+      return { x, baseY: y, fixed: y >= H * 0.9 || y <= 0, phase: Math.random() * Math.PI * 2,
                amp: ampRange[0] + Math.random() * (ampRange[1] - ampRange[0]),
                speed: speedRange[0] + Math.random() * (speedRange[1] - speedRange[0]) };
     });
@@ -95,11 +95,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const poly = svg.querySelector('polygon');
     if (!poly) return;
     const W = 1440, H = 72;
+    // dividers into dark sections hang the light "sky" from the top edge
+    const edge = svg.closest('.section-divider--to-dark') ? 0 : H;
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
     const segs = 8 + Math.floor(Math.random() * 7);
-    let pts = '0,' + H;
+    let pts = '0,' + edge;
     for (let i = 0; i <= segs; i++) pts += ' ' + Math.round((W / segs) * i) + ',' + (H * (0.12 + Math.random() * 0.62)).toFixed(1);
-    pts += ' ' + W + ',' + H;
+    pts += ' ' + W + ',' + edge;
     poly.setAttribute('points', pts);
     registerRidge(svg, poly, W, H, [3, 10], [0.0005, 0.0016], svg);
   });
@@ -224,9 +226,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: true });
 
+  const headerDarkSecs = [...document.querySelectorAll('.hero, .philosophy, .footer')];
+  // dividers into dark sections overlap them with a light band (negative margin);
+  // a dark section only "starts" halfway down that divider
+  function darkRect(sec) {
+    const r = sec.getBoundingClientRect();
+    const d = sec.previousElementSibling;
+    const off = d && d.classList.contains('section-divider--to-dark') ? d.offsetHeight * 0.5 : 0;
+    return { top: r.top + off, bottom: r.bottom, left: r.left, right: r.right };
+  }
+
+  // each aurora is scaled from its own data-aurora-intensity (0.6x–1.05x), so the
+  // hero / philosophy / footer balance is kept
+  const auroraScroll = (window.ViFightAurora && !reduceMotion)
+    ? window.ViFightAurora.instances.map(inst => ({
+        inst,
+        host: inst.canvas.closest('[data-aurora-host]') || inst.canvas.parentElement,
+        base: parseFloat(inst.canvas.getAttribute('data-aurora-intensity')) || 1,
+        last: -1
+      }))
+    : [];
+  function updateAuroraIntensity() {
+    const vh = window.innerHeight;
+    for (const a of auroraScroll) {
+      const r = a.host.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) continue;
+      const off = Math.min(1, Math.abs(r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2));
+      const v = +(a.base * (0.6 + 0.45 * (1 - off * off))).toFixed(3);
+      if (Math.abs(v - a.last) > 0.01) { a.inst.setIntensity(v); a.last = v; }
+    }
+  }
+
   function onScrollFrame() {
     const scrollY = currentScrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const overDark = headerDarkSecs.some(sec => { const r = darkRect(sec); return r.top <= 32 && r.bottom >= 32; });
+    header.classList.toggle('over-dark', overDark);
     header.classList.toggle('scrolled', scrollY > 80);
     progressBar.style.width = ((scrollY / docHeight) * 100) + '%';
     for (const { el, speed } of parallaxEls) {
@@ -234,9 +269,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const center = rect.top + rect.height / 2 - window.innerHeight / 2;
       el.style.transform = `translateY(${center * speed}px)`;
     }
+    updateAuroraIntensity();
     lastScrollY = scrollY;
     ticking = false;
   }
+  requestAnimationFrame(onScrollFrame);  // restored scroll positions get the right header/aurora state
 
   if (scrollMarquee) {
     requestAnimationFrame(() => { marqueeWidth = scrollMarquee.scrollWidth / 4; });
@@ -257,10 +294,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (particles.length > 0) {
       ctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
       particles = particles.filter(p => p.life > 0);
+      const trailRgb = document.body.classList.contains('on-dark') ? '120,228,190' : '139,115,85';
       for (const p of particles) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(139,115,85,${p.life * 0.25})`;
+        ctx.fillStyle = `rgba(${trailRgb},${p.life * 0.3})`;
         ctx.fill();
         p.x += p.vx; p.y += p.vy; p.life -= 0.05;
       }
@@ -648,6 +686,7 @@ document.addEventListener('DOMContentLoaded', () => {
       for (const l of plxLayers) {
         l.el.style.transform = `translate(${(nx * l.fx).toFixed(1)}px, ${(ny * l.fy).toFixed(1)}px)`;
       }
+      if (window.ViFightAurora) window.ViFightAurora.setPointerAll(-nx, -ny);
       const settled = Math.abs(tiltX - currentX) < 0.01 && Math.abs(tiltY - currentY) < 0.01 &&
                       Math.abs(tiltX) < 0.01 && Math.abs(tiltY) < 0.01;
       if (settled) { tiltRunning = false; return; }
@@ -672,7 +711,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function evalDark() {
     const onDark = darkSections.some(s => {
-      const r = s.getBoundingClientRect();
+      const r = darkRect(s);
       return mouseY >= r.top && mouseY <= r.bottom &&
              mouseX >= r.left && mouseX <= r.right;
     });

@@ -17,7 +17,8 @@
   --bg-accent: #d8c8b2;
   --text: #211a13;
   --text-light: #6b6054;
-  --text-muted: #9d9181;
+  --text-muted: #756859;   /* AA on cream (was #9d9181, 2.6:1) */
+  --line-muted: #9d9181;   /* old tone, decorative strokes only */
   --accent: #271f17;
   --accent-warm: #8b7355;
   --accent-brown: #b8946a;   /* 薄い茶色 — light brown accent */
@@ -156,7 +157,7 @@ ul {
 .loader-bar-fill {
   width: 0%;
   height: 100%;
-  background: var(--accent-warm);
+  background: linear-gradient(90deg, var(--accent-warm), #5fe0b4 55%, #7bb8c9 80%, #9a7fd6);
   border-radius: 2px;
   animation: loaderBarFill 2s var(--ease-in-out) forwards;
   animation-delay: 0.5s;
@@ -193,7 +194,7 @@ ul {
   top: 0;
   left: 0;
   will-change: transform;
-  transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out), background 0.3s;
+  transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out), background 0.3s, box-shadow 0.3s;
 }
 
 /* hide the custom cursor until the pointer first moves (no stray ring at 0,0) */
@@ -212,7 +213,7 @@ body.cursor-ready .cursor, body.cursor-ready .cursor-follower { opacity: 1; }
   left: 0;
   will-change: transform;
   transition: width 0.4s var(--ease-out), height 0.4s var(--ease-out),
-              border-color 0.3s, background 0.3s, opacity 0.3s;
+              border-color 0.3s, background 0.3s, opacity 0.3s, box-shadow 0.4s;
 }
 
 .cursor.expanded {
@@ -246,18 +247,30 @@ body.cursor-ready .cursor, body.cursor-ready .cursor-follower { opacity: 1; }
   color: var(--white);
 }
 
-/* Cursor on dark sections — invert to white */
+/* Cursor on dark sections — becomes a small piece of aurora */
 body.on-dark .cursor {
-  background: var(--white);
+  background: #d4f7ea;
+  box-shadow: 0 0 10px rgba(95, 224, 180, 0.75), 0 0 22px rgba(123, 184, 201, 0.35);
 }
 body.on-dark .cursor-follower {
-  border-color: rgba(250, 249, 247, 0.45);
+  border-color: rgba(130, 232, 196, 0.55);
+  box-shadow: 0 0 18px rgba(95, 224, 180, 0.22), inset 0 0 12px rgba(154, 127, 214, 0.16);
+  animation: cursorAurora 6s ease-in-out infinite alternate;
 }
 body.on-dark .cursor.expanded {
-  background: var(--accent-warm);
+  background: #6fe6bd;
 }
 body.on-dark .cursor-follower.expanded {
-  border-color: var(--accent-warm);
+  border-color: rgba(160, 240, 210, 0.85);
+  background: radial-gradient(circle, rgba(95, 224, 180, 0.12), transparent 70%);
+}
+body.on-dark .cursor-follower.expanded,
+body.on-dark .cursor-follower.view { animation: none; }
+body.on-dark .cursor-follower.view { border-color: transparent; box-shadow: none; }
+@keyframes cursorAurora {
+  0%   { border-color: rgba(130, 232, 196, 0.55); }
+  50%  { border-color: rgba(123, 184, 201, 0.55); }
+  100% { border-color: rgba(154, 127, 214, 0.5); }
 }
 body.on-dark .cursor-follower.view {
   background: rgba(250, 249, 247, 0.9);
@@ -281,7 +294,7 @@ body.on-dark .cursor-follower.view::after {
   width: 100%;
   z-index: 1000;
   padding: 20px 0;
-  transition: background 0.4s, padding 0.4s;
+  transition: background 0.4s, padding 0.4s, border-color 0.4s, box-shadow 0.4s;
 }
 
 #header.scrolled {
@@ -429,16 +442,35 @@ body.on-dark .cursor-follower.view::after {
   background: var(--text);
 }
 
+/* Over dark sections the bar turns to dark glass with an aurora underglow */
+#header.scrolled.over-dark {
+  background: rgba(21, 16, 11, 0.58);
+  border-bottom-color: rgba(140, 230, 200, 0.14);
+  box-shadow: 0 8px 28px -14px rgba(72, 214, 174, 0.35);
+}
+#header.scrolled.over-dark .nav-logo,
+#header.scrolled.over-dark .nav-links a { color: rgba(244, 235, 218, 0.92); }
+#header.scrolled.over-dark .nav-links a::after { background: linear-gradient(90deg, #6fe6bd, #7bb8c9, #9a7fd6); }
+#header.scrolled.over-dark .nav-cta { border-color: rgba(160, 240, 210, 0.35); }
+#header.scrolled.over-dark .nav-cta:hover { background: var(--white); color: var(--accent); }
+#header.scrolled.over-dark .nav-hamburger span { background: rgba(244, 235, 218, 0.92); }
+
 /* ---------- MOBILE MENU ---------- */
 .mobile-menu {
   position: fixed;
   inset: 0;
   z-index: 999;
   pointer-events: none;
+  /* hidden while closed (its footer text used to float over every page);
+     the delay keeps it visible through the 0.6s close animation */
+  visibility: hidden;
+  transition: visibility 0s linear 0.6s;
 }
 
 .mobile-menu.active {
   pointer-events: auto;
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 .mobile-menu-bg {
@@ -535,7 +567,7 @@ body.on-dark .cursor-follower.view::after {
 .hero-visual-base {
   background:
     radial-gradient(ellipse 64% 58% at 28% 52%, rgba(21, 16, 11, 0.55) 0%, rgba(21, 16, 11, 0.25) 55%, transparent 75%),
-    linear-gradient(to bottom, rgba(21, 16, 11, 0.25) 0%, rgba(21, 16, 11, 0.08) 30%, transparent 60%, rgba(28, 22, 17, 0.5) 86%, rgba(21, 16, 11, 0.9) 100%),
+    linear-gradient(to bottom, rgba(14, 11, 9, 0.6) 0%, rgba(14, 11, 9, 0.4) 18%, rgba(21, 16, 11, 0.1) 32%, transparent 55%, rgba(28, 22, 17, 0.5) 86%, rgba(21, 16, 11, 0.9) 100%),
     linear-gradient(150deg, rgba(28, 22, 17, 0.38) 0%, rgba(38, 29, 20, 0.2) 28%, rgba(34, 26, 19, 0.24) 55%, rgba(21, 16, 11, 0.46) 100%),
     url('../images/hero/hero-cover.jpg') center / cover no-repeat,
     linear-gradient(150deg, #1c1611 0%, #261d14 28%, #221a13 55%, #15100b 100%);
@@ -659,13 +691,18 @@ body.on-dark .cursor-follower.view::after {
   top: -8%;
   left: -8%;
   right: -8%;
-  height: 64%;
+  height: 68%;
   pointer-events: none;
-  filter: blur(38px) saturate(125%);
-  /* NOTE: no mix-blend-mode — screen-blending here corrupted compositor
-     sorting of sibling layers (hero text painted under the scrim). */
-  opacity: 0.8;
-  will-change: transform;
+  mix-blend-mode: screen;   /* luminous glow over the photo sky */
+  opacity: 0.95;
+  will-change: transform, filter;
+  animation: auroraHue 16s ease-in-out infinite alternate;
+}
+/* slow living color drift: teal ⇄ green ⇄ violet */
+@keyframes auroraHue {
+  0%   { filter: blur(38px) saturate(135%) hue-rotate(0deg); }
+  45%  { filter: blur(40px) saturate(150%) hue-rotate(-18deg); }
+  100% { filter: blur(36px) saturate(140%) hue-rotate(14deg); }
 }
 .aurora-band {
   position: absolute;
@@ -741,6 +778,26 @@ body.on-dark .cursor-follower.view::after {
   animation: aurora2 19s ease-in-out infinite alternate;
 }
 
+/* ---------- WEBGL AURORA (assets/js/aurora.js) ---------- */
+.aurora-gl {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 2.2s ease;
+}
+.aurora-gl.gl-aurora-on { opacity: 1; }
+/* the real-time aurora replaces the blurry CSS fallback bands */
+.gl-aurora-on .hero-aurora,
+.gl-aurora-on .philosophy-aurora { display: none; }
+/* keep screen-blending contained to each host section */
+.philosophy, .footer { isolation: isolate; }
+.philosophy .aurora-gl, .footer .aurora-gl { z-index: 0; }
+
 /* Patagonia-style sunset glow + layered mountain skyline */
 .hero-sunset {
   position: absolute;
@@ -787,7 +844,7 @@ body.on-dark .cursor-follower.view::after {
   z-index: 10;
   isolation: isolate;
   transform: translateZ(0);  /* own compositor layer from first paint */
-  padding: 0 clamp(30px, 6vw, 100px);
+  padding: 0 clamp(20px, 4vw, 60px);
   max-width: var(--container);
   margin: 0 auto;
   width: 100%;
@@ -872,7 +929,7 @@ body.on-dark .cursor-follower.view::after {
 
 .hero-sub {
   font-size: clamp(14px, 1.8vw, 18px);
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(244, 235, 218, 0.92);
   text-shadow: 0 2px 12px rgba(15, 10, 6, 0.6);
   letter-spacing: 1px;
   line-height: 2;
@@ -888,7 +945,7 @@ body.on-dark .cursor-follower.view::after {
 
 .hero-scroll {
   position: absolute;
-  bottom: 100px;
+  bottom: calc(clamp(150px, 32vh, 340px) + 24px);
   right: clamp(30px, 4vw, 60px);
   display: flex;
   flex-direction: column;
@@ -938,7 +995,8 @@ body.on-dark .cursor-follower.view::after {
   left: 0;
   width: 100%;
   padding: 20px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: 0;
+  background: linear-gradient(to top, rgba(21, 16, 11, 0.7), transparent);
   overflow: hidden;
   z-index: 2;
 }
@@ -981,7 +1039,7 @@ body.on-dark .cursor-follower.view::after {
   font-size: 13px;
   letter-spacing: 3px;
   color: var(--accent-warm);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 /* small accent line before the section number for an editorial touch */
@@ -996,7 +1054,7 @@ body.on-dark .cursor-follower.view::after {
   font-family: var(--font-en);
   font-size: clamp(48px, 8vw, 120px);
   font-weight: 600;
-  letter-spacing: -2px;
+  letter-spacing: -0.025em;
   line-height: 1;
   overflow: hidden;
 }
@@ -1014,8 +1072,8 @@ body.on-dark .cursor-follower.view::after {
 .section-sub {
   font-size: 14px;
   color: var(--text-muted);
-  margin-top: 12px;
-  letter-spacing: 2px;
+  margin-top: 18px;
+  letter-spacing: 0.16em;
 }
 
 /* Reveal animations */
@@ -1084,7 +1142,7 @@ body.on-dark .cursor-follower.view::after {
 .stat-plus {
   font-family: var(--font-en);
   font-size: clamp(24px, 2.5vw, 32px);
-  font-weight: 300;
+  font-weight: 400;
   color: var(--accent-warm);
 }
 
@@ -1120,7 +1178,7 @@ body.on-dark .cursor-follower.view::after {
   aspect-ratio: 3/4;
   overflow: hidden;
   border-radius: 8px;
-  box-shadow: 0 20px 50px rgba(13, 35, 50, 0.12);
+  box-shadow: 0 20px 50px rgba(28, 22, 17, 0.14);
 }
 
 .about-image-photo {
@@ -1175,6 +1233,17 @@ body.on-dark .cursor-follower.view::after {
   overflow: hidden;
   padding: clamp(120px, 18vw, 260px) 0;
   position: relative;
+}
+.philosophy::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 140px;
+  background: linear-gradient(to bottom, transparent, #15100b);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .philosophy-bg {
@@ -1260,22 +1329,26 @@ body.on-dark .cursor-follower.view::after {
   font-size: clamp(80px, 12vw, 160px);
   font-weight: 600;
   line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(184, 148, 106, 0.28);
-  text-stroke: 1px rgba(184, 148, 106, 0.28);
   margin-bottom: -30px;
-  filter: drop-shadow(0 0 30px rgba(184, 148, 106, 0.12));
   user-select: none;
+  color: transparent;
+  background: linear-gradient(180deg, rgba(220, 195, 160, 0.7) 0%, rgba(184, 148, 106, 0.3) 60%, rgba(184, 148, 106, 0.08) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 22px rgba(184, 148, 106, 0.22));
 }
 
 .philosophy-quote {
   font-size: clamp(22px, 3.5vw, 44px);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 2;
-  letter-spacing: 3px;
+  letter-spacing: 0.08em;
+  font-feature-settings: "palt";
+  word-break: auto-phrase;
   max-width: 900px;
   margin: 0 auto;
-  text-shadow: 0 0 40px rgba(184, 148, 106, 0.15);
+  /* dark halo keeps the quote crisp where aurora curtains pass behind it */
+  text-shadow: 0 2px 18px rgba(12, 9, 6, 0.75), 0 0 40px rgba(184, 148, 106, 0.15);
 }
 
 .philosophy-quote .word {
@@ -1292,19 +1365,19 @@ body.on-dark .cursor-follower.view::after {
 
 /* Accent underline between quote and attribution */
 .philosophy-accent-line {
-  width: 60px;
+  width: 84px;
   height: 2px;
   margin: 36px auto 0;
-  background: linear-gradient(90deg, transparent, rgba(200, 165, 120, 0.75), transparent);
+  background: linear-gradient(90deg, transparent, #6fe6bd 30%, #7bb8c9 60%, #9a7fd6 80%, transparent);
   border-radius: 1px;
-  box-shadow: 0 0 12px rgba(184, 148, 106, 0.4);
+  box-shadow: 0 0 12px rgba(95, 224, 180, 0.35);
 }
 
 .philosophy-attr {
   font-family: var(--font-en);
   font-size: 13px;
   letter-spacing: 3px;
-  color: rgba(220, 195, 160, 0.55);
+  color: rgba(220, 195, 160, 0.72);
   margin-top: 24px;
 }
 
@@ -1604,12 +1677,12 @@ body.on-dark .cursor-follower.view::after {
   overflow: hidden;
   border-radius: 14px;
   position: relative;
-  box-shadow: 0 10px 30px rgba(13, 23, 35, 0.06);
+  box-shadow: 0 10px 30px rgba(28, 22, 17, 0.08);
   transition: box-shadow 0.5s var(--ease-out), transform 0.5s var(--ease-out);
 }
 
 .work-item:hover .work-image {
-  box-shadow: 0 24px 60px rgba(13, 50, 70, 0.16);
+  box-shadow: 0 24px 60px rgba(28, 22, 17, 0.16), 0 16px 44px -16px rgba(72, 214, 174, 0.38), 0 0 0 1px rgba(140, 230, 200, 0.22);
 }
 
 /* real project photo fills the card; warm tint + grid sit above it */
@@ -1662,7 +1735,7 @@ body.on-dark .cursor-follower.view::after {
 .work-image-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(13, 23, 35, 0.55) 0%, transparent 55%);
+  background: linear-gradient(to top, rgba(21, 16, 11, 0.6) 0%, transparent 55%);
   opacity: 0;
   transition: opacity 0.4s var(--ease-out);
   z-index: 1;
@@ -1677,8 +1750,8 @@ body.on-dark .cursor-follower.view::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle 230px at var(--mx, 50%) var(--my, 50%),
-    rgba(240, 212, 170, 0.30), transparent 65%);
+  background: radial-gradient(circle 240px at var(--mx, 50%) var(--my, 50%),
+    rgba(240, 212, 170, 0.26) 0%, rgba(140, 230, 200, 0.12) 42%, rgba(154, 127, 214, 0.06) 60%, transparent 72%);
   opacity: 0;
   transition: opacity 0.35s var(--ease-out);
   z-index: 2;
@@ -1784,7 +1857,7 @@ body.on-dark .cursor-follower.view::after {
 
 .flow-line {
   position: absolute;
-  left: 30px;
+  left: 52px;
   top: 0;
   width: 1px;
   height: 100%;
@@ -1802,7 +1875,7 @@ body.on-dark .cursor-follower.view::after {
 .flow-step::before {
   content: '';
   position: absolute;
-  left: 24px;
+  left: 46px;
   top: 50px;
   width: 13px;
   height: 13px;
@@ -2099,17 +2172,6 @@ body.on-dark .cursor-follower.view::after {
   position: relative;
 }
 
-/* glowing top edge to match hero / philosophy */
-.footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(184, 148, 106, 0.45) 50%, transparent);
-}
-
 .footer-top {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
@@ -2128,11 +2190,23 @@ body.on-dark .cursor-follower.view::after {
   font-weight: 600;
   letter-spacing: -0.5px;
   margin-bottom: 12px;
+  display: inline-block;
+  background: linear-gradient(100deg, #f4ebda 0%, #f4ebda 38%, #a6f0d2 47%, #9fd0e0 53%, #c6b4ee 58%, #f4ebda 68%, #f4ebda 100%);
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: auroraSweep 9s ease-in-out infinite;
+}
+@keyframes auroraSweep {
+  0%, 20%   { background-position: 100% 0; }
+  65%, 100% { background-position: 0 0; }
 }
 
 .footer-tagline {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.75);
+  text-shadow: 0 1px 12px rgba(12, 9, 6, 0.7);
   letter-spacing: 1px;
   margin-bottom: 32px;
 }
@@ -2152,16 +2226,16 @@ body.on-dark .cursor-follower.view::after {
 }
 
 .footer-info dt {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.58);
   letter-spacing: 1.5px;
   font-family: var(--font-en);
   text-transform: uppercase;
-  font-size: 10px;
+  font-size: 11px;
   padding-top: 2px;
 }
 
 .footer-info dd {
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.82);
   letter-spacing: 0.5px;
 }
 
@@ -2174,7 +2248,7 @@ body.on-dark .cursor-follower.view::after {
   font-family: var(--font-en);
   font-size: 13px;
   letter-spacing: 0.5px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.7);
   transition: color 0.3s;
 }
 
@@ -2192,7 +2266,7 @@ body.on-dark .cursor-follower.view::after {
 .footer-bottom p {
   font-family: var(--font-en);
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.45);
   letter-spacing: 1px;
 }
 
@@ -2390,7 +2464,7 @@ body.on-dark .cursor-follower.view::after {
   .hero-ridge-1 { height: clamp(68px, 14vh, 140px); }
 
   /* Aurora: lighter blur, two bands only on phone GPUs */
-  .hero-aurora { filter: blur(22px) saturate(115%); }
+  .hero-aurora { animation: none; filter: blur(22px) saturate(115%); }
   .aurora-band-3 { display: none; }
   .philosophy-aurora { filter: blur(28px); }
 }
@@ -2454,7 +2528,7 @@ body.on-dark .cursor-follower.view::after {
 }
 .float-shape.tri { clip-path: polygon(50% 0%, 100% 100%, 0% 100%); }
 .float-shape.diamond { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
-.float-shape.s1 { top: 14%; left: 7%;  width: 70px;  height: 70px;  animation: floatA 17s ease-in-out infinite; }
+.float-shape.s1 { top: 9%; right: 7%; left: auto; width: 70px; height: 70px; animation: floatA 17s ease-in-out infinite; }
 .float-shape.s2 { bottom: 12%; right: 9%; width: 130px; height: 130px; animation: floatB 24s ease-in-out infinite; }
 .float-shape.s3 { top: 58%; left: 72%; width: 54px;  height: 54px;  animation: floatA 20s ease-in-out infinite reverse; }
 .float-shape.s4 { top: 30%; right: 22%; width: 46px; height: 46px;  animation: floatB 19s ease-in-out infinite; opacity: 0.1; }
@@ -2519,8 +2593,8 @@ body.on-dark .cursor-follower.view::after {
   animation: linePulse 3.6s ease-in-out infinite;
 }
 @keyframes linePulse {
-  0%, 100% { opacity: 0.7; box-shadow: 0 0 12px rgba(184, 148, 106, 0.35); }
-  50% { opacity: 1; box-shadow: 0 0 24px rgba(184, 148, 106, 0.7); }
+  0%, 100% { opacity: 0.7; box-shadow: 0 0 12px rgba(95, 224, 180, 0.3); }
+  50% { opacity: 1; box-shadow: 0 0 24px rgba(95, 224, 180, 0.6), 0 0 36px rgba(154, 127, 214, 0.25); }
 }
 
 /* ---------- WORK MODAL ---------- */
@@ -2726,7 +2800,11 @@ body::after {
   .float-shape,
   .service-icon svg,
   .aurora-band,
-  .philosophy-aurora {
+  .hero-aurora,
+  .philosophy-aurora,
+  #loader::before,
+  .footer-logo,
+  body.on-dark .cursor-follower {
     animation: none !important;
   }
   *,
@@ -2735,3 +2813,128 @@ body::after {
     scroll-behavior: auto !important;
   }
 }
+
+
+/* =====================================================================
+   AURORA ENHANCEMENTS
+   ===================================================================== */
+
+/* B7: the thin light streaks read as scratches over a real photograph */
+.hero-visual-streak { display: none; }
+
+/* B1: scrim that travels with the headline — above every hero-visual layer
+   (incl. the WebGL aurora), below the type. hero-content is isolated. */
+.hero-content::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -14%;
+  bottom: -14%;
+  left: -6%;
+  right: 22%;
+  pointer-events: none;
+  background: radial-gradient(ellipse 58% 52% at 34% 50%, rgba(14, 10, 6, 0.5) 0%, rgba(14, 10, 6, 0.26) 48%, transparent 76%);
+}
+
+/* B2: same idea behind the Philosophy quote (content is its own stacking context) */
+.philosophy-content::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -10% -8%;
+  pointer-events: none;
+  background: radial-gradient(ellipse 55% 48% at 50% 58%, rgba(16, 12, 8, 0.5) 0%, rgba(16, 12, 8, 0.22) 52%, transparent 76%);
+}
+
+/* E3 + E12: aurora rim light on the low-poly crests, depth shading on the far ridge */
+.hero-ridge-3 polygon {
+  fill: url(#ridgeShade3);
+  stroke: url(#ridgeRim);
+  stroke-width: 1.4px;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.hero-ridge-2 polygon {
+  stroke: url(#ridgeRim);
+  stroke-width: 1px;
+  stroke-opacity: 0.4;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* E1: dividers leading INTO dark sections hang the light section's "sky" over
+   a transparent band, so the dark section's own live aurora glows up to the peaks */
+.section-divider--to-dark {
+  /* 2px strip of the light colour seals the anti-aliased top edge, which
+     otherwise shows the dark section through as a hairline */
+  background: linear-gradient(currentColor, currentColor) top / 100% 2px no-repeat;
+  margin-bottom: calc(-1 * clamp(40px, 5vw, 72px));
+}
+.section-divider--to-dark + .philosophy {
+  padding-top: calc(clamp(120px, 18vw, 260px) + clamp(40px, 5vw, 72px));
+}
+.section-divider--to-dark + .footer {
+  padding-top: calc(60px + clamp(40px, 5vw, 72px));
+}
+@media (hover: hover) and (min-width: 769px) {
+  .section-divider--to-dark svg { filter: drop-shadow(0 3px 8px rgba(95, 224, 180, 0.28)); }
+}
+
+/* E8: aurora shimmer behind the loader wordmark */
+#loader::before {
+  content: '';
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  top: -12%;
+  height: 65%;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 12%, rgba(72, 214, 174, 0.3) 36%, rgba(123, 184, 201, 0.22) 55%, rgba(150, 125, 205, 0.16) 72%, transparent 90%);
+  filter: blur(48px);
+  mix-blend-mode: screen;
+  opacity: 0;
+  animation: loaderAurora 3.6s ease-in-out infinite alternate, loaderAuroraIn 1.2s ease 0.15s forwards;
+}
+@keyframes loaderAurora {
+  0%   { transform: translateX(-6%) skewY(-3deg) scaleY(1); }
+  100% { transform: translateX(6%) skewY(2deg) scaleY(1.25); }
+}
+@keyframes loaderAuroraIn { to { opacity: 1; } }
+.loader-inner { position: relative; z-index: 1; }
+
+/* B10: decorative strokes keep the softer old tone */
+.service-icon,
+.service-arrow { color: var(--line-muted); }
+
+/* E10: Japanese typesetting */
+.hero-line { letter-spacing: -0.02em; }
+.about-lead, .contact-lead, .service-title, .work-title,
+.flow-step-content h3, .faq-question, .voice-text { font-feature-settings: "palt"; }
+.about-lead, .contact-lead { text-wrap: balance; word-break: auto-phrase; }
+/* each sentence of the quote is its own inline-block: balance it so a phone
+   never leaves "ある。" alone on a line */
+.philosophy-quote .word { text-wrap: balance; word-break: auto-phrase; }
+
+@media (max-width: 768px) {
+  .hero-content::before {
+    right: -6%;
+    background: radial-gradient(ellipse 80% 50% at 45% 50%, rgba(14, 10, 6, 0.5), transparent 78%);
+  }
+  #loader::before { filter: blur(28px); }
+  /* phone flow layout keeps its original rail position (content has padding-left:50px) */
+  .flow-line { left: 30px; }
+  .flow-step::before { left: 24px; }
+}
+
+/* footer: content breathes below the aurora horizon */
+.section-divider--to-dark + .footer { padding-top: calc(104px + clamp(40px, 5vw, 72px)); }
+.footer-links { padding-top: 10px; }
+.footer-links a { text-shadow: 0 1px 10px rgba(12, 9, 6, 0.7); }
+
+/* large ambient shapes collided with the form, step 04 and the footer rule */
+.contact .float-shape.s2,
+.flow .float-shape.s2,
+.footer .float-shape.s2 { display: none; }
+
+/* quieter rim on the mid ridge */
+.hero-ridge-2 polygon { stroke-opacity: 0.22; }
