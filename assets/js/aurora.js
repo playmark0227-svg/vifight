@@ -374,6 +374,7 @@
 
     var inst = {
       canvas: canvas,
+      baseIntensity: cfg.intensity,
       start: function () { enabled = true; update(); },
       stop: function () { enabled = false; update(); },
       setPointer: function (nx, ny) {
@@ -424,7 +425,8 @@
     mount: mount,
     instances: instances,
     setPointerAll: function (nx, ny) { instances.forEach(function (it) { it.setPointer(nx, ny); }); },
-    setIntensityAll: function (f) { instances.forEach(function (it) { it.setIntensity(f); }); }
+    // f is a factor of each canvas's own base, so the per-section balance survives
+    setIntensityAll: function (f) { instances.forEach(function (it) { it.setIntensity(it.baseIntensity * f); }); }
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', autoMount, false);

@@ -32,7 +32,7 @@
   <meta name="twitter:image" content="https://vifight.com/assets/images/hero/hero-cover.jpg">
 
   <link rel="preload" as="image" href="assets/images/hero/hero-cover.jpg" fetchpriority="high">
-  <link rel="stylesheet" href="assets/css/style.css?v=20261005a">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261005b">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Interのみ同期（Latin文字・軽量）、Noto Sans JPは非同期で遅延読み込み -->
@@ -313,7 +313,7 @@
       <canvas class="hero-particles" id="hero-particles"></canvas>
       <!-- Patagonia-style sunset + layered mountain skyline -->
       <div class="hero-sunset"></div>
-      <svg class="hero-ridge hero-ridge-3" viewBox="0 0 1440 400" preserveAspectRatio="none"><polygon points="0,400 0,250 110,270 190,150 250,225 330,80 405,205 470,140 560,235 650,45 735,200 820,120 905,235 1000,95 1085,215 1175,145 1270,240 1350,175 1440,225 1440,400"/></svg>
+      <svg class="hero-ridge hero-ridge-3" viewBox="0 0 1440 400" preserveAspectRatio="none"><defs><linearGradient id="ridgeRim" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5fe0b4" stop-opacity=".1"/><stop offset=".35" stop-color="#6fe6bd" stop-opacity=".5"/><stop offset=".65" stop-color="#7bb8c9" stop-opacity=".4"/><stop offset="1" stop-color="#9a7fd6" stop-opacity=".22"/></linearGradient><linearGradient id="ridgeShade3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a4430"/><stop offset=".6" stop-color="#3a2b1d"/><stop offset="1" stop-color="#241a12"/></linearGradient></defs><polygon points="0,400 0,250 110,270 190,150 250,225 330,80 405,205 470,140 560,235 650,45 735,200 820,120 905,235 1000,95 1085,215 1175,145 1270,240 1350,175 1440,225 1440,400"/></svg>
       <svg class="hero-ridge hero-ridge-2" viewBox="0 0 1440 400" preserveAspectRatio="none"><polygon points="0,400 0,300 95,285 175,210 255,300 330,180 430,290 520,205 610,300 700,150 790,275 880,210 980,300 1070,200 1165,290 1255,225 1350,300 1440,255 1440,400"/></svg>
       <svg class="hero-ridge hero-ridge-1" viewBox="0 0 1440 400" preserveAspectRatio="none"><polygon points="0,400 0,335 130,320 240,285 360,335 470,275 590,330 700,260 820,325 940,280 1060,335 1180,295 1300,330 1440,300 1440,400"/></svg>
     </div>
@@ -696,9 +696,9 @@
     </div>
   </section>
 
-  <!-- angular divider: about(white) → philosophy(espresso) -->
-  <div class="section-divider" style="background:var(--white);color:#1c1611" aria-hidden="true">
-    <svg viewBox="0 0 1440 72" preserveAspectRatio="none"><polygon points="0,72 0,40 144,56 288,20 432,50 576,14 720,46 864,18 1008,52 1152,24 1296,54 1440,30 1440,72"/></svg>
+  <!-- angular divider: about(white) ridge hangs over philosophy(espresso), whose aurora rises behind the peaks -->
+  <div class="section-divider section-divider--to-dark" style="color:var(--white)" aria-hidden="true">
+    <svg viewBox="0 0 1440 72" preserveAspectRatio="none"><polygon points="0,0 0,40 144,56 288,20 432,50 576,14 720,46 864,18 1008,52 1152,24 1296,54 1440,30 1440,0"/></svg>
   </div>
 
   <!-- ========== PHILOSOPHY ========== -->
@@ -712,9 +712,9 @@
     <canvas class="philosophy-particles" id="philosophy-particles" aria-hidden="true"></canvas>
     <div class="container">
       <div class="philosophy-content">
-        <div class="philosophy-deco-quote" aria-hidden="true">"</div>
+        <div class="philosophy-deco-quote" aria-hidden="true">&#8220;</div>
         <blockquote class="philosophy-quote" data-reveal-words>
-          ViFightには、言葉を超える力がある。その力で、まだ届いていない想いを届ける手助けをする。
+          ViFightには、言葉を超える力がある。 その力で、まだ届いていない想いを届ける手助けをする。
         </blockquote>
         <div class="philosophy-accent-line"></div>
         <p class="philosophy-attr" data-reveal>— ViFight Philosophy</p>
@@ -741,7 +741,7 @@
       </div>
       <div class="voice-grid">
         <div class="voice-card" data-reveal="flip">
-          <div class="voice-quote-mark">"</div>
+          <div class="voice-quote-mark" aria-hidden="true">&#8220;</div>
           <p class="voice-text">
             問い合わせが月0件だったホームページが、リニューアル後は<strong>毎月10件以上の問い合わせが入るように</strong>なりました。こちらの想いをしっかりヒアリングしてくれて、「自分たちの言葉」で伝わるサイトに仕上げてくれました。
           </p>
@@ -1476,9 +1476,9 @@
   </div><!-- /view-contact -->
   </main>
 
-  <!-- angular divider: active view → footer(espresso); transparent top works over both light tabs and the dark home -->
-  <div class="section-divider footer-divider" style="background:transparent;color:#1c1611" aria-hidden="true">
-    <svg viewBox="0 0 1440 72" preserveAspectRatio="none"><polygon points="0,72 0,38 144,54 288,22 432,52 576,16 720,48 864,20 1008,50 1152,26 1296,56 1440,32 1440,72"/></svg>
+  <!-- angular divider: active view → footer(espresso). The ridge is the view's own sky (cream on light tabs, espresso on home via CSS) and the footer aurora rises behind the peaks -->
+  <div class="section-divider section-divider--to-dark footer-divider" style="color:var(--bg)" aria-hidden="true">
+    <svg viewBox="0 0 1440 72" preserveAspectRatio="none"><polygon points="0,0 0,38 144,54 288,22 432,52 576,16 720,48 864,20 1008,50 1152,26 1296,56 1440,32 1440,0"/></svg>
   </div>
 
   <!-- ========== FOOTER ========== -->
@@ -1541,7 +1541,7 @@
     </div>
   </div>
 
-  <script src="assets/js/aurora.js?v=20261005a" defer></script>
-  <script src="assets/js/main.js?v=20261005a"></script>
+  <script src="assets/js/aurora.js?v=20261005b" defer></script>
+  <script src="assets/js/main.js?v=20261005b"></script>
 </body>
 </html>

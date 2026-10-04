@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // parse "x,y x,y ..." into vertices; fix those sitting on the baseline
     const verts = poly.getAttribute('points').trim().split(/\s+/).map(p => {
       const [x, y] = p.split(',').map(Number);
-      return { x, baseY: y, fixed: y >= H * 0.9, phase: Math.random() * Math.PI * 2,
+      return { x, baseY: y, fixed: y >= H * 0.9 || y <= 0, phase: Math.random() * Math.PI * 2,
                amp: ampRange[0] + Math.random() * (ampRange[1] - ampRange[0]),
                speed: speedRange[0] + Math.random() * (speedRange[1] - speedRange[0]) };
     });
@@ -102,11 +102,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const poly = svg.querySelector('polygon');
     if (!poly) return;
     const W = 1440, H = 72;
+    // dividers into dark sections hang the light "sky" from the top edge; their
+    // peaks start a little lower so the undulation (amp up to 10) never lifts one past it
+    const edge = svg.closest('.section-divider--to-dark') ? 0 : H;
+    const lo = edge ? 0.12 : 0.16;
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
     const segs = 8 + Math.floor(Math.random() * 7);
-    let pts = '0,' + H;
-    for (let i = 0; i <= segs; i++) pts += ' ' + Math.round((W / segs) * i) + ',' + (H * (0.12 + Math.random() * 0.62)).toFixed(1);
-    pts += ' ' + W + ',' + H;
+    let pts = '0,' + edge;
+    for (let i = 0; i <= segs; i++) pts += ' ' + Math.round((W / segs) * i) + ',' + (H * (lo + Math.random() * 0.62)).toFixed(1);
+    pts += ' ' + W + ',' + edge;
     poly.setAttribute('points', pts);
     registerRidge(svg, poly, W, H, [3, 10], [0.0005, 0.0016], svg);
   });
@@ -211,6 +215,22 @@ document.addEventListener('DOMContentLoaded', () => {
   // True only while the Home (hero) tab is active. Every other tab sits over
   // light sections, so the header must use its solid / dark-text style there.
   let onHomeView = true;
+  // the scrolled bar also turns night-toned over these on any tab (.over-dark)
+  const headerDarkSecs = [...document.querySelectorAll('.hero, .philosophy, .footer')];
+  function syncHeaderTone() {
+    header.classList.toggle('over-dark', headerDarkSecs.some(s => {
+      const r = darkRect(s);
+      return r.height > 0 && r.top <= 32 && r.bottom >= 32;
+    }));
+  }
+  // a divider leading into a dark section overlaps it with the light ridge band
+  // (negative margin), so the section only reads as dark from halfway down it
+  function darkRect(sec) {
+    const r = sec.getBoundingClientRect();
+    const d = sec.previousElementSibling;
+    const off = d && d.classList.contains('section-divider--to-dark') ? d.offsetHeight * 0.5 : 0;
+    return { top: r.top + off, bottom: r.bottom, left: r.left, right: r.right, width: r.width, height: r.height };
+  }
   const progressBar = document.createElement('div');
   progressBar.style.cssText = 'position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--aurora-green),var(--aurora-teal),var(--aurora-violet));z-index:10001;width:0%;pointer-events:none;';
   document.body.appendChild(progressBar);
@@ -259,11 +279,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const heroScrollCue = document.querySelector('.hero-scroll');
 
+  // Scroll-linked aurora: each canvas brightens as its section nears the middle
+  // of the viewport, from 0.6x up to 1x of its own base (never above the tuned
+  // hero / CTA / philosophy / footer values, which B1/B3 legibility relies on).
+  const auroraScroll = new WeakMap();
+  function updateAuroraIntensity() {
+    if (reduceMotion || !window.ViFightAurora) return;
+    const vh = window.innerHeight;
+    for (const inst of window.ViFightAurora.instances) {
+      let a = auroraScroll.get(inst);
+      if (!a) {
+        a = {
+          host: inst.canvas.closest('[data-aurora-host]') || inst.canvas.parentElement,
+          base: isFinite(inst.baseIntensity) ? inst.baseIntensity : (parseFloat(inst.canvas.getAttribute('data-aurora-intensity')) || 1),
+          last: -1
+        };
+        auroraScroll.set(inst, a);
+      }
+      const r = a.host.getBoundingClientRect();
+      // offscreen or in a hidden tab: setIntensity() would force a draw on a paused canvas
+      if (!r.height || r.bottom <= 0 || r.top >= vh) continue;
+      const off = Math.min(1, Math.abs(r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2));
+      const v = +(a.base * (0.6 + 0.4 * (1 - off * off))).toFixed(3);
+      if (Math.abs(v - a.last) > 0.01) { inst.setIntensity(v); a.last = v; }
+    }
+  }
+
   function onScrollFrame() {
     const scrollY = currentScrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     header.classList.toggle('scrolled', scrollY > 80 || !onHomeView);
     header.classList.toggle('header--night', onHomeView);
+    syncHeaderTone();
     progressBar.style.width = ((scrollY / docHeight) * 100) + '%';
     // back-to-top: show past 600px, ring tracks page progress
     totop.classList.toggle('show', scrollY > 600);
@@ -278,11 +325,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const center = rect.top + rect.height / 2 - window.innerHeight / 2;
       el.style.transform = `translateY(${center * speed}px)`;
     }
+    updateAuroraIntensity();
     // sections shifted under the pointer → refresh dark-cursor rects + state
     computeDarkRects();
     checkDark();
     ticking = false;
   }
+  // restored scroll positions / deep-linked tabs get the right header, cursor and aurora state
+  requestAnimationFrame(onScrollFrame);
+  // tab switches dispatch a resize (showView), so newly shown auroras re-balance too
+  resizeFns.push(updateAuroraIntensity);
 
   if (scrollMarquee) {
     requestAnimationFrame(() => { marqueeWidth = scrollMarquee.scrollWidth / 4; });
@@ -303,10 +355,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (particles.length > 0) {
       ctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
       particles = particles.filter(p => p.life > 0);
+      // aurora-teal trail over dark sections (body class, not isOnDark: that
+      // let is declared further down and mainLoop starts before it)
+      const trailRgb = document.body.classList.contains('on-dark') ? '120,228,190' : '139,115,85';
       for (const p of particles) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(139,115,85,${p.life * 0.25})`;
+        ctx.fillStyle = `rgba(${trailRgb},${p.life * 0.3})`;
         ctx.fill();
         p.x += p.vx; p.y += p.vy; p.life -= 0.05;
       }
@@ -522,6 +577,7 @@ document.addEventListener('DOMContentLoaded', () => {
       onHomeView = (viewId === 'view-home');
       header.classList.toggle('scrolled', window.scrollY > 80 || !onHomeView);
       header.classList.toggle('header--night', onHomeView);
+      syncHeaderTone();
 
       // close the work modal if a tab change happens while it's open
       const wm = document.getElementById('work-modal');
@@ -1304,7 +1360,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // arithmetic test with no per-move getBoundingClientRect / layout read.
   function computeDarkRects() {
     darkRects = darkSections
-      .map(s => s.getBoundingClientRect())
+      .map(darkRect)
       .filter(r => r.width > 0 && r.height > 0);
   }
   function checkDark() {
