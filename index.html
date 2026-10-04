@@ -32,7 +32,7 @@
   <meta name="twitter:image" content="https://vifight.com/assets/images/hero/hero-cover.jpg">
 
   <link rel="preload" as="image" href="assets/images/hero/hero-cover.jpg" fetchpriority="high">
-  <link rel="stylesheet" href="assets/css/style.css?v=20260806e">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261005a">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Interのみ同期（Latin文字・軽量）、Noto Sans JPは非同期で遅延読み込み -->
@@ -283,7 +283,7 @@
 
   <!-- ========== HERO ========== -->
   <div class="view view--home is-active" id="view-home">
-  <section id="hero" class="hero">
+  <section id="hero" class="hero" data-aurora-host>
     <div class="hero-visual" aria-hidden="true">
       <div class="hero-visual-layer hero-visual-base"></div>
       <div class="hero-visual-layer hero-visual-grain"></div>
@@ -304,6 +304,8 @@
       </div>
       <!-- vertical curtain rays — the signature aurora drape -->
       <div class="aurora-curtain"></div>
+      <!-- real-time WebGL aurora (assets/js/aurora.js); the CSS bands above stay as the fallback -->
+      <canvas class="aurora-gl" data-aurora data-aurora-intensity="1.15" data-aurora-fade-start="0.24" data-aurora-fade-end="0.46" data-aurora-seed="1.3"></canvas>
       <!-- interactive aurora: glides/brightens toward the pointer (see main.js) -->
       <canvas class="hero-aurora-interactive" id="hero-aurora-canvas" aria-hidden="true"></canvas>
       <div class="hero-visual-layer hero-visual-streak hero-streak-1"></div>
@@ -591,8 +593,9 @@
   </section>
 
   <!-- ===== HOME · CTA ===== -->
-  <section class="home-section home-cta">
+  <section class="home-section home-cta" data-aurora-host>
     <div class="home-aurora home-aurora--center" aria-hidden="true"></div>
+    <canvas class="aurora-gl" data-aurora data-aurora-intensity="0.85" data-aurora-fade-start="0.24" data-aurora-fade-end="0.5" data-aurora-seed="5.9" aria-hidden="true"></canvas>
     <div class="container">
       <p class="home-cta-eyebrow" data-reveal>無料相談・お見積もり受付中</p>
       <h2 class="home-cta-title" data-reveal>まずは、<span class="aurora-text">無料相談</span>から。</h2>
@@ -699,12 +702,13 @@
   </div>
 
   <!-- ========== PHILOSOPHY ========== -->
-  <section class="section philosophy">
+  <section class="section philosophy" data-aurora-host>
     <div class="philosophy-bg" data-parallax="0.05" aria-hidden="true"></div>
     <div class="philosophy-orb philosophy-orb-1" aria-hidden="true"></div>
     <div class="philosophy-orb philosophy-orb-2" aria-hidden="true"></div>
     <div class="philosophy-aurora" aria-hidden="true"></div>
     <div class="philosophy-aurora-curtain" aria-hidden="true"></div>
+    <canvas class="aurora-gl" data-aurora data-aurora-intensity="0.85" data-aurora-fade-start="0.28" data-aurora-fade-end="0.74" data-aurora-seed="7.7" aria-hidden="true"></canvas>
     <canvas class="philosophy-particles" id="philosophy-particles" aria-hidden="true"></canvas>
     <div class="container">
       <div class="philosophy-content">
@@ -1473,12 +1477,13 @@
   </main>
 
   <!-- angular divider: active view → footer(espresso); transparent top works over both light tabs and the dark home -->
-  <div class="section-divider" style="background:transparent;color:#1c1611" aria-hidden="true">
+  <div class="section-divider footer-divider" style="background:transparent;color:#1c1611" aria-hidden="true">
     <svg viewBox="0 0 1440 72" preserveAspectRatio="none"><polygon points="0,72 0,38 144,54 288,22 432,52 576,16 720,48 864,20 1008,50 1152,26 1296,56 1440,32 1440,72"/></svg>
   </div>
 
   <!-- ========== FOOTER ========== -->
-  <footer class="footer">
+  <footer class="footer" data-aurora-host>
+    <canvas class="aurora-gl" data-aurora data-aurora-intensity="0.6" data-aurora-fade-start="0.13" data-aurora-fade-end="0.32" data-aurora-seed="4.2" aria-hidden="true"></canvas>
     <div class="float-shapes float-shapes--dark" aria-hidden="true">
       <div class="float-shape tri s2"></div>
       <div class="float-shape diamond s3"></div>
@@ -1536,6 +1541,7 @@
     </div>
   </div>
 
-  <script src="assets/js/main.js?v=20260806e"></script>
+  <script src="assets/js/aurora.js?v=20261005a" defer></script>
+  <script src="assets/js/main.js?v=20261005a"></script>
 </body>
 </html>

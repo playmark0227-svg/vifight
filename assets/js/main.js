@@ -263,6 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollY = currentScrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     header.classList.toggle('scrolled', scrollY > 80 || !onHomeView);
+    header.classList.toggle('header--night', onHomeView);
     progressBar.style.width = ((scrollY / docHeight) * 100) + '%';
     // back-to-top: show past 600px, ring tracks page progress
     totop.classList.toggle('show', scrollY > 600);
@@ -520,6 +521,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // header: solid / dark-text style on every tab except Home (hero)
       onHomeView = (viewId === 'view-home');
       header.classList.toggle('scrolled', window.scrollY > 80 || !onHomeView);
+      header.classList.toggle('header--night', onHomeView);
 
       // close the work modal if a tab change happens while it's open
       const wm = document.getElementById('work-modal');
@@ -962,6 +964,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gRidges[i].style.transform = `translate(${(cgx * f).toFixed(1)}px, ${(cgy * f * 0.4).toFixed(1)}px)`;
       }
       auroraWind = cgx * 1.4;   // tilt feeds the aurora canvas drift
+      if (window.ViFightAurora) window.ViFightAurora.setPointerAll(-cgx, -cgy);
       if (Math.abs(tgx - cgx) > 0.001 || Math.abs(tgy - cgy) > 0.001) {
         requestAnimationFrame(gyroLoop);
       } else {
@@ -1271,6 +1274,7 @@ document.addEventListener('DOMContentLoaded', () => {
       for (const l of plxLayers) {
         l.el.style.transform = `translate(${(nx * l.fx).toFixed(1)}px, ${(ny * l.fy).toFixed(1)}px)`;
       }
+      if (window.ViFightAurora) window.ViFightAurora.setPointerAll(-nx, -ny);
       const settled = Math.abs(tiltX - currentX) < 0.01 && Math.abs(tiltY - currentY) < 0.01 &&
                       Math.abs(tiltX) < 0.01 && Math.abs(tiltY) < 0.01;
       if (settled) { tiltRunning = false; return; }
