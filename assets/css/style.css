@@ -1496,7 +1496,10 @@ body.on-dark .cursor-follower.view::after {
   pointer-events: none;
   z-index: 0;
 }
-@media print { .philosophy::after { display: none; } }
+/* paints over the light section its hanging divider overlaps; the hard shadow fills
+   its fractional bottom row, which would otherwise show the cream below as a hairline */
+.philosophy { z-index: 1; box-shadow: 0 3px 0 #15100b; }
+@media print { .philosophy::after { display: none; } .philosophy { box-shadow: none; } }
 
 .philosophy-bg {
   position: absolute;
@@ -2837,10 +2840,10 @@ body.on-dark .cursor-follower.view::after {
    dark section slides up beneath it so its own aurora glows up to the peaks. */
 .section-divider--to-dark,
 .section-divider--hang {
-  /* a 2px strip of the sky colour seals the anti-aliased top edge, which would
-     otherwise let the dark section through as a hairline */
-  background: linear-gradient(currentColor, currentColor) top / 100% 2px no-repeat;
-  margin-bottom: calc(-1 * clamp(40px, 5vw, 72px));
+  /* the next section starts 3px down, under the opaque strip, so the divider's
+     anti-aliased top edge only ever sits over the same-coloured section above it */
+  background: linear-gradient(currentColor, currentColor) top / 100% 3px no-repeat;
+  margin-bottom: calc(-1 * clamp(40px, 5vw, 72px) + 3px);
 }
 /* dark -> light uses the same hanging build (a filled band + ridge drawn in one
    layer leaves a dark hairline along its bottom edge); the light section's
