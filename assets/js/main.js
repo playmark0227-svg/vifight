@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const W = 1440, H = 72;
     // dividers into dark sections hang the light "sky" from the top edge; their
     // peaks start a little lower so the undulation (amp up to 10) never lifts one past it
-    const edge = svg.closest('.section-divider--to-dark') ? 0 : H;
+    const edge = svg.closest('.section-divider--to-dark, .section-divider--hang') ? 0 : H;
     const lo = edge ? 0.12 : 0.16;
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
     const segs = 8 + Math.floor(Math.random() * 7);

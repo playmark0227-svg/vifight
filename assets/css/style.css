@@ -2813,6 +2813,9 @@ body.on-dark .cursor-follower.view::after {
   position: relative;
   width: 100%;
   height: clamp(40px, 5vw, 72px);
+  /* tuck 1px under the section above (same colour): at fractional offsets the
+     two anti-aliased edges otherwise let the cream page show through as a hairline */
+  margin-top: -1px;
   line-height: 0;
   overflow: hidden;
   z-index: 2;
@@ -2832,12 +2835,17 @@ body.on-dark .cursor-follower.view::after {
 /* Dividers INTO dark sections invert: the polygon is the light section's sky
    hanging from the top edge, the band under the ridge is transparent, and the
    dark section slides up beneath it so its own aurora glows up to the peaks. */
-.section-divider--to-dark {
+.section-divider--to-dark,
+.section-divider--hang {
   /* a 2px strip of the sky colour seals the anti-aliased top edge, which would
      otherwise let the dark section through as a hairline */
   background: linear-gradient(currentColor, currentColor) top / 100% 2px no-repeat;
   margin-bottom: calc(-1 * clamp(40px, 5vw, 72px));
 }
+/* dark -> light uses the same hanging build (a filled band + ridge drawn in one
+   layer leaves a dark hairline along its bottom edge); the light section's
+   transparent top border replaces the height the overlap takes */
+.section-divider--hang + .section { border-top: clamp(40px, 5vw, 72px) solid transparent; }
 .section-divider--to-dark + .philosophy {
   padding-top: calc(clamp(120px, 18vw, 260px) + clamp(40px, 5vw, 72px));
 }
