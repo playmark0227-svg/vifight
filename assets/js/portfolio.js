@@ -1,7 +1,7 @@
 /* =============================================================
    ViFight — ポートフォリオ（案件一覧）
    ============================================================= */
-import { PROJECTS, CATEGORIES } from './portfolio-data.js?v=20260806a';
+import { PROJECTS, CATEGORIES } from './portfolio-data.js?v=20261103a';
 
 const $ = (id) => document.getElementById(id);
 const gridEl = $('pf-grid');

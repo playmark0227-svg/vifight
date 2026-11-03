@@ -64,9 +64,9 @@
     '  return v * 1.142857;',
     '}',
     'vec3 ramp(float h) {',
-    '  vec3 c = mix(vec3(0.36, 0.92, 0.66), vec3(0.31, 0.84, 0.82), smoothstep(0.10, 0.45, h));',
-    '  c = mix(c, vec3(0.60, 0.42, 1.00), smoothstep(0.40, 0.80, h));',
-    '  return mix(c, vec3(0.75, 0.42, 0.85), smoothstep(0.75, 1.0, h));',
+    '  vec3 c = mix(vec3(0.30, 0.95, 0.68), vec3(0.30, 0.66, 1.00), smoothstep(0.10, 0.42, h));',
+    '  c = mix(c, vec3(0.62, 0.42, 1.00), smoothstep(0.38, 0.72, h));',
+    '  return mix(c, vec3(1.00, 0.46, 0.80), smoothstep(0.70, 1.0, h));',
     '}',
 
     // shape: x = lower-edge y (from top), y = ray height, z = fold amplitude, w = fold frequency
@@ -88,7 +88,7 @@
     '  float seg = smoothstep(0.12, 0.55, vnoise1(p.x * 0.6 + t * 0.011 + s * 5.3));',
     '  float bundle = vnoise1(rx * 9.0 - t * 0.08 + s * 2.3);',
     '  float env = (0.5 + 0.8 * pulse * pulse) * (0.45 + 1.1 * bundle * bundle) * seg * look.x * (1.0 + 0.6 * smoothstep(0.15, 1.4, slope));',
-    '  vec3 col = vec3(0.20, 0.80, 0.62) * (exp(-abs(d0 - shape.y * 0.3) * 6.0) * env * 0.05);',
+    '  vec3 col = vec3(0.30, 0.55, 0.95) * (exp(-abs(d0 - shape.y * 0.3) * 6.0) * env * 0.05);',
     // well below the lower edge only the soft glow remains; skip the ray work
     '  if (d0 < -0.09) return col;',
 
@@ -108,7 +108,8 @@
     '  float tail = exp(-dp / (shape.y * (0.35 + 1.3 * r1)));',
     '  float prof = exp(min(d, 0.0) * 140.0) * (1.3 * exp(-dp * 22.0) + 0.6 * tail);',
     '  float shade = mix(1.0, rays, mix(0.3, 0.9, smoothstep(0.0, 0.3, h)));',
-    '  col += ramp(h) * (prof * shade * env);',
+    '  float hx = 0.5 + 0.5 * sin(p.x * 1.9 + s * 1.7 + t * 0.025);',
+    '  col += ramp(clamp(h * 0.55 + hx * 0.75, 0.0, 1.0)) * (prof * shade * env);',
     '  col += vec3(1.0, 0.30, 0.55) * (exp(-abs(d + 0.016) * 140.0) * look.z * (0.35 + 0.65 * rays) * env * 0.5);',
     '  return col;',
     '}',

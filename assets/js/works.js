@@ -11,9 +11,7 @@ const SDK = 'https://www.gstatic.com/firebasejs/10.12.2';
 const BASE_WORKS = [
   { image: 'assets/images/works/portal-job.jpg',      category: 'ポータルサイト', title: '求人ポータルサイト構築・運営', meta: '2024 — 継続中' },
   { image: 'assets/images/works/print-company.jpg',   category: 'HP制作',        title: '印刷会社コーポレートサイト',   meta: '2024 — 問い合わせ0→月10件' },
-  { image: 'assets/images/works/restaurant-movie.jpg', category: '映像制作',      title: '飲食店ブランディング映像',     meta: '2024' },
   { image: 'assets/images/works/restaurant-site.jpg',  category: 'HP制作',        title: '飲食店コーポレートサイト',     meta: '2025' },
-  { image: 'assets/images/works/drone-aerial.jpg',     category: '映像制作',      title: '空撮プロモーション映像',       meta: '2025' },
   { image: 'assets/images/works/portal-local.jpg',     category: 'ポータルサイト', title: '地域情報ポータル開発・運営',   meta: '2025 — 継続中' },
 ];
 

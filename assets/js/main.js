@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // light sections, so the header must use its solid / dark-text style there.
   let onHomeView = true;
   // the scrolled bar also turns night-toned over these on any tab (.over-dark)
-  const headerDarkSecs = [...document.querySelectorAll('.hero, .philosophy, .footer')];
+  const headerDarkSecs = [...document.querySelectorAll('.hero, .bg-dark')];
   function syncHeaderTone() {
     header.classList.toggle('over-dark', headerDarkSecs.some(s => {
       const r = darkRect(s);
@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollY = currentScrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     header.classList.toggle('scrolled', scrollY > 80 || !onHomeView);
-    header.classList.toggle('header--night', onHomeView);
+    header.classList.toggle('header--night', false);
     syncHeaderTone();
     progressBar.style.width = ((scrollY / docHeight) * 100) + '%';
     // back-to-top: show past 600px, ring tracks page progress
@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
       particles = particles.filter(p => p.life > 0);
       // aurora-teal trail over dark sections (body class, not isOnDark: that
       // let is declared further down and mainLoop starts before it)
-      const trailRgb = document.body.classList.contains('on-dark') ? '120,228,190' : '139,115,85';
+      const trailRgb = document.body.classList.contains('on-dark') ? '150,200,255' : '120,110,230';
       for (const p of particles) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
@@ -576,16 +576,12 @@ document.addEventListener('DOMContentLoaded', () => {
       // header: solid / dark-text style on every tab except Home (hero)
       onHomeView = (viewId === 'view-home');
       header.classList.toggle('scrolled', window.scrollY > 80 || !onHomeView);
-      header.classList.toggle('header--night', onHomeView);
+      header.classList.toggle('header--night', false);
       syncHeaderTone();
 
       // close the work modal if a tab change happens while it's open
       const wm = document.getElementById('work-modal');
-      if (wm && wm.classList.contains('active')) {
-        wm.classList.remove('active');
-        wm.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('modal-open');
-      }
+      if (wm && wm.classList.contains('active')) wm.querySelector('[data-modal-close]').click();
 
       // Let the hero keep its scripted first-load entrance; for every other
       // transition, jump to top, bloom the content in, and re-measure canvases.
@@ -752,12 +748,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         hctx.beginPath();
         hctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        hctx.fillStyle = `rgba(224, 200, 165, ${a})`;
+        hctx.fillStyle = `rgba(225, 235, 255, ${a})`;
         hctx.fill();
 
         hctx.beginPath();
         hctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
-        hctx.fillStyle = `rgba(184, 148, 106, ${a * 0.15})`;
+        hctx.fillStyle = `rgba(160, 170, 255, ${a * 0.15})`;
         hctx.fill();
       }
 
@@ -829,11 +825,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Pre-render one soft radial-glow sprite per aurora hue — far cheaper than
     // rebuilding a gradient for every wisp on every frame.
     const palette = [
-      [88, 240, 188],   // emerald
-      [120, 232, 214],  // teal
-      [150, 212, 232],  // ice blue
-      [196, 142, 228],  // violet
-      [236, 130, 200]   // magenta
+      [80, 236, 180],   // emerald
+      [86, 190, 255],   // sky blue
+      [110, 130, 255],  // blue
+      [168, 112, 255],  // violet
+      [255, 120, 200]   // pink
     ];
     function makeGlowSprite(col) {
       const s = document.createElement('canvas');
@@ -1087,7 +1083,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function build() {
       const w = canvas.width, h = canvas.height;
       const cols = [
-        [80, 240, 185], [120, 232, 216], [150, 205, 235], [196, 140, 228], [236, 132, 200]
+        [80, 236, 180], [86, 190, 255], [110, 130, 255], [168, 112, 255], [255, 120, 200]
       ];
       bands = [];
       const n = reduceMotion ? 2 : 4;
@@ -1193,9 +1189,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // close work modal on Escape
       const wm = document.getElementById('work-modal');
       if (e.key === 'Escape' && wm && wm.classList.contains('active')) {
-        wm.classList.remove('active');
-        wm.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('modal-open');
+        wm.querySelector('[data-modal-close]').click();
         return;
       }
       // never hijack typing in form fields (e.g. the contact form)
@@ -1267,11 +1261,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         phCtx.beginPath();
         phCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        phCtx.fillStyle = `rgba(224, 200, 165, ${a})`;
+        phCtx.fillStyle = `rgba(120, 110, 220, ${a})`;
         phCtx.fill();
         phCtx.beginPath();
         phCtx.arc(p.x, p.y, p.r * 2.5, 0, Math.PI * 2);
-        phCtx.fillStyle = `rgba(184, 148, 106, ${a * 0.12})`;
+        phCtx.fillStyle = `rgba(80, 180, 255, ${a * 0.12})`;
         phCtx.fill();
       }
       requestAnimationFrame(drawPhParticles);
@@ -1297,7 +1291,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Depth-parallax layers: nearer layers travel further with the pointer
     const plxLayers = [
-      { el: document.querySelector('.hero-ridge-1'), fx: 26, fy: 12 },
+      { el: document.querySelector('.hero-map'),     fx: 12, fy: 6 },
       { el: document.querySelector('.hero-ridge-2'), fx: 16, fy: 8 },
       { el: document.querySelector('.hero-ridge-3'), fx: 9,  fy: 5 },
       { el: document.querySelector('.hero-aurora'),  fx: -14, fy: -7 },
@@ -1351,7 +1345,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Switch cursor to white when mouse is hovering over a dark-background section.
   // Reuses mouseX / mouseY from CUSTOM CURSOR section above. Any section that
   // sits on a dark background should match here (add .bg-dark to future ones).
-  const darkSections = [...document.querySelectorAll('.hero, .philosophy, .footer, .home-section, .bg-dark')];
+  const darkSections = [...document.querySelectorAll('.hero, .bg-dark')];
   let darkRects = [];
   let isOnDark = false;
 
@@ -1443,7 +1437,9 @@ document.addEventListener('DOMContentLoaded', () => {
       year: '2026',
       desc: '写真と30秒動画で求人を見て、スワイプで応募する求人マッチングアプリ。相互マッチからチャット、ビデオ面接、AIによる面接の振り返りまでをアプリ1つで完結させました。LIFFとMessaging APIを2チャネル構成で連携し、LINEからのプッシュ通知も実現しています。',
       meta: { Service: 'Webアプリ開発', Stack: 'Next.js / Firebase / LINE LIFF', Point: 'ビデオ面接＋AI分析レポート' },
-      img: 'assets/images/portfolio/swiply.jpg'
+      img: 'assets/images/portfolio/swiply.jpg',
+      url: 'https://playmark0227-svg.github.io/swiply/',
+      full: null
     },
     '2': {
       cat: 'ECサイト',
@@ -1452,7 +1448,9 @@ document.addEventListener('DOMContentLoaded', () => {
       year: '2026',
       desc: '札幌・琴似の古着屋の公式サイト。店舗紹介とブログ、Stripe決済のオンラインストア、店主がスマホで運用できる管理画面までを一体で構築しました。古着＝全商品1点物のため、決済時に商品を30分ホールドして二重販売を防ぐ仕組みを組んでいます。',
       meta: { Service: 'ECサイト構築', Stack: 'Firebase / Cloud Functions / Stripe', Point: '1点物の二重販売を防ぐ在庫設計' },
-      img: 'assets/images/portfolio/grit.jpg'
+      img: 'assets/images/portfolio/grit.jpg',
+      url: 'https://playmark0227-svg.github.io/grit/',
+      full: 'assets/images/works-full/grit.webp'
     },
     '3': {
       cat: 'Webアプリ',
@@ -1461,7 +1459,9 @@ document.addEventListener('DOMContentLoaded', () => {
       year: '2026',
       desc: '北海道専門のAIプランナーと対話しながら旅程を組み立てるアプリ。地図・チャット・プランナーの3画面が連動し、行き先選びからプラン確定・共有まで完結します。AIの提案を構造化データで受け取ることで、確実に地図と連動させました。',
       meta: { Service: 'Webアプリ開発', Stack: 'Claude API / Cloudflare Workers / Leaflet', Point: 'AI応答のストリーミング表示' },
-      img: 'assets/images/portfolio/hokkaido.jpg'
+      img: 'assets/images/portfolio/hokkaido.jpg',
+      url: 'https://playmark0227-svg.github.io/hokkaido/',
+      full: null
     },
     '4': {
       cat: 'コーポレートサイト',
@@ -1470,7 +1470,9 @@ document.addEventListener('DOMContentLoaded', () => {
       year: '2026',
       desc: 'ネイル・エステ・アイ・ピラティス・ドッグサロン・バーを展開する複合サロンのブランドサイト。8つのブランドを1つの世界観の下にまとめ、各サービスの詳細ページへ送客します。バーのページだけ配色をナイトモードに切り替え、ブランドごとの空気感を1サイトで両立させました。',
       meta: { Service: 'ブランドサイト制作', Scope: 'ブランド別 7ページ構成', Point: 'Instagram最新投稿の自動掲載' },
-      img: 'assets/images/portfolio/shogosan.jpg'
+      img: 'assets/images/portfolio/shogosan.jpg',
+      url: 'https://playmark0227-svg.github.io/shogosan/',
+      full: 'assets/images/works-full/shogosan.webp'
     },
     '5': {
       cat: 'コーポレートサイト',
@@ -1479,7 +1481,9 @@ document.addEventListener('DOMContentLoaded', () => {
       year: '2026',
       desc: 'イベントの企画・運営とコンサルティングを行う会社の公式サイト。3つのコミュニティと全道の会場網を紹介するマルチページ構成です。会場情報をデータファイルに外出しし、追記するだけで地図のピンと一覧の両方が増える設計にしました。',
       meta: { Service: 'コーポレートサイト制作', Scope: 'トップ＋事業別LP 4ページ', Point: 'データ駆動の北海道会場マップ' },
-      img: 'assets/images/portfolio/yolo.jpg'
+      img: 'assets/images/portfolio/yolo.jpg',
+      url: 'https://playmark0227-svg.github.io/yolo-hp/',
+      full: 'assets/images/works-full/yolo.webp'
     },
     '6': {
       cat: '業務ツール',
@@ -1488,7 +1492,9 @@ document.addEventListener('DOMContentLoaded', () => {
       year: '2026',
       desc: '自社の商材を入力すると、AIが理想の顧客像を組み立て、ウェブ検索で実在企業を発見。各社のホームページをAIが実際に読み込んで、購入適合度を100点満点で採点する営業支援ツールです。点数の根拠まで提示するので、なぜその企業なのかが分かります。',
       meta: { Service: '業務ツール開発', Stack: 'Claude API / Cloudflare Workers / Brave Search', Point: '20種以上の購買シグナルで加点' },
-      img: 'assets/images/portfolio/tell.jpg'
+      img: 'assets/images/portfolio/tell.jpg',
+      url: 'https://playmark0227-svg.github.io/Tell/',
+      full: null
     },
     '7': {
       cat: 'コーポレートサイト',
@@ -1497,87 +1503,147 @@ document.addEventListener('DOMContentLoaded', () => {
       year: '2026',
       desc: '北海道旭川で昭和二十七年創業の木材店のコーポレートサイト。道産銘木の取り扱いと、木と歩んだ70年の理念を、設計者や工務店に向けて静かに伝えます。アニメーションを意図的に最小限にし、余白と速度で老舗の落ち着きを表現しました。',
       meta: { Service: 'コーポレートサイト制作', Scope: '設計 / デザイン / 実装', Point: '明朝体と文字組みで品格を表現' },
-      img: 'assets/images/portfolio/marukou.jpg'
+      img: 'assets/images/portfolio/marukou.jpg',
+      url: 'https://playmark0227-svg.github.io/marukou/',
+      full: 'assets/images/works-full/marukou.webp'
     }
   };
 
   const workModal = document.getElementById('work-modal');
   if (workModal) {
-    const modalCat = document.getElementById('work-modal-cat');
-    const modalTitle = document.getElementById('work-modal-title');
-    const modalYear = document.getElementById('work-modal-year');
-    const modalDesc = document.getElementById('work-modal-desc');
-    const modalLabel = document.getElementById('work-modal-label');
-    const modalMeta = document.getElementById('work-modal-meta');
-    const modalImg = document.getElementById('work-modal-img');
-    let modalLastFocus = null;
+    const $ = (id) => document.getElementById(id);
+    const modalCat = $('work-modal-cat'), modalTitle = $('work-modal-title'), modalYear = $('work-modal-year');
+    const modalDesc = $('work-modal-desc'), modalMeta = $('work-modal-meta');
+    const design = $('wm-design'), shot = $('wm-shot'), live = $('wm-live'), frame = $('wm-frame'), iframe = $('wm-iframe');
+    const urlEl = $('wm-url'), openLink = $('wm-open'), hint = $('wm-hint');
+    const tabs = workModal.querySelectorAll('[data-wm-mode]');
+    const devicesBox = workModal.querySelector('.wm-devices');
+    const devices = workModal.querySelectorAll('[data-wm-device]');
+    let current = null, mode = 'design', device = 'pc', modalLastFocus = null;
+
+    // ---- design view: the full-page capture glides down by itself ----
+    let auto = false, rafId = 0, lastT = 0, holdUntil = 0, pos = 0;
+    const SPEED = 70; // px per second
+    const stepScroll = (t) => {
+      if (!auto) return;
+      rafId = requestAnimationFrame(stepScroll);
+      const dt = lastT ? Math.min(0.05, (t - lastT) / 1000) : 0;
+      lastT = t;
+      if (t < holdUntil) { pos = design.scrollTop; return; }
+      const max = design.scrollHeight - design.clientHeight;
+      if (max <= 0) return;
+      pos += SPEED * dt;
+      if (pos >= max) { pos = max; design.scrollTop = max; holdUntil = t + 1800; setTimeout(() => { if (auto) { design.scrollTo({ top: 0, behavior: 'smooth' }); pos = 0; holdUntil = performance.now() + 1600; } }, 1800); return; }
+      design.scrollTop = pos;
+    };
+    const startAuto = (delay) => {
+      if (reduceMotion || !current || !current.full) return;
+      auto = true; lastT = 0; pos = design.scrollTop; holdUntil = performance.now() + (delay || 0);
+      cancelAnimationFrame(rafId); rafId = requestAnimationFrame(stepScroll);
+    };
+    const stopAuto = () => { auto = false; cancelAnimationFrame(rafId); };
+    const pauseAuto = () => { if (auto) holdUntil = performance.now() + 2600; };
+    design.addEventListener('mouseenter', () => { if (auto) holdUntil = Infinity; });
+    design.addEventListener('mouseleave', () => { if (auto) holdUntil = performance.now() + 900; });
+    ['wheel', 'touchstart', 'keydown'].forEach(ev => design.addEventListener(ev, () => {
+      if (!auto) return;
+      holdUntil = design.matches(':hover') ? Infinity : performance.now() + 2600;
+    }, { passive: true }));
+
+    // ---- live view: the real site in an iframe, scaled into a PC or phone frame ----
+    const SIZES = { pc: [1440, 900], sp: [390, 844] };
+    const fitFrame = () => {
+      if (mode !== 'live') return;
+      const [w, h] = SIZES[device];
+      const box = live.getBoundingClientRect();
+      const pad = device === 'sp' ? 24 : 0;
+      const sc = device === 'pc' ? box.width / w : Math.min((box.height - pad * 2) / h, (box.width - pad * 2) / w);
+      frame.style.width = w + 'px';
+      frame.style.height = (device === 'pc' ? box.height / sc : h) + 'px';
+      frame.style.transform = `scale(${sc})`;
+      frame.style.left = device === 'pc' ? '0px' : ((box.width - w * sc) / 2) + 'px';
+      frame.style.top = device === 'pc' ? '0px' : ((box.height - h * sc) / 2) + 'px';
+    };
+    const setDevice = (d) => {
+      device = d;
+      devices.forEach(b => { const on = b.dataset.wmDevice === d; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', on); });
+      live.classList.toggle('is-sp', d === 'sp');
+      fitFrame();
+    };
+    const setMode = (m) => {
+      mode = m;
+      tabs.forEach(b => { const on = b.dataset.wmMode === m; b.classList.toggle('is-on', on); b.setAttribute('aria-selected', on); });
+      const isLive = m === 'live';
+      design.hidden = isLive; live.hidden = !isLive; devicesBox.hidden = !isLive;
+      if (isLive) {
+        stopAuto();
+        if (iframe.getAttribute('src') !== current.url) iframe.src = current.url;
+        hint.textContent = '公開中のサイトをそのまま表示しています。クリックやスクロールで操作できます。';
+        requestAnimationFrame(fitFrame);
+      } else {
+        hint.textContent = current.full ? '自動でスクロールします。マウスを乗せると止まり、自由にスクロールできます。' : 'アプリの画面です。「実際に触ってみる」で操作できます。';
+        startAuto(600);
+      }
+    };
+    tabs.forEach(b => b.addEventListener('click', () => setMode(b.dataset.wmMode)));
+    devices.forEach(b => b.addEventListener('click', () => setDevice(b.dataset.wmDevice)));
+    window.addEventListener('resize', fitFrame);
 
     const openWorkModal = (id) => {
       const data = workData[id];
       if (!data) return;
+      current = data;
       modalCat.textContent = data.cat;
       modalTitle.textContent = data.title;
       modalYear.textContent = data.year;
       modalDesc.textContent = data.desc;
-      // ラベルは実スクリーンショットが無い場合の代替表示。画像がある案件では隠す。
-      modalLabel.textContent = data.label || '';
-      modalLabel.hidden = !!data.img;
-      if (modalImg) {
-        if (data.img) {
-          modalImg.src = data.img;
-          modalImg.alt = data.title;
-          modalImg.style.display = '';
-        } else {
-          modalImg.style.display = 'none';
-        }
-      }
       modalMeta.innerHTML = '';
       for (const [k, v] of Object.entries(data.meta)) {
         const div = document.createElement('div');
-        const dt = document.createElement('dt');
-        dt.textContent = k;
-        const dd = document.createElement('dd');
-        dd.textContent = v;
-        div.appendChild(dt);
-        div.appendChild(dd);
+        const dt = document.createElement('dt'); dt.textContent = k;
+        const dd = document.createElement('dd'); dd.textContent = v;
+        div.append(dt, dd);
         modalMeta.appendChild(div);
       }
+      urlEl.textContent = data.url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+      openLink.href = data.url;
+      design.classList.toggle('is-app', !data.full);
+      shot.src = data.full || data.img;
+      shot.alt = data.title + ' のデザイン';
+      design.scrollTop = 0;
+      iframe.removeAttribute('src');
+      setDevice(window.innerWidth < 700 ? 'sp' : 'pc');
       workModal.classList.add('active');
       workModal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('modal-open');
-      // move keyboard focus into the dialog; remember where it came from
+      setMode('design');
       modalLastFocus = document.activeElement;
       const closeBtn = workModal.querySelector('.work-modal-close');
       if (closeBtn) closeBtn.focus();
     };
 
     const closeWorkModal = () => {
+      stopAuto();
+      iframe.removeAttribute('src');
       workModal.classList.remove('active');
       workModal.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('modal-open');
-      // hand keyboard focus back to the card that opened the dialog
       if (modalLastFocus && modalLastFocus.focus) modalLastFocus.focus();
       modalLastFocus = null;
     };
 
     document.querySelectorAll('.work-item[data-work-id]').forEach(item => {
       item.style.cursor = 'pointer';
-      // keyboard access: cards act as buttons that open the detail dialog
       item.setAttribute('tabindex', '0');
       item.setAttribute('role', 'button');
       item.setAttribute('aria-haspopup', 'dialog');
       item.addEventListener('click', () => openWorkModal(item.getAttribute('data-work-id')));
       item.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          openWorkModal(item.getAttribute('data-work-id'));
-        }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openWorkModal(item.getAttribute('data-work-id')); }
       });
     });
 
-    workModal.querySelectorAll('[data-modal-close]').forEach(el => {
-      el.addEventListener('click', closeWorkModal);
-    });
+    workModal.querySelectorAll('[data-modal-close]').forEach(el => el.addEventListener('click', closeWorkModal));
   }
 
   // (The Konami code now triggers the full Aurora Storm easter egg — see the
