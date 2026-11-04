@@ -577,41 +577,38 @@ body.modal-open .totop, body.modal-open #totop { opacity: 0; pointer-events: non
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 4px 16px rgba(4, 6, 20, 0.7));
 }
-.cc-outline {
+/* 「北海道」: a map pin drops onto 道, ripples spread, the word lights up */
+.cc-pin {
   position: absolute;
-  left: 50%; top: 50%;
-  width: 2.7em; height: auto;
-  transform: translate(-50%, -44%);
+  left: 83%; top: -0.42em;
+  width: 0.34em; height: auto;
+  margin-left: -0.17em;
+  z-index: 3;
+  opacity: 0;
   overflow: visible;
   pointer-events: none;
-  z-index: 0;
+  filter: drop-shadow(0 6px 10px rgba(4, 6, 20, 0.6));
+}
+.cc-ring {
+  position: absolute;
+  left: 83%; top: -0.02em;
+  width: 1.4em; height: 0.42em;
+  margin-left: -0.7em;
+  border-radius: 50%;
+  border: 0.03em solid #9af8da;
   opacity: 0;
+  z-index: 2;
+  pointer-events: none;
 }
-.cc-outline path {
-  fill: none;
-  stroke: url(#ccGrad);
-  stroke-width: 9;
-  stroke-opacity: 0.55;
-  stroke-linejoin: round;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  filter: drop-shadow(0 0 10px rgba(130, 150, 255, 0.7));
-}
-.hero-title.hk-draw .hero-line { overflow: visible; }
-.hero-title.hk-draw .cc-outline { opacity: 1; }
-.hero-title.hk-draw .cc-outline path { animation: hkDraw 2.4s ease-in-out forwards; }
-@keyframes hkDraw { to { stroke-dashoffset: 0; } }
-.hero-title .cc-hk::after {
-  content: '';
-  position: absolute; left: 0; right: 0; bottom: -0.08em;
-  height: 0.06em;
-  border-radius: 1em;
-  background: linear-gradient(90deg, #6ff2c6, #8f8bff, #ff8fcf);
-  transform: scaleX(0);
-  transform-origin: left;
-}
-.hero-title.hk-draw .cc-hk::after { animation: hkLine 0.8s 2.1s ease-out forwards; }
-@keyframes hkLine { to { transform: scaleX(1); } }
+.cc-ring.r2 { border-color: #b6b0ff; }
+.hero-title .hkw { filter: brightness(0.45) saturate(0.6) drop-shadow(0 4px 18px rgba(4, 6, 20, 0.6)); transition: filter 0.8s ease-out; }
+.hero-title.hk-pin .hero-line { overflow: visible; }
+.hero-title.hk-pin .cc-pin { animation: hkDrop 0.75s 0.25s cubic-bezier(0.3, 1.5, 0.55, 1) forwards; }
+@keyframes hkDrop { 0% { opacity: 0; transform: translateY(-1.4em); } 40% { opacity: 1; } 100% { opacity: 1; transform: none; } }
+.hero-title.hk-pin .cc-ring { animation: hkRing 1s 1s ease-out forwards; }
+.hero-title.hk-pin .cc-ring.r2 { animation-delay: 1.25s; }
+@keyframes hkRing { 0% { opacity: 0.9; transform: scale(0.2); } 100% { opacity: 0; transform: scale(2.6); } }
+.hero-title.hk-lit .hkw { filter: drop-shadow(0 4px 18px rgba(4, 6, 20, 0.6)) drop-shadow(0 0 22px rgba(130, 160, 255, 0.45)); }
 .hero-title--jp .hero-line > span { white-space: nowrap; }
 @media (min-width: 601px) {
   .hero-title--jp .hero-line { font-size: clamp(26px, 6.4vw, 88px); }
@@ -621,9 +618,9 @@ body.modal-open .totop, body.modal-open #totop { opacity: 0; pointer-events: non
   .hero-title--jp .hero-line:first-child { font-size: 9.5vw; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-title .cc-outline { opacity: 1; }
-  .hero-title .cc-outline path { stroke-dashoffset: 0; animation: none; }
-  .hero-title .cc-hk::after { transform: none; animation: none; }
+  .hero-title .cc-pin { opacity: 1; animation: none !important; }
+  .hero-title .cc-ring { display: none; }
+  .hero-title .hkw { filter: drop-shadow(0 4px 18px rgba(4, 6, 20, 0.6)); }
 }
 /* wider scrim so the headline stays crisp over the larger map */
 .hero-content::before { right: -12%; background: radial-gradient(ellipse 62% 56% at 38% 50%, rgba(5, 8, 24, 0.5) 0%, rgba(5, 8, 24, 0.22) 50%, transparent 78%); }
