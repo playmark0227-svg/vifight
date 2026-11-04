@@ -18,6 +18,7 @@
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var STEP = 11;
   var dots = [];
+  var waves = [], lastT = 0;
   (function buildDots() {
     var off = document.createElement('canvas');
     off.width = VW; off.height = VH;
@@ -56,6 +57,8 @@
 
   function draw(time) {
     var t = time / 1000;
+    lastT = t;
+    waves = waves.filter(function (w) { return t - w.t0 < 3.4; });
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     var rad = Math.max(1, 3.1 * scale);
     // a slow diagonal light sweep runs across the island
@@ -65,6 +68,17 @@
       var tw = reduceMotion ? 0.8 : 0.62 + 0.38 * Math.sin(t * 1.3 + d.ph);
       var dist = Math.abs(d.t - sweep);
       var boost = reduceMotion ? 0 : Math.max(0, 1 - dist * 7);
+      for (var w = 0; w < waves.length; w++) {
+        var wv = waves[w], age = t - wv.t0;
+        if (wv.kind === 'sweep') {
+          var front = age * 0.55 - 0.1;               // west → east across t (0..1)
+          boost += Math.max(0, 1 - Math.abs(d.t - front) * 9) * Math.max(0, 1 - age / 3.2);
+        } else {
+          var dd = Math.sqrt((d.x - wv.x) * (d.x - wv.x) + (d.y - wv.y) * (d.y - wv.y));
+          boost += Math.max(0, 1 - Math.abs(dd - age * 520) / 70) * Math.max(0, 1 - age / 2.6);
+        }
+      }
+      if (boost > 1.4) boost = 1.4;
       ctx.globalAlpha = Math.min(1, tw * 0.78 + boost * 0.5);
       ctx.fillStyle = 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')';
       ctx.beginPath();
@@ -109,4 +123,17 @@
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (!running) draw(0); });
   resize();
   start();
+
+  // public hooks so the headline can light up the map
+  window.ViFightMap = {
+    // ripple outward from a point given in viewport (client) coordinates
+    pulseFrom: function (cx, cy) {
+      var r = canvas.getBoundingClientRect();
+      var mx = ((cx - r.left) * dpr - ox) / scale, my = ((cy - r.top) * dpr - oy) / scale;
+      waves.push({ kind: 'ripple', x: mx, y: my, t0: lastT });
+    },
+    // a band of light runs west → east across the island
+    sweep: function () { waves.push({ kind: 'sweep', t0: lastT }); },
+    rect: function () { return canvas.getBoundingClientRect(); }
+  };
 })();
