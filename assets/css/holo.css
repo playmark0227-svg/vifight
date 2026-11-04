@@ -624,3 +624,14 @@ body.modal-open .totop, body.modal-open #totop { opacity: 0; pointer-events: non
 }
 /* wider scrim so the headline stays crisp over the larger map */
 .hero-content::before { right: -12%; background: radial-gradient(ellipse 62% 56% at 38% 50%, rgba(5, 8, 24, 0.5) 0%, rgba(5, 8, 24, 0.22) 50%, transparent 78%); }
+
+/* works grid: brand-colour card for projects without a screenshot */
+.work-photo--card {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  color: var(--ct);
+  text-align: center;
+}
+.work-photo--card span { font-size: clamp(22px, 2.4vw, 32px); font-weight: 700; letter-spacing: 0.02em; }
+.work-photo--card small { font-size: 13px; opacity: 0.85; }

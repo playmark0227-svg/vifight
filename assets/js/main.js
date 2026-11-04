@@ -1439,7 +1439,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---------- WORK MODAL ----------
   const workData = {
-    '1': {
+    'swiply': {
       cat: 'Webアプリ',
       label: 'Web App',
       title: 'SWIPLY｜求人マッチングアプリ',
@@ -1450,7 +1450,7 @@ document.addEventListener('DOMContentLoaded', () => {
       url: 'https://playmark0227-svg.github.io/swiply/',
       full: null
     },
-    '2': {
+    'grit': {
       cat: 'ECサイト',
       label: 'EC Site',
       title: 'Grit.｜古着屋 HP＋オンラインストア',
@@ -1461,7 +1461,7 @@ document.addEventListener('DOMContentLoaded', () => {
       url: 'https://playmark0227-svg.github.io/grit/',
       full: 'assets/images/works-full/grit.webp'
     },
-    '3': {
+    'hokkaido': {
       cat: 'Webアプリ',
       label: 'AI App',
       title: 'ほっかいどう旅手帳｜AI旅程プランナー',
@@ -1472,7 +1472,7 @@ document.addEventListener('DOMContentLoaded', () => {
       url: 'https://playmark0227-svg.github.io/hokkaido/',
       full: null
     },
-    '4': {
+    'shogosan': {
       cat: 'コーポレートサイト',
       label: 'Corporate',
       title: 'ES Beauty｜札幌の複合ビューティーサロン',
@@ -1483,7 +1483,7 @@ document.addEventListener('DOMContentLoaded', () => {
       url: 'https://playmark0227-svg.github.io/shogosan/',
       full: 'assets/images/works-full/shogosan.webp'
     },
-    '5': {
+    'yolo': {
       cat: 'コーポレートサイト',
       label: 'Corporate',
       title: '株式会社YOLO｜イベント運営会社',
@@ -1494,7 +1494,7 @@ document.addEventListener('DOMContentLoaded', () => {
       url: 'https://playmark0227-svg.github.io/yolo-hp/',
       full: 'assets/images/works-full/yolo.webp'
     },
-    '6': {
+    'tell': {
       cat: '業務ツール',
       label: 'Sales Tool',
       title: 'tell partner｜AI営業リスト生成',
@@ -1505,7 +1505,7 @@ document.addEventListener('DOMContentLoaded', () => {
       url: 'https://playmark0227-svg.github.io/Tell/',
       full: null
     },
-    '7': {
+    'marukou': {
       cat: 'コーポレートサイト',
       label: 'Corporate',
       title: '丸幸木材店｜創業70余年の木材店',
@@ -1515,7 +1515,20 @@ document.addEventListener('DOMContentLoaded', () => {
       img: 'assets/images/portfolio/marukou.jpg',
       url: 'https://playmark0227-svg.github.io/marukou/',
       full: 'assets/images/works-full/marukou.webp'
-    }
+    },
+    // generated from assets/js/portfolio-data.js
+    'kannakamuy': {"cat": "コーポレートサイト", "label": "Corporate", "title": "KANNA KAMUY｜遺品整理・生前整理", "year": "2026", "desc": "遺品整理・生前整理・ゴミ屋敷清掃・不用品買取・防災コンサルティングを行う事業者のサイト。「いまをまもり、これまでの歩みをのこし、未来に想いをつなぐ」というコンセプトを、火をモチーフにした表現で伝えます。", "meta": {"Service": "コーポレートサイト制作", "Stack": "HTML/CSS/JavaScript / Quill.js / HTML5 Video", "Point": "「火」を一貫したモチーフに"}, "img": "assets/images/portfolio/kannakamuy.jpg", "url": "https://playmark0227-svg.github.io/kannnakamui/", "full": "assets/images/works-full/kannakamuy.webp", "card": null},
+    'sunnyway': {"cat": "コーポレートサイト", "label": "Corporate", "title": "株式会社Sunnyway｜韓国コスメPR会社", "year": "2026", "desc": "韓国コスメ・ビューティーブランドの日本マーケティングを支援するキャスティング・PR会社の公式サイト。インフルエンサー施策やSNS運用の提供内容を、明るく親しみやすいトーンで伝えます。", "meta": {"Service": "コーポレートサイト制作", "Stack": "HTML/CSS/JavaScript / Google Fonts / 構造化データ", "Point": "誰でも読めることを最優先"}, "img": "assets/images/portfolio/sunnyway.jpg", "url": "https://playmark0227-svg.github.io/sunnyway/", "full": "assets/images/works-full/sunnyway.webp", "card": null},
+    'hec': {"cat": "ECサイト", "label": "EC Site", "title": "海愛 -UMIAI-｜北海道産直 海鮮EC", "year": "2026", "desc": "北海道オホーツク産のホタテ・カニ・タコ・イカを扱う海鮮ECサイト。お客様向けの店舗ページ、4ステップの注文フロー、店舗運営者向けの管理画面までをワンセットで制作しました。", "meta": {"Service": "ECサイト構築", "Stack": "HTML/CSS/JavaScript / localStorage / SVG生成", "Point": "入力途中でも消えない下書き保存"}, "img": "assets/images/portfolio/hec.jpg", "url": "https://playmark0227-svg.github.io/hEC/", "full": "assets/images/works-full/hec.webp", "card": null},
+    'carfax': {"cat": "ツール・診断", "label": "Tool", "title": "クルマカルテ｜車両ヒストリーサービス", "year": "2026", "desc": "愛車日記と整備記録を蓄積し、車の使われ方や手入れの履歴を「クルマの物語」として残すサービスのコンセプトデモ。売却時の信頼と査定価値につなげる構想を、動くプロトタイプとして形にしました。", "meta": {"Service": "ツール開発", "Stack": "HTML/CSS/JavaScript / localStorage / Canvas", "Point": "サーバーなしで共有できる仕組み"}, "img": "assets/images/portfolio/carfax.jpg", "url": "https://playmark0227-svg.github.io/carfax-japan/", "full": "assets/images/works-full/carfax.webp", "card": null},
+    'sunnyway-app': {"cat": "Webアプリ", "label": "Web App", "title": "Sunnyway App｜コスメ×インフルエンサー", "year": "2026", "desc": "コスメブランドと美容系インフルエンサーをつなぐマッチングプラットフォーム。掲載→応募→採用→投稿→運営チェック→報酬の振込までを1つのシステムで扱います。インフルエンサー向けアプリと運営コンソールの2本立てです。", "meta": {"Service": "Webアプリ開発", "Stack": "Next.js / React / TypeScript", "Point": "権限事故を「構造」で防ぐ"}, "img": "assets/images/portfolio/sunnyway-app.jpg", "url": "https://playmark0227-svg.github.io/sunnywayApp/", "full": null, "card": null},
+    'iface': {"cat": "コーポレートサイト", "label": "Corporate", "title": "合同会社アイフェイス｜営業販売代行・環境商材", "year": "2026", "desc": "営業販売代行と環境商材を扱う会社の公式サイト。理念・事業内容・会社情報を伝えるトップページと、取り扱い商材のカタログページの2ページ構成です。", "meta": {"Service": "コーポレートサイト制作", "Stack": "HTML/CSS/JavaScript / IntersectionObserver", "Point": "黒×生成り×赤の3色に絞る"}, "img": "assets/images/portfolio/iface.jpg", "url": "https://playmark0227-svg.github.io/iface/", "full": null, "card": null},
+    'sienn': {"cat": "ツール・診断", "label": "Tool", "title": "令翠学 運命周期診断｜無料診断LP", "year": "2026", "desc": "生年月日から「運命周期」を無料診断するランディングページ。診断結果を入口に、運命分析学講士による本鑑定（LINE公式アカウント）へ送客する導線を設計しました。", "meta": {"Service": "ツール開発", "Stack": "HTML/CSS/JavaScript / LINE LIFF SDK", "Point": "占術ロジックを自前で実装"}, "img": "assets/images/portfolio/sienn.jpg", "url": "https://playmark0227-svg.github.io/sienn/", "full": "assets/images/works-full/sienn.webp", "card": null},
+    'risaie': {"cat": "Webアプリ", "label": "Web App", "title": "Risaie Connect｜不動産アプリ＋DX提案", "year": "2026", "desc": "中標津・別海・釧路エリアの物件を探せるお客様向けアプリと、不動産会社向けの導入提案LPの2点セット。「社内の物件管理とお客様向けアプリが、ひとつのデータでつながる」という不動産DXの構想を形にしました。", "meta": {"Service": "Webアプリ開発", "Stack": "HTML/CSS/JavaScript / PWA / インラインSVG", "Point": "スマホ実機に見えるモック表現"}, "img": "assets/images/portfolio/risaie.jpg", "url": "https://playmark0227-svg.github.io/risaie/", "full": null, "card": null},
+    'satukoi': {"cat": "Webアプリ", "label": "Web App", "title": "サツコイ！｜札幌恋活マッチング", "year": "2026", "desc": "「まずは会う」「チャットしない」という設計方針の、札幌エリア特化の恋活サービス。会員向けスマホアプリと運営管理システムの2システム構成で、申込みからデート後アンケートまでを一本の流れで扱います。", "meta": {"Service": "Webアプリ開発", "Stack": "Next.js / React / TypeScript", "Point": "業務ルールをコードで一元管理"}, "img": null, "url": "https://playmark0227-svg.github.io/satukoi/", "full": null, "card": {"c1": "#ee3f9b", "c2": "#7c2d55", "ct": "#ffffff", "name": "サツコイ！", "jp": "札幌恋活マッチング"}},
+    'hoppo': {"cat": "Webアプリ", "label": "Web App", "title": "北方領土ステータス｜学習ゲーミフィケーションPWA", "year": "2026", "desc": "北方領土についてクイズやスタンプラリー、階級認定証で楽しく学べるアプリ。イベント会場でのQR読み取りを想定し、スマホアプリのように動作するPWAとして制作しました。", "meta": {"Service": "Webアプリ開発", "Stack": "HTML/CSS/JavaScript / PWA / Service Worker", "Point": "個人情報を外に出さない設計"}, "img": "assets/images/portfolio/hoppo.jpg", "url": "https://playmark0227-svg.github.io/hoppo/", "full": null, "card": null},
+    'tunagaru': {"cat": "業務システム", "label": "System", "title": "つながるCraft｜マルチロール業務基盤", "year": "2026", "desc": "顧客管理・メッセージ・案件管理・物販を1つに集約する、クラフト事業者向けのプラットフォーム。本部・作業者・クライアント・エンドユーザーの4つの立場それぞれに専用の入口を用意しました。", "meta": {"Service": "業務システム開発", "Stack": "Next.js / React / TypeScript", "Point": "「転記忘れ」をデータ構造で防ぐ"}, "img": null, "url": "https://playmark0227-svg.github.io/tunagaru/", "full": null, "card": {"c1": "#282f5a", "c2": "#17b6d4", "ct": "#ffffff", "name": "つながるCraft", "jp": "マルチロール業務基盤"}},
+    'vifight': {"cat": "コーポレートサイト", "label": "Corporate", "title": "ViFight｜自社コーポレートサイト", "year": "2026", "desc": "当社ViFightの公式サイト。北海道の夜空とオーロラ、ドットで描いた北海道の地図をモチーフに、AIと開発の会社としての世界観を表現しました。SEOと問い合わせ導線を軸に設計しています。", "meta": {"Service": "コーポレートサイト制作", "Stack": "HTML/CSS/JavaScript / Canvas / Firebase", "Point": "検索で見つかる設計"}, "img": "assets/images/portfolio/vifight.jpg", "url": "https://vifight.com/", "full": null, "card": null}
   };
 
   const workModal = document.getElementById('work-modal');
@@ -1617,7 +1630,9 @@ document.addEventListener('DOMContentLoaded', () => {
       urlEl.textContent = data.url.replace(/^https?:\/\//, '').replace(/\/$/, '');
       openLink.href = data.url;
       design.classList.toggle('is-app', !data.full);
-      shot.src = data.full || data.img;
+      const cardSvg = (c) => 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c.c1}"/><stop offset="1" stop-color="${c.c2}"/></linearGradient></defs><rect width="1200" height="750" fill="url(#g)"/><text x="600" y="370" text-anchor="middle" font-family="Noto Sans JP, sans-serif" font-size="96" font-weight="700" fill="${c.ct}">${c.name}</text><text x="600" y="450" text-anchor="middle" font-family="Noto Sans JP, sans-serif" font-size="40" fill="${c.ct}" opacity=".8">${c.jp}</text></svg>`);
+      shot.src = data.full || data.img || (data.card ? cardSvg(data.card) : '');
       shot.alt = data.title + ' のデザイン';
       design.scrollTop = 0;
       iframe.removeAttribute('src');
