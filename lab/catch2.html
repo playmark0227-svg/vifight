@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>北海道の演出 比較2｜ViFight</title>
+<link rel="stylesheet" href="../assets/css/style.css?v=20261104d">
+<link rel="stylesheet" href="../assets/css/holo.css?v=20261104d">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body { cursor: auto; }
+  a, button { cursor: pointer; }
+  .hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; }
+  .hero .hero-line span { transform: none; }
+  .hero .hero-sub { opacity: 1; transform: none; }
+  .cc .hero-line { overflow: visible; }
+  .cc .hkw { transition: none; }
+
+  /* ---------- E: ホログラムのスキャン ---------- */
+  .pE .hkw { clip-path: inset(0 0 100% 0); }
+  .pE.run .hkw { animation: eReveal 1.3s .2s cubic-bezier(.6,0,.3,1) forwards, eGlitch .5s 1.5s steps(2) 1; }
+  @keyframes eReveal { to { clip-path: inset(0 0 0 0); } }
+  @keyframes eGlitch {
+    0%   { filter: drop-shadow(-4px 0 0 rgba(0,255,220,.8)) drop-shadow(4px 0 0 rgba(255,60,200,.8)); transform: translateX(2px); }
+    50%  { filter: drop-shadow(3px 0 0 rgba(0,255,220,.8)) drop-shadow(-3px 0 0 rgba(255,60,200,.8)); transform: translateX(-2px); }
+    100% { filter: drop-shadow(0 4px 18px rgba(4,6,20,.6)); transform: none; }
+  }
+  .cc-scan { position: absolute; left: -6%; right: -6%; top: 0; height: 3px; border-radius: 3px; opacity: 0; pointer-events: none; z-index: 2;
+    background: linear-gradient(90deg, transparent, #9af8da 20%, #fff 50%, #ffb3de 80%, transparent);
+    box-shadow: 0 0 18px 4px rgba(150,200,255,.75), 0 0 50px 10px rgba(150,120,255,.4); }
+  .pE.run .cc-scan { animation: eBeam 1.3s .2s cubic-bezier(.6,0,.3,1) forwards; }
+  @keyframes eBeam { 0% { top: 0; opacity: 1; } 92% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+  .cc-lines { position: absolute; inset: -4% -2%; pointer-events: none; z-index: 2; opacity: 0;
+    background: repeating-linear-gradient(180deg, rgba(5,8,24,.55) 0 2px, transparent 2px 5px); }
+  .pE.run .cc-lines { animation: eLines 2.2s .2s ease-out forwards; }
+  @keyframes eLines { 0%, 60% { opacity: .9; } 100% { opacity: 0; } }
+
+  /* ---------- F: 変換して確定 ---------- */
+  .pF .hkw { background: none; -webkit-text-fill-color: #f4f7ff; color: #f4f7ff; }
+  .pF .hkw.typing { border-bottom: .045em dashed rgba(244,247,255,.7); }
+  .pF .hkw.typing::after { content: ''; display: inline-block; width: .06em; height: .9em; margin-left: .04em; vertical-align: -.08em; background: #9adbff; animation: fCaret .8s steps(1) infinite; }
+  @keyframes fCaret { 50% { opacity: 0; } }
+  .pF .hkw.select { background: rgba(110,140,255,.55); -webkit-text-fill-color: #fff; border-radius: .08em; border-bottom: .06em solid #9adbff; }
+  .pF .hkw.fixed { background: linear-gradient(100deg,#6ff2c6,#6cc8ff 35%,#8f8bff 65%,#ff8fcf); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    animation: fPop .5s cubic-bezier(.3,1.6,.5,1) both; }
+  @keyframes fPop { 0% { transform: scale(.92); } 100% { transform: none; } }
+
+  /* ---------- G: ピンが刺さる ---------- */
+  .cc-pin { position: absolute; left: 83%; top: -.42em; width: .34em; height: auto; margin-left: -.17em; opacity: 0; z-index: 3; pointer-events: none; overflow: visible;
+    filter: drop-shadow(0 6px 10px rgba(4,6,20,.6)); }
+  .pG.run .cc-pin { animation: gDrop .75s .25s cubic-bezier(.3,1.5,.55,1) forwards; }
+  @keyframes gDrop { 0% { opacity: 0; transform: translateY(-1.4em); } 40% { opacity: 1; } 100% { opacity: 1; transform: none; } }
+  .cc-ring { position: absolute; left: 83%; top: -.02em; width: 1.4em; height: .42em; margin-left: -.7em; border-radius: 50%; border: .03em solid #9af8da; opacity: 0; pointer-events: none; z-index: 2; }
+  .pG.run .cc-ring { animation: gRing 1s 1s ease-out forwards; }
+  .pG.run .cc-ring.r2 { animation-delay: 1.25s; border-color: #b6b0ff; }
+  @keyframes gRing { 0% { opacity: .9; transform: scale(.2); } 100% { opacity: 0; transform: scale(2.6); } }
+  .pG .hkw { opacity: .35; }
+  .pG.run .hkw { animation: gGlow .8s 1s ease-out forwards; }
+  @keyframes gGlow { to { opacity: 1; } }
+
+  /* ---------- H: オーロラのカーテン ---------- */
+  .pH .hkw {
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0) 0 .07em, rgba(255,255,255,.55) .09em .11em, rgba(255,255,255,0) .13em .2em),
+      linear-gradient(0deg, #6ff2c6 0%, #6cc8ff 40%, #9a8bff 70%, #ff8fcf 100%);
+    background-size: 1.2em 100%, 100% 100%;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 50%, transparent 50%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 50%, transparent 50%, transparent 100%);
+    -webkit-mask-size: 100% 200%; mask-size: 100% 200%;
+    -webkit-mask-position: 0 100%; mask-position: 0 100%;
+  }
+  .pH.run .hkw { animation: hDown 1.6s .2s ease-out forwards, hRays 6s linear infinite; }
+  @keyframes hDown { to { -webkit-mask-position: 0 0; mask-position: 0 0; } }
+  @keyframes hRays { to { background-position: 2.4em 0, 0 0; } }
+  .pH.run .cc-hk { animation: hHalo 2.4s .6s ease-out forwards; }
+  @keyframes hHalo { 0% { filter: none; } 50% { filter: drop-shadow(0 -.12em .3em rgba(111,242,198,.7)) drop-shadow(0 0 .5em rgba(154,139,255,.6)); } 100% { filter: drop-shadow(0 0 .25em rgba(111,242,198,.35)); } }
+
+  .cc-outline, .cc-hk::after { display: none !important; }
+  .cc-extra { display: none; }
+  .pE .cc-e, .pG .cc-g { display: block; }
+
+  /* switcher */
+  .cc-panel { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 50; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; padding: 8px; border-radius: 18px;
+    background: rgba(255,255,255,.94); box-shadow: 0 16px 40px -12px rgba(0,0,20,.5); max-width: calc(100vw - 24px); }
+  .cc-panel button { padding: 10px 16px; border-radius: 12px; font: 600 13.5px/1.3 "Noto Sans JP", sans-serif; color: #4a5170; background: transparent; border: 0; text-align: left; }
+  .cc-panel button small { display: block; font-weight: 400; font-size: 11px; color: #7a809a; }
+  .cc-panel button.on { background: #0e1328; color: #fff; }
+  .cc-panel button.on small { color: rgba(255,255,255,.7); }
+  .cc-panel .replay { background: linear-gradient(100deg,#10c493,#4f6bff,#f0509f); color: #fff; }
+  .cc-note { position: fixed; top: 18px; left: 50%; transform: translateX(-50%); z-index: 50; padding: 8px 16px; border-radius: 100px; background: rgba(255,255,255,.12); color: #dfe6ff; font-size: 12.5px; border: 1px solid rgba(255,255,255,.2); white-space: nowrap; }
+  @media (max-width: 700px) { .cc-panel button { padding: 8px 10px; font-size: 12.5px; } .cc-panel button small { display: none; } .cc-note { font-size: 11px; } }
+</style>
+</head>
+<body>
+<p class="cc-note">比較用のページです（本番のサイトには影響しません）</p>
+<section id="hero" class="hero visible" data-aurora-host>
+  <div class="hero-visual" aria-hidden="true">
+    <div class="hero-visual-layer hero-visual-base"></div>
+    <div class="hero-visual-layer hero-stars"></div>
+    <div class="hero-visual-layer hero-stars-2"></div>
+    <canvas class="aurora-gl" data-aurora data-aurora-intensity="1.15" data-aurora-fade-start="0.24" data-aurora-fade-end="0.46" data-aurora-seed="1.3"></canvas>
+    <div class="hero-map" aria-hidden="true"><canvas class="hero-map-canvas" id="hero-map" data-intro></canvas></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag"><span>北海道｜札幌・中標津・道東</span></div>
+    <h1 class="hero-title hero-title--jp cc pE" id="cc">
+      <span class="hero-line hero-line-outline"><span><em class="cc-hk" id="hk"><span class="hkw" id="hkw">北海道</span><i class="cc-extra cc-e cc-scan"></i><i class="cc-extra cc-e cc-lines"></i><svg class="cc-extra cc-g cc-pin" viewBox="0 0 24 34" aria-hidden="true"><defs><linearGradient id="pinG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9af8da"/><stop offset=".5" stop-color="#8f8bff"/><stop offset="1" stop-color="#ff8fcf"/></linearGradient></defs><path d="M12 0C5.4 0 0 5.3 0 11.9 0 20.8 12 34 12 34s12-13.2 12-22.1C24 5.3 18.6 0 12 0z" fill="url(#pinG)"/><circle cx="12" cy="12" r="4.6" fill="#0a1030"/></svg><i class="cc-extra cc-g cc-ring"></i><i class="cc-extra cc-g cc-ring r2"></i></em>から、</span></span>
+      <span class="hero-line hero-line-outline hero-line-2"><span>「あったらいいな」を<b class="cc-grad">つくる。</b></span></span>
+    </h1>
+    <p class="hero-sub">Web・アプリ・業務システム・AI開発からHP制作・SNS運用まで、北海道で自社ワンストップ。<br class="pc-br">問い合わせ0件→月10件の成果実績。初回相談・お見積もりは無料、2営業日以内にご返信します。</p>
+  </div>
+</section>
+<div class="cc-panel" role="group" aria-label="パターン切り替え">
+  <button data-p="E" class="on">E ホログラムのスキャン<small>光の線が上から走り、ホログラムのように文字が現れる</small></button>
+  <button data-p="F">F 変換して確定<small>「ほっかいどう」と打たれ、変換されて「北海道」に</small></button>
+  <button data-p="G">G ピンが刺さる<small>地図のピンが「北海道」に落ち、波紋が広がる</small></button>
+  <button data-p="H">H オーロラのカーテン<small>文字にオーロラが上から降り、光の筋がゆらめく</small></button>
+  <button class="replay" id="replay">もう一度 ↻</button>
+</div>
+<script src="../assets/js/aurora.js?v=20261104d" defer></script>
+<script src="../assets/js/hokkaido-map.js?v=20261104d" defer></script>
+<script>
+(function () {
+  var cc = document.getElementById('cc'), hkw = document.getElementById('hkw');
+  var cur = 'E', timers = [];
+  var END = { E: 2100, F: 2900, G: 1900, H: 2000 };   // when the word has settled
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  function map() { return window.ViFightMap; }
+  function typeSeq() {
+    var steps = ['ほ', 'ほっ', 'ほっか', 'ほっかい', 'ほっかいど', 'ほっかいどう'];
+    hkw.className = 'hkw typing'; hkw.textContent = '';
+    steps.forEach(function (t, i) { later(function () { hkw.textContent = t; }, 250 + i * 190); });
+    later(function () { hkw.className = 'hkw select'; hkw.textContent = '北海道'; }, 250 + steps.length * 190 + 350);
+    later(function () { hkw.className = 'hkw fixed'; }, 250 + steps.length * 190 + 1000);
+  }
+  function play() {
+    timers.forEach(clearTimeout); timers = [];
+    cc.className = 'hero-title hero-title--jp cc p' + cur;
+    hkw.className = 'hkw'; hkw.textContent = '北海道';
+    if (map()) map().hide();
+    void cc.offsetWidth;
+    cc.classList.add('run');
+    if (cur === 'F') typeSeq();
+    later(function () { map() && map().reveal(1900); }, END[cur] + 300);
+  }
+  document.querySelectorAll('[data-p]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('[data-p]').forEach(function (x) { x.classList.toggle('on', x === b); });
+      cur = b.dataset.p; play();
+    });
+  });
+  document.getElementById('replay').addEventListener('click', play);
+  var q = (location.hash || '').replace('#', '').toUpperCase();
+  if (/^[EFGH]$/.test(q)) { cur = q; document.querySelectorAll('[data-p]').forEach(function (x) { x.classList.toggle('on', x.dataset.p === q); }); }
+  window.addEventListener('load', function () { setTimeout(play, 700); });
+})();
+</script>
+</body>
+</html>
