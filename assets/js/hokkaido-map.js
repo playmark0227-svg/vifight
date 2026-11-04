@@ -19,6 +19,8 @@
   var STEP = 11;
   var dots = [];
   var waves = [], lastT = 0;
+  // intro: the map stays dark until reveal() (or a fallback timer) lights it west → east
+  var intro = canvas.hasAttribute('data-intro') && !reduceMotion, revealT0 = -1, revealDur = 1.8;
   (function buildDots() {
     var off = document.createElement('canvas');
     off.width = VW; off.height = VH;
@@ -79,14 +81,23 @@
         }
       }
       if (boost > 1.4) boost = 1.4;
-      ctx.globalAlpha = Math.min(1, tw * 0.78 + boost * 0.5);
+      var f = 1;
+      if (intro) {
+        var prog = revealT0 < 0 ? -1 : (t - revealT0) / revealDur;
+        f = Math.max(0, Math.min(1, (prog * 1.25 - d.t) * 5));
+        if (f <= 0) continue;
+      }
+      ctx.globalAlpha = Math.min(1, tw * 0.78 + boost * 0.5) * f;
       ctx.fillStyle = 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')';
       ctx.beginPath();
-      ctx.arc(ox + d.x * scale, oy + d.y * scale, rad * (1 + boost * 0.35), 0, 6.2832);
+      ctx.arc(ox + d.x * scale, oy + d.y * scale, rad * (1 + boost * 0.35) * (0.4 + 0.6 * f), 0, 6.2832);
       ctx.fill();
     }
     ctx.globalAlpha = 1;
     // pins
+    var pinA = intro ? (revealT0 < 0 ? 0 : Math.max(0, Math.min(1, ((t - revealT0) / revealDur - 0.75) * 3))) : 1;
+    if (pinA <= 0) return;
+    ctx.globalAlpha = pinA;
     var fs = Math.max(11, Math.round(24 * scale));
     ctx.font = '700 ' + fs + 'px "Noto Sans JP", sans-serif';
     for (var j = 0; j < PINS.length; j++) {
@@ -105,6 +116,7 @@
       ctx.fillText(pn.label, px + 15 * scale, pn.below ? py + 15 * scale + fs : py - 13 * scale);
       ctx.shadowBlur = 0;
     }
+    ctx.globalAlpha = 1;
   }
 
   function loop(time) {
@@ -123,6 +135,7 @@
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (!running) draw(0); });
   resize();
   start();
+  if (intro) setTimeout(function () { if (revealT0 < 0) { revealT0 = lastT; } }, 7000);
 
   // public hooks so the headline can light up the map
   window.ViFightMap = {
@@ -134,6 +147,7 @@
     },
     // a band of light runs west → east across the island
     sweep: function () { waves.push({ kind: 'sweep', t0: lastT }); },
+    reveal: function (dur) { if (!intro || revealT0 >= 0) return; if (dur) revealDur = dur / 1000; revealT0 = lastT; start(); },
     rect: function () { return canvas.getBoundingClientRect(); }
   };
 })();

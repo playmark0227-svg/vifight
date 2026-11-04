@@ -553,6 +553,77 @@ body.modal-open #header { opacity: 0; pointer-events: none; }
 body.modal-open .totop, body.modal-open #totop { opacity: 0; pointer-events: none; }
 @media (max-width: 600px) {
   .hero-title--jp .hero-line { font-size: 6.7vw; }
-  .hero-title--jp .hero-line-outline { white-space: nowrap; }
-  .hero-title--jp .hero-line-accent { font-size: 11vw; }
 }
+
+/* =============================================================
+   HERO HEADLINE — 「北海道から、」 with the outline-draw intro
+   ============================================================= */
+.hero-title .cc-hk { position: relative; display: inline-block; font-style: normal; }
+.hero-line-outline .cc-hk span { text-shadow: none; }
+.hero-title .hkw {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(100deg, #6ff2c6 0%, #6cc8ff 35%, #8f8bff 65%, #ff8fcf 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 18px rgba(4, 6, 20, 0.6));
+}
+.hero-title .cc-grad {
+  font-weight: inherit;
+  background: linear-gradient(100deg, #9af8da, #9adbff 30%, #b6b0ff 55%, #e2a8ff 76%, #ffb3de);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 16px rgba(4, 6, 20, 0.7));
+}
+.cc-outline {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 2.7em; height: auto;
+  transform: translate(-50%, -44%);
+  overflow: visible;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+}
+.cc-outline path {
+  fill: none;
+  stroke: url(#ccGrad);
+  stroke-width: 9;
+  stroke-opacity: 0.55;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  filter: drop-shadow(0 0 10px rgba(130, 150, 255, 0.7));
+}
+.hero-title.hk-draw .hero-line { overflow: visible; }
+.hero-title.hk-draw .cc-outline { opacity: 1; }
+.hero-title.hk-draw .cc-outline path { animation: hkDraw 2.4s ease-in-out forwards; }
+@keyframes hkDraw { to { stroke-dashoffset: 0; } }
+.hero-title .cc-hk::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: -0.08em;
+  height: 0.06em;
+  border-radius: 1em;
+  background: linear-gradient(90deg, #6ff2c6, #8f8bff, #ff8fcf);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.hero-title.hk-draw .cc-hk::after { animation: hkLine 0.8s 2.1s ease-out forwards; }
+@keyframes hkLine { to { transform: scaleX(1); } }
+.hero-title--jp .hero-line > span { white-space: nowrap; }
+@media (min-width: 601px) {
+  .hero-title--jp .hero-line { font-size: clamp(26px, 6.4vw, 88px); }
+}
+@media (max-width: 600px) {
+  .hero-title--jp .hero-line { font-size: 6.7vw; }
+  .hero-title--jp .hero-line:first-child { font-size: 9.5vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-title .cc-outline { opacity: 1; }
+  .hero-title .cc-outline path { stroke-dashoffset: 0; animation: none; }
+  .hero-title .cc-hk::after { transform: none; animation: none; }
+}
+/* wider scrim so the headline stays crisp over the larger map */
+.hero-content::before { right: -12%; background: radial-gradient(ellipse 62% 56% at 38% 50%, rgba(5, 8, 24, 0.5) 0%, rgba(5, 8, 24, 0.22) 50%, transparent 78%); }

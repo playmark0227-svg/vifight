@@ -17,6 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const hero = document.getElementById('hero');
       if (hero) hero.classList.add('visible');
     }, 300);
+    // Headline intro: 「北海道」 floats in → its outline is drawn → the big
+    // background dot map lights up west → east.
+    const heroTitle = document.querySelector('#hero .hero-title');
+    const rmIntro = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (heroTitle) {
+      setTimeout(() => heroTitle.classList.add('hk-draw'), rmIntro ? 0 : 1500);
+      setTimeout(() => { if (window.ViFightMap) window.ViFightMap.reveal(1900); }, rmIntro ? 0 : 3700);
+    }
     // Snap hero entrance transitions to their final state shortly after the
     // loader hides. Root cause of the "ghost title": Chrome sometimes froze
     // the data-reveal opacity/translate transitions mid-flight on first
