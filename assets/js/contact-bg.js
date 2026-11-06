@@ -1,14 +1,15 @@
 /* =============================================================
-   ViFight — Contact 背景の視線誘導（比較用プレビュー）
-   ?cbg=I〜M を付けて開いたときだけ動く。どれも最後はフォームに
-   視線が集まるように、光や模様がフォームへ向かって流れる。
+   ViFight — Contact 背景の視線誘導
+   本番は M（入力に合わせて光る）。?cbg=I〜M を付けると他の案も比較できる。
    ============================================================= */
 (function () {
   'use strict';
   var params = new URLSearchParams(location.search);
-  var mode = (params.get('cbg') || '').toUpperCase();
+  var preview = params.has('cbg');
+  // M（入力に合わせて光る）を本番の演出に採用。?cbg=I〜M で他の案も比較できる
+  var mode = (params.get('cbg') || 'M').toUpperCase();
   var MODES = ['I', 'J', 'K', 'L', 'M'];
-  if (MODES.indexOf(mode) < 0) return;
+  if (MODES.indexOf(mode) < 0) mode = 'M';
 
   var sec = document.getElementById('contact');
   var form = sec && sec.querySelector('.contact-form');
@@ -181,9 +182,11 @@
   }
 
   var DRAW = { I: drawI, J: drawJ, K: drawK, L: drawL, M: drawM };
-  var running = false, visible = false;
+  var running = false, visible = false, tick = 0;
   function frame(now) {
     if (!running) return;
+    // re-measure the form now and then: it slides in (data-reveal) after the first layout
+    if (++tick % 45 === 0) { F = rel(form); B = btn ? rel(btn) : B; }
     ctx.clearRect(0, 0, W, H);
     DRAW[mode](reduce ? 0 : now / 1000);
     if (reduce) { running = false; return; }
@@ -197,7 +200,8 @@
   // the contact view is a tab: re-measure whenever it becomes visible
   window.addEventListener('hashchange', function () { setTimeout(function () { if (sec.offsetWidth) { relayout(); start(); } }, 120); });
 
-  // ---------- preview switcher ----------
+  // ---------- preview switcher (only with ?cbg=) ----------
+  if (!preview) return;
   var NAMES = { I: '光の導線', J: 'ドットの波', K: 'オーロラの帯', L: '流れるシェブロン', M: '入力に合わせて光る' };
   var bar = document.createElement('div');
   bar.className = 'cbg-panel';
