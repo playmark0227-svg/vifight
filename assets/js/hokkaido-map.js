@@ -148,6 +148,7 @@
     sweep: function () { waves.push({ kind: 'sweep', t0: lastT }); },
     hide: function () { if (canvas.hasAttribute('data-intro') && !reduceMotion) { intro = true; revealT0 = -1; } },
     reveal: function (dur) { if (!intro || revealT0 >= 0) return; if (dur) revealDur = dur / 1000; revealT0 = lastT; start(); },
-    rect: function () { return canvas.getBoundingClientRect(); }
+    rect: function () { return canvas.getBoundingClientRect(); },
+    path: PATH
   };
 })();
