@@ -635,3 +635,20 @@ body.modal-open .totop, body.modal-open #totop { opacity: 0; pointer-events: non
 }
 .work-photo--card span { font-size: clamp(22px, 2.4vw, 32px); font-weight: 700; letter-spacing: 0.02em; }
 .work-photo--card small { font-size: 13px; opacity: 0.85; }
+
+/* contact background guidance (preview: ?cbg=I..M) */
+.contact.has-cbg { position: relative; }
+.contact-bg { position: absolute; left: 0; top: 0; z-index: 0; pointer-events: none; }
+.contact.has-cbg .container { position: relative; z-index: 1; }
+.cbg-panel {
+  position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 2500;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; padding: 8px;
+  border-radius: 16px; background: rgba(14, 19, 40, 0.92); box-shadow: 0 16px 40px -12px rgba(0, 0, 20, 0.5);
+  max-width: calc(100vw - 24px);
+}
+.cbg-panel button { padding: 9px 14px; border-radius: 10px; border: 0; background: transparent; color: rgba(255, 255, 255, 0.75); font: 600 13px/1.2 "Noto Sans JP", sans-serif; cursor: pointer; }
+.cbg-panel button.on { background: #fff; color: #0e1328; }
+@media (max-width: 700px) {
+  .cbg-panel { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; bottom: 10px; padding: 6px; }
+  .cbg-panel button { white-space: nowrap; padding: 8px 10px; font-size: 12px; }
+}
