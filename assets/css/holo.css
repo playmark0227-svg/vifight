@@ -646,3 +646,31 @@ body.modal-open .totop, body.modal-open #totop { opacity: 0; pointer-events: non
 .works-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 .works-bg canvas { position: absolute; left: 0; top: 0; display: block; will-change: transform; }
 .works.has-wbg .container { position: relative; z-index: 1; }
+
+/* =============================================================
+   SERVICES — photo band behind the heading only (above the 01/02 list).
+   White wash on the left keeps the dark heading text readable; the
+   laptop / SNS icons stay visible on the right.
+   ============================================================= */
+.services .section-header { position: relative; z-index: 0; }
+.services .section-header::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: calc(-1 * var(--section-pad));
+  bottom: calc(-1 * clamp(50px, 8vw, 100px) + 28px);
+  left: calc(50% - 50vw);
+  right: calc(50% - 50vw);
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 22%, rgba(255, 255, 255, 0) 70%, #fff 100%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.92) 40%, rgba(255, 255, 255, 0.55) 56%, rgba(255, 255, 255, 0.1) 78%, rgba(255, 255, 255, 0) 100%),
+    url('../images/services-hero.webp') right center / cover no-repeat;
+}
+@media (max-width: 760px) {
+  .services .section-header::before {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.8) 30%, rgba(255, 255, 255, 0.9) 48%, #fff 62%),
+      url('../images/services-hero.webp') 72% top / auto 64% no-repeat;
+  }
+}
