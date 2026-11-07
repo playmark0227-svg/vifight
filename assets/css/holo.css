@@ -759,8 +759,10 @@ body.modal-open .totop, body.modal-open #totop { opacity: 0; pointer-events: non
 }
 
 /* =============================================================
-   HEADING PHOTO ANIMATIONS — preview (?anim=S1,F1,Q1 …)
-   html.anim-S1..S3 / anim-F1..F3 / anim-Q1..Q3
+   HEADING PHOTO ANIMATIONS
+   Services: aurora colours drift across the photo
+   Flow: a glow lights the four step panels in order (JS sets --imgw / --bh)
+   FAQ: the glass sign floats gently
    ============================================================= */
 .services .section-header::after,
 .flow .section-header::after {
@@ -773,22 +775,9 @@ body.modal-open .totop, body.modal-open #totop { opacity: 0; pointer-events: non
   right: calc(50% - 50vw);
   pointer-events: none;
 }
-/* shared: a soft sheen that sweeps across */
-@keyframes hpSheen { 0% { background-position: 160% 0; } 55%, 100% { background-position: -60% 0; } }
-@keyframes hpSheenSlow { 0% { background-position: 140% 0; } 100% { background-position: -40% 0; } }
 
 /* --- Services --- */
-html.anim-S1 .services .section-header::before { transform-origin: 72% 45%; animation: hpZoom 22s ease-in-out infinite alternate; }
-@keyframes hpZoom { from { transform: scale(1); } to { transform: scale(1.08) translateX(-1%); } }
-html.anim-S2 .services .section-header::after {
-  background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.42) 50%, transparent 58%) 0 0 / 260% 100% no-repeat;
-  -webkit-mask-image: linear-gradient(90deg, transparent 30%, #000 60%), linear-gradient(180deg, #000 70%, transparent);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(90deg, transparent 30%, #000 60%), linear-gradient(180deg, #000 70%, transparent);
-  mask-composite: intersect;
-  animation: hpSheen 7s ease-in-out infinite;
-}
-html.anim-S3 .services .section-header::after {
+.services .section-header::after {
   background: linear-gradient(100deg, rgba(16, 196, 147, 0.22), rgba(31, 169, 232, 0.2), rgba(79, 107, 255, 0.22), rgba(154, 77, 255, 0.22), rgba(240, 80, 159, 0.2), rgba(16, 196, 147, 0.22)) 0 0 / 300% 100%;
   -webkit-mask-image: linear-gradient(90deg, transparent 25%, #000 60%), linear-gradient(180deg, #000 70%, transparent);
   -webkit-mask-composite: source-in;
@@ -799,17 +788,8 @@ html.anim-S3 .services .section-header::after {
 @keyframes hpHue { to { background-position: 300% 0; } }
 
 /* --- Flow --- */
-html.anim-F1 .flow .section-header::after {
-  background: linear-gradient(90deg, transparent 40%, rgba(180, 200, 255, 0.0) 44%, rgba(255, 255, 255, 0.5) 50%, rgba(200, 170, 255, 0.0) 56%, transparent 60%) 0 0 / 240% 100% no-repeat;
-  -webkit-mask-image: linear-gradient(90deg, transparent 28%, #000 50%), linear-gradient(180deg, #000 70%, transparent);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(90deg, transparent 28%, #000 50%), linear-gradient(180deg, #000 70%, transparent);
-  mask-composite: intersect;
-  animation: hpSheenLR 6s cubic-bezier(.5, 0, .5, 1) infinite;
-}
-@keyframes hpSheenLR { 0% { background-position: 100% 0; } 70%, 100% { background-position: 0% 0; } }
 /* F2: a glow hops across the four step panels (positions set by JS: --imgw / --bh) */
-html.anim-F2 .flow .section-header::after {
+.flow .section-header::after {
   top: calc(-1 * var(--section-pad) + var(--bh, 470px) * 0.42 - 120px);
   bottom: auto; right: auto;
   width: 240px; height: 240px;
@@ -833,24 +813,13 @@ html.anim-F2 .flow .section-header::after {
   94%  { left: var(--x3); opacity: 1; }
   100% { left: var(--x3); opacity: 0; }
 }
-html.anim-F3 .flow .section-header::before { animation: hpPan 26s ease-in-out infinite alternate; }
-@keyframes hpPan { from { transform: translateX(1.5%) scale(1.04); } to { transform: translateX(-1.5%) scale(1.04); } }
 
 /* --- FAQ --- */
-html.anim-Q1 .faq .section-header::before { animation: hpFloat 9s ease-in-out infinite; }
+.faq .section-header::before { animation: hpFloat 9s ease-in-out infinite; }
 @keyframes hpFloat { 0%, 100% { transform: translateY(0) scale(1.02); } 50% { transform: translateY(-10px) scale(1.03); } }
-html.anim-Q2 .faq .section-header::after {
-  background:
-    linear-gradient(115deg, transparent 44%, rgba(255, 255, 255, 0.55) 50%, transparent 56%) 0 0 / 260% 100% no-repeat,
-    linear-gradient(110deg, rgba(16, 196, 147, 0.08), rgba(79, 107, 255, 0.10) 50%, rgba(240, 80, 159, 0.08));
-  animation: hpSheen2 6.5s ease-in-out infinite;
-}
-@keyframes hpSheen2 { 0% { background-position: 160% 0, 0 0; } 55%, 100% { background-position: -60% 0, 0 0; } }
-html.anim-Q3 .faq .section-header::before { animation: hpHueRot 18s ease-in-out infinite alternate; }
-@keyframes hpHueRot { from { filter: hue-rotate(-25deg) saturate(1.1); } to { filter: hue-rotate(35deg) saturate(1.35); } }
 
 @media (max-width: 760px) {
-  html.anim-F2 .flow .section-header::after {
+  .flow .section-header::after {
     width: 110px; height: 110px;
     top: calc(-1 * var(--section-pad) + 58px + 100vw * 0.4885 * 0.42 - 55px);
     --x0: calc(50% - 50vw + 100vw * 0.194 - 55px);
@@ -863,9 +832,5 @@ html.anim-Q3 .faq .section-header::before { animation: hpHueRot 18s ease-in-out 
   .services .section-header::before, .services .section-header::after,
   .flow .section-header::before, .flow .section-header::after,
   .faq .section-header::before, .faq .section-header::after { animation: none !important; }
+  .flow .section-header::after { display: none; }
 }
-.hpa-panel { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 2500; display: flex; gap: 10px; padding: 8px 10px; border-radius: 16px; background: rgba(14, 19, 40, 0.92); box-shadow: 0 16px 40px -12px rgba(0, 0, 20, 0.5); max-width: calc(100vw - 20px); overflow-x: auto; }
-.hpa-panel .grp { display: flex; align-items: center; gap: 4px; }
-.hpa-panel .grp b { color: rgba(255, 255, 255, 0.55); font: 600 11px/1 "Inter", sans-serif; letter-spacing: .08em; margin-right: 2px; white-space: nowrap; }
-.hpa-panel button { padding: 8px 11px; border-radius: 9px; border: 0; background: transparent; color: rgba(255, 255, 255, 0.78); font: 600 12.5px/1.2 "Noto Sans JP", sans-serif; white-space: nowrap; cursor: pointer; }
-.hpa-panel button.on { background: #fff; color: #0e1328; }
