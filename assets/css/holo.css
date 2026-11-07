@@ -641,16 +641,8 @@ body.modal-open .totop, body.modal-open #totop { opacity: 0; pointer-events: non
 .contact-bg { position: absolute; left: 0; top: 0; z-index: 0; pointer-events: none; }
 .contact.has-cbg .container { position: relative; z-index: 1; }
 
-/* works background on scroll (preview: ?wbg=N..R) */
+/* works background on scroll (assets/js/works-bg.js) */
 .works.has-wbg { position: relative; }
 .works-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 .works-bg canvas { position: absolute; left: 0; top: 0; display: block; will-change: transform; }
 .works.has-wbg .container { position: relative; z-index: 1; }
-.wbg-panel {
-  position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 2500;
-  display: flex; gap: 6px; padding: 8px; border-radius: 16px;
-  background: rgba(14, 19, 40, 0.92); box-shadow: 0 16px 40px -12px rgba(0, 0, 20, 0.5);
-  max-width: calc(100vw - 24px); overflow-x: auto;
-}
-.wbg-panel button { padding: 9px 14px; border-radius: 10px; border: 0; background: transparent; color: rgba(255, 255, 255, 0.75); font: 600 13px/1.2 "Noto Sans JP", sans-serif; white-space: nowrap; cursor: pointer; }
-.wbg-panel button.on { background: #fff; color: #0e1328; }
