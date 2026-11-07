@@ -714,3 +714,46 @@ body.modal-open .totop, body.modal-open #totop { opacity: 0; pointer-events: non
 }
 .flow .section-title, .flow .section-sub, .flow .section-lead { text-shadow: 0 0 18px rgba(255, 255, 255, 0.9), 0 0 3px rgba(255, 255, 255, 0.9); }
 .flow .section-lead { color: var(--text); }
+
+
+/* =============================================================
+   FAQ — photo band behind the heading only (above the question list).
+   The FAQ photo sits on the right and fades out to the left/bottom,
+   so the heading text stays on a light ground.
+   ============================================================= */
+.faq .section-header { position: relative; z-index: 0; }
+.faq .section-header::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: calc(-1 * var(--section-pad));
+  bottom: calc(-1 * clamp(50px, 8vw, 100px) + 28px);
+  left: calc(50% - 50vw);
+  right: calc(50% - 50vw);
+  pointer-events: none;
+  background:
+    linear-gradient(110deg, rgba(16, 196, 147, 0.12) 0%, rgba(79, 107, 255, 0.14) 45%, rgba(154, 77, 255, 0.14) 75%, rgba(240, 80, 159, 0.12) 100%),
+    url('../images/faq-hero.webp') right center / auto 100% no-repeat;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 44%, rgba(0, 0, 0, 0.5) 54%, #000 66%), linear-gradient(180deg, #000 0%, #000 72%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent 0%, transparent 44%, rgba(0, 0, 0, 0.5) 54%, #000 66%), linear-gradient(180deg, #000 0%, #000 72%, transparent 100%);
+  mask-composite: intersect;
+}
+@media (max-width: 760px) {
+  .faq .section-header::before {
+    background:
+      linear-gradient(110deg, rgba(16, 196, 147, 0.12), rgba(79, 107, 255, 0.14) 50%, rgba(240, 80, 159, 0.12)),
+      url('../images/faq-hero.webp') center 58px / 100% auto no-repeat;
+    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.45) 34%, transparent 50%);
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.45) 34%, transparent 50%);
+  }
+}
+.faq .section-title, .faq .section-sub, .faq .section-lead { text-shadow: 0 0 18px rgba(255, 255, 255, 0.9), 0 0 3px rgba(255, 255, 255, 0.9); }
+.faq .section-lead { color: var(--text); }
+.faq .section-header::after {
+  content: ''; position: absolute; z-index: -1; pointer-events: none;
+  top: calc(-1 * var(--section-pad)); bottom: calc(-1 * clamp(50px, 8vw, 100px) + 28px);
+  left: calc(50% - 50vw); right: calc(50% - 50vw);
+  background: linear-gradient(110deg, rgba(16, 196, 147, 0.08), rgba(79, 107, 255, 0.10) 50%, rgba(240, 80, 159, 0.08));
+  -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 100%); mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
+}
