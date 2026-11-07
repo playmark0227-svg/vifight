@@ -317,7 +317,7 @@ export const PROJECTS = [
     year: '2026',
     url: 'https://vifight.com/',
     c1: '#0a1030', c2: '#6c7bff', ct: '#ffffff',
-    tagline: '北海道から、「あったらいいな」をつくる。',
+    tagline: '北海道から、「あったらいいな」をつくる',
     summary: '当社ViFightの公式サイト。北海道の夜空とオーロラ、ドットで描いた北海道の地図をモチーフに、AIと開発の会社としての世界観を表現しました。SEOと問い合わせ導線を軸に設計しています。',
     features: [
       'オーロラ・星空・北海道のドット地図を重ねたヒーロー演出',
