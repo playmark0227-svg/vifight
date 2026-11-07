@@ -679,3 +679,38 @@ body.modal-open .totop, body.modal-open #totop { opacity: 0; pointer-events: non
 /* stronger photo band: a soft white halo keeps the heading readable */
 .services .section-title, .services .section-sub, .services .section-lead { text-shadow: 0 0 18px rgba(255, 255, 255, 0.9), 0 0 3px rgba(255, 255, 255, 0.9); }
 .services .section-lead { color: var(--text); }
+
+/* =============================================================
+   FLOW — photo band behind the heading only (above the 01/02 steps).
+   The steps photo sits on the right and fades out to the left/bottom,
+   so the heading text stays on a light ground.
+   ============================================================= */
+.flow .section-header { position: relative; z-index: 0; }
+.flow .section-header::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: calc(-1 * var(--section-pad));
+  bottom: calc(-1 * clamp(50px, 8vw, 100px) + 28px);
+  left: calc(50% - 50vw);
+  right: calc(50% - 50vw);
+  pointer-events: none;
+  background:
+    linear-gradient(110deg, rgba(16, 196, 147, 0.12) 0%, rgba(79, 107, 255, 0.14) 45%, rgba(154, 77, 255, 0.14) 75%, rgba(240, 80, 159, 0.12) 100%),
+    url('../images/flow-hero.webp') right center / auto 100% no-repeat;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 26%, rgba(0, 0, 0, 0.55) 46%, #000 62%), linear-gradient(180deg, #000 0%, #000 72%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent 0%, transparent 26%, rgba(0, 0, 0, 0.55) 46%, #000 62%), linear-gradient(180deg, #000 0%, #000 72%, transparent 100%);
+  mask-composite: intersect;
+}
+@media (max-width: 760px) {
+  .flow .section-header::before {
+    background:
+      linear-gradient(110deg, rgba(16, 196, 147, 0.12), rgba(79, 107, 255, 0.14) 50%, rgba(240, 80, 159, 0.12)),
+      url('../images/flow-hero.webp') center 58px / 100% auto no-repeat;
+    -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.45) 34%, transparent 50%);
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.45) 34%, transparent 50%);
+  }
+}
+.flow .section-title, .flow .section-sub, .flow .section-lead { text-shadow: 0 0 18px rgba(255, 255, 255, 0.9), 0 0 3px rgba(255, 255, 255, 0.9); }
+.flow .section-lead { color: var(--text); }
