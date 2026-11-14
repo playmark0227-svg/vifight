@@ -115,13 +115,14 @@
     '}',
 
     'void main() {',
-    '  float y = 1.0 - v_uv.y;',
+    '  vec2 uv = gl_FragCoord.xy / u_res;',
+    '  float y = 1.0 - uv.y;',
     '  if (y >= u_fade.y) { gl_FragColor = vec4(0.0); return; }',
     // reference length: wide canvases (footer) get a longer one so rays/folds aren't crammed,
     // portrait ones a shorter one so a phone still sees several folds
     '  float L = min(max(u_res.y, u_res.x * 0.5), u_res.x * 1.4);',
     '  float aspect = u_res.x / L;',
-    '  vec2 p = vec2((v_uv.x - 0.5) * aspect, y);',
+    '  vec2 p = vec2((uv.x - 0.5) * aspect, y);',
     '  float t = u_time;',
     // fade out the fine ray octave when it would be under ~4px per period (aliasing shimmer)
     '  float aa = smoothstep(2.5, 5.0, L / 92.0);',
@@ -263,7 +264,9 @@
 
     function draw(time) {
       if (lost || !res || !canvas.width || !canvas.height) return;
-      gl.viewport(0, 0, canvas.width, canvas.height);
+      // only the band above fadeEnd can hold aurora: skip shading the rest of the canvas
+      var bandH = Math.min(canvas.height, Math.ceil(canvas.height * cfg.fadeEnd) + 2);
+      gl.viewport(0, canvas.height - bandH, canvas.width, bandH);
       gl.useProgram(res.prog);
       gl.bindBuffer(gl.ARRAY_BUFFER, res.buf);
       gl.enableVertexAttribArray(0);
@@ -289,9 +292,9 @@
       var w = canvas.clientWidth, h = canvas.clientHeight;
       var had = hasSize; hasSize = !!(w && h);
       if (!hasSize) { if (had) update(); return; }
-      var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      var s = cfg.scale == null ? 0.5 : cfg.scale;
-      if (lowPower()) s = Math.min(s, 0.35);
+      var dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+      var s = cfg.scale == null ? 0.42 : cfg.scale;
+      if (lowPower()) s = Math.min(s, 0.3);
       s = clamp(s, 0.1, 1);
       var cw = Math.max(1, Math.round(w * dpr * s)), ch = Math.max(1, Math.round(h * dpr * s));
       var changed = cw !== canvas.width || ch !== canvas.height;
@@ -307,7 +310,7 @@
 
     function frame(now) {
       raf = requestAnimationFrame(frame);
-      var interval = now < scrollingUntil ? 1000 / 20 : (lowPower() ? 1000 / 30 : 1000 / 60);
+      var interval = now < scrollingUntil ? 1000 / 15 : (lowPower() ? 1000 / 24 : 1000 / 30);
       var delta = now - lastDraw;
       if (delta < interval - 1.5) return;
       // a tick up to 1.5ms early re-anchors at now; only a late tick carries its overshoot
