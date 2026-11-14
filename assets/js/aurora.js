@@ -151,6 +151,10 @@
   var instances = [];
   var warned = false;
 
+  // while the page is being scrolled, draw the aurora at 20fps so the
+  // compositor has headroom for the scroll itself (the GPU is shared)
+  var scrollingUntil = 0;
+  window.addEventListener('scroll', function () { scrollingUntil = performance.now() + 180; }, { passive: true });
   function lowPower() { return !!((mqSmall && mqSmall.matches) || (mqCoarse && mqCoarse.matches)); }
   function reducedMotion() { return !!(mqReduce && mqReduce.matches); }
   function onMq(mq, fn) {
@@ -303,7 +307,7 @@
 
     function frame(now) {
       raf = requestAnimationFrame(frame);
-      var interval = lowPower() ? 1000 / 30 : 1000 / 60;
+      var interval = now < scrollingUntil ? 1000 / 20 : (lowPower() ? 1000 / 30 : 1000 / 60);
       var delta = now - lastDraw;
       if (delta < interval - 1.5) return;
       // a tick up to 1.5ms early re-anchors at now; only a late tick carries its overshoot

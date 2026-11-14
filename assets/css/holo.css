@@ -834,3 +834,15 @@ body.modal-open .totop, body.modal-open #totop { opacity: 0; pointer-events: non
   .faq .section-header::before, .faq .section-header::after { animation: none !important; }
   .flow .section-header::after { display: none; }
 }
+
+/* =============================================================
+   PERF: the four hero orbs used filter: blur(120px) on ~800px boxes
+   while animating — the browser re-blurred them every frame, which was
+   the main cause of janky scrolling out of the hero. The radial
+   gradients below are already soft, so the blur filter is dropped.
+   ============================================================= */
+.hero-visual-orb, .hero-orb-4 { filter: none !important; }
+.hero-orb-1 { background: radial-gradient(circle, rgba(60, 230, 180, 0.2) 0%, rgba(60, 230, 180, 0.1) 30%, rgba(60, 230, 180, 0.03) 55%, transparent 70%) !important; }
+.hero-orb-2 { background: radial-gradient(circle, rgba(80, 150, 255, 0.2) 0%, rgba(80, 150, 255, 0.1) 30%, rgba(80, 150, 255, 0.03) 55%, transparent 70%) !important; }
+.hero-orb-3 { background: radial-gradient(circle, rgba(160, 100, 255, 0.18) 0%, rgba(160, 100, 255, 0.08) 30%, rgba(160, 100, 255, 0.02) 55%, transparent 70%) !important; }
+.hero-orb-4 { background: radial-gradient(circle, rgba(255, 110, 190, 0.15) 0%, rgba(255, 110, 190, 0.07) 30%, rgba(255, 110, 190, 0.02) 55%, transparent 70%) !important; }

@@ -76,6 +76,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // Safety fallback: never let the loader hang. Force-hide after 3.5s regardless.
   setTimeout(hideLoader, 3500);
+  // The loader locks scrolling (body overflow:hidden). If the visitor already
+  // tries to scroll, don't make them wait for it — open the page right away.
+  const earlyScroll = () => { if (!loaderHidden && document.readyState !== 'loading') hideLoader(); };
+  ['wheel', 'touchstart', 'keydown'].forEach(ev => window.addEventListener(ev, earlyScroll, { passive: true, once: true }));
 
   // ---------- ANIMATED LOW-POLY EDGES (dividers + hero mountains) ----------
   // Peaks gently undulate (per-vertex sine). One shared rAF loop; only visible
